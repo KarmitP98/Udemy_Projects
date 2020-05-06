@@ -16,9 +16,6 @@ export class RecipesComponent
   }
 
   ngOnInit() {
-    this.rs.recipeSelected.subscribe((recipe: Recipe) => {
-      this.selectedRecipe = recipe;
-    });
   }
 
 }

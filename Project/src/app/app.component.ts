@@ -9,9 +9,6 @@ export class AppComponent {
   title = "Project1";
   loadedFeature = 1;
 
-  onNavigate(type: number) {
-    this.loadedFeature = type;
-  }
 
 
 }

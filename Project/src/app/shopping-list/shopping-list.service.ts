@@ -1,12 +1,13 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Ingredient } from "../shared/ingredient.model";
+import { Subject } from "rxjs";
 
 @Injectable({
               providedIn : "root"
             })
 export class ShoppingListService {
 
-  ingridientsChanged = new EventEmitter<Ingredient[]>();
+  ingridientsChanged = new Subject<Ingredient[]>();
 
   private ingredients: Ingredient[] = [
     new Ingredient("Apples", 5),
@@ -22,7 +23,7 @@ export class ShoppingListService {
 
   addIngredient(ing: Ingredient) {
     this.ingredients.push(ing);
-    this.ingridientsChanged.emit(this.ingredients.slice());
+    this.ingridientsChanged.next(this.ingredients.slice());
   }
 
   addIngrediants(ings: Ingredient[]) {
@@ -31,6 +32,6 @@ export class ShoppingListService {
     // }  TOO MANY EMITS
 
     this.ingredients.push(...ings); // ... is spread operator same as Array.asList();
-    this.ingridientsChanged.emit(this.ingredients.slice());
+    this.ingridientsChanged.next(this.ingredients.slice());
   }
 }
