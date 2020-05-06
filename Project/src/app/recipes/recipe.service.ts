@@ -1,29 +1,29 @@
-import {EventEmitter, Injectable} from '@angular/core';
-import {Recipe} from './recipe.model';
-import {Ingredient} from '../shared/ingredient.model';
-import {ShoppingListService} from '../shopping-list/shopping-list.service';
+import { EventEmitter, Injectable } from "@angular/core";
+import { Recipe } from "./recipe.model";
+import { Ingredient } from "../shared/ingredient.model";
+import { ShoppingListService } from "../shopping-list/shopping-list.service";
 
 @Injectable({
-  providedIn: 'root'
-})
+              providedIn : "root"
+            })
 export class RecipeService {
 // Test
   recipeSelected = new EventEmitter<Recipe>();
   private recipes: Recipe[] = [
     // tslint:disable-next-line:max-line-length
-    new Recipe('Onion',
-      'This is a test recipe',
-      'https://image.shutterstock.com/image-photo/red-gold-onions-isolated-on-600w-569575726.jpg',
-      [new Ingredient('Ing 1.1', 1),
-        new Ingredient('Ing 1.2', 2)]
+    new Recipe("Onion",
+               "This is a test recipe",
+               "https://image.shutterstock.com/image-photo/red-gold-onions-isolated-on-600w-569575726.jpg",
+               [new Ingredient("Ing 1.1", 1),
+                new Ingredient("Ing 1.2", 2)]
     ),
 
     // tslint:disable-next-line:max-line-length
-    new Recipe('Potato',
-      'Another test recipe',
-      'https://image.shutterstock.com/image-photo/young-potato-isolated-on-white-600w-630239534.jpg',
-      [new Ingredient('Ing 2.1', 1),
-        new Ingredient('Ing 2.2', 2)]
+    new Recipe("Potato",
+               "Another test recipe",
+               "https://image.shutterstock.com/image-photo/young-potato-isolated-on-white-600w-630239534.jpg",
+               [new Ingredient("Ing 2.1", 1),
+                new Ingredient("Ing 2.2", 2)]
     )
   ];
 
@@ -37,5 +37,9 @@ export class RecipeService {
 
   addIngToList(ings: Ingredient[]) {
     this.shoppingListService.addIngrediants(ings);
+  }
+
+  getRecipe(id: number) {
+    return this.recipes[id];
   }
 }
