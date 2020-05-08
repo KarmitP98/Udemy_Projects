@@ -7,7 +7,8 @@ import { Subject } from "rxjs";
             })
 export class ShoppingListService {
 
-  ingridientsChanged = new Subject<Ingredient[]>();
+  ingredientsChanged = new Subject<Ingredient[]>();
+  startedEditing = new Subject<number>();
 
   private ingredients: Ingredient[] = [
     new Ingredient("Apples", 5),
@@ -23,7 +24,7 @@ export class ShoppingListService {
 
   addIngredient(ing: Ingredient) {
     this.ingredients.push(ing);
-    this.ingridientsChanged.next(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 
   addIngrediants(ings: Ingredient[]) {
@@ -32,6 +33,20 @@ export class ShoppingListService {
     // }  TOO MANY EMITS
 
     this.ingredients.push(...ings); // ... is spread operator same as Array.asList();
-    this.ingridientsChanged.next(this.ingredients.slice());
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
+  getIngredient(i: number): Ingredient {
+    return this.ingredients[i];
+  }
+
+  updateIngredient(i: number, newIng: Ingredient) {
+    this.ingredients[i] = newIng;
+    this.ingredientsChanged.next(this.ingredients.slice());
+  }
+
+  removeIngredient(i: number) {
+    this.ingredients.splice(i, 1);
+    this.ingredientsChanged.next(this.ingredients.slice());
   }
 }

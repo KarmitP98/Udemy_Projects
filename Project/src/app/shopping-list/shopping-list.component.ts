@@ -23,7 +23,7 @@ export class ShoppingListComponent
 
   ngOnInit() {
     this.ingredients = this.shoppingListService.getIngredients();
-    this.sub = this.shoppingListService.ingridientsChanged.subscribe(
+    this.sub = this.shoppingListService.ingredientsChanged.subscribe(
       (ing: Ingredient[]) => {
         this.ingredients = ing;
       }
@@ -31,4 +31,7 @@ export class ShoppingListComponent
   }
 
 
+  onEditItem(i: number): void {
+    this.shoppingListService.startedEditing.next(i);
+  }
 }
