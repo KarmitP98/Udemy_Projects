@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersService } from "../../services/users.service";
+import { Component, OnInit } from "@angular/core";
+import { UserService } from "../../services/user.service";
 
 @Component( {
-              selector: 'app-dashboard-page',
-              templateUrl: './dashboard-page.component.html',
-              styleUrls: [ './dashboard-page.component.css' ]
+              selector: "app-dashboard-page",
+              templateUrl: "./dashboard-page.component.html",
+              styleUrls: [ "./dashboard-page.component.css" ]
             } )
 export class DashboardPageComponent implements OnInit {
 
-  constructor( public usersService: UsersService ) { }
+  constructor( public usersService: UserService ) { }
 
   ngOnInit() {
   }

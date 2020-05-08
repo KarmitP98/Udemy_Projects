@@ -1,23 +1,34 @@
-import { Component, OnInit } from '@angular/core';
-import { UsersService } from "../../services/users.service";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { UserService } from "../../services/user.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { NgForm } from "@angular/forms";
 
 @Component( {
-              selector: 'app-login-page',
-              templateUrl: './login-page.component.html',
-              styleUrls: [ './login-page.component.css' ]
+              selector: "app-login-page",
+              templateUrl: "./login-page.component.html",
+              styleUrls: [ "./login-page.component.css" ]
             } )
 export class LoginPageComponent implements OnInit {
 
-  constructor( private usersService: UsersService, private router: Router, private route: ActivatedRoute ) { }
+  @ViewChild( "form", { static: false } ) loginForm: NgForm;
+
+  constructor( private usersService: UserService,
+               private router: Router,
+               private route: ActivatedRoute ) { }
 
   ngOnInit() {
     console.log( "Login-page created." );
   }
 
-  login( id: number ): void {
-    this.usersService.login( id );
-    console.log( "User clicked login." );
-    this.router.navigate( [ '/dashboard' ] );
+  onSubmit(): void {
+    let loggedIn: boolean;
+    loggedIn = this.usersService.login( this.loginForm.value.email, this.loginForm.value.password );
+    if ( loggedIn ) {
+      this.router.navigate( [ "/home" ] );
+    }
+  }
+
+  goTo(): void {
+    this.router.navigate( [ "/signup" ] );
   }
 }
