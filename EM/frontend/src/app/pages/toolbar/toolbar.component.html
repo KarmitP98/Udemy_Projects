@@ -1,17 +1,26 @@
-<div class = "container">
+<div style = "background: #d9534f; color: aliceblue;">
   <div class = "btn-toolbar">
-    <button [routerLink] = "['home']" class = "btn btn-danger">Home</button>
-    <button [routerLink] = "['time-sheet']" class = "btn btn-danger">Time
-                                                                     Sheet
+    <button [routerLink] = "['home']" class = "btn"
+            style = "background: #d9534f; color: aliceblue"
+            style = "background: #d9534f;">Home
     </button>
-    <button [routerLink] = "['annual-leave']" class = "btn btn-danger">Annual
-                                                                       Leave
+    <button [routerLink] = "['time-sheet']" class = "btn"
+            style = "background: #d9534f; color: aliceblue">Time
+                                                            Sheet
     </button>
-    <button [routerLink] = "['sick-leave']" class = "btn btn-danger">SickLeave
+    <button [routerLink] = "['annual-leave']" class = "btn"
+            style = "background: #d9534f; color: aliceblue">Annual
+                                                            Leave
+    </button>
+    <button [routerLink] = "['sick-leave']" class = "btn"
+            style = "background: #d9534f; color: aliceblue">SickLeave
     </button>
     <button *ngIf = "usersService.isAdmin()" [routerLink] = "['admin']"
-            class = "btn btn-danger">Admin
+            class = "btn" style = "background: #d9534f; color: aliceblue">Admin
     </button>
-    <button (click) = "onLogout()" class = "btn btn-danger">Logout</button>
+    <button (click) = "onLogout()" class = "btn"
+            style = "background: #d9534f; color: aliceblue">
+      Logout
+    </button>
   </div>
 </div>
