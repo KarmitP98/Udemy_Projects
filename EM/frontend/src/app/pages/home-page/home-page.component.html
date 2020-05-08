@@ -1,0 +1,33 @@
+<div class = "container">
+  <div class = "row">
+    <hr>
+    <button [routerLink] = "['/dashboard','time-sheet']"
+            class = "btn btn-danger">Time-Sheet
+    </button>
+    View your timesheet
+  </div>
+  <div class = "row">
+    <hr>
+    <button [routerLink] = "['/dashboard','annual-leave']"
+            class = "btn btn-danger">Annual-Leave
+    </button>
+    View your annual leaves
+    <hr>
+  </div>
+  <div class = "row">
+    <hr>
+    <button [routerLink] = "['/dashboard','sick-leave']"
+            class = "btn btn-danger">Sick-Leave
+    </button>
+    Apply for sick leave
+    <hr>
+  </div>
+  <div *ngIf = "this.usersService.isAdmin()" class = "row">
+    <hr>
+    <button [routerLink] = "['/dashboard','admin']"
+            class = "btn btn-danger">Admin
+    </button>
+    Admin Controls
+    <hr>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class = "container">
+  <div class = "btn-toolbar">
+    <button [routerLink] = "['home']" class = "btn btn-danger">Home</button>
+    <button [routerLink] = "['time-sheet']" class = "btn btn-danger">Time
+                                                                     Sheet
+    </button>
+    <button [routerLink] = "['annual-leave']" class = "btn btn-danger">Annual
+                                                                       Leave
+    </button>
+    <button [routerLink] = "['sick-leave']" class = "btn btn-danger">SickLeave
+    </button>
+    <button *ngIf = "usersService.isAdmin()" [routerLink] = "['admin']"
+            class = "btn btn-danger">Admin
+    </button>
+    <button [routerLink] = "['/login']" class = "btn btn-danger">Logout</button>
+  </div>
+</div>
