@@ -1,15 +1,27 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { DataStorageService } from "../shared/data-storage.service";
 
 @Component({
              selector : "app-header",
              templateUrl : "./header.component.html"
            })
-export class HeaderComponent {
+export class HeaderComponent
+  implements OnInit, OnDestroy {
 
-  @Output("type") featureSelected = new EventEmitter<number>();
 
-  onSelect(type: number) {
-    this.featureSelected.emit(type);
+  constructor(public dataStorageService: DataStorageService) {}
+
+  ngOnDestroy(): void {
   }
 
+  ngOnInit(): void {
+  }
+
+  onSaveRecipes() {
+    this.dataStorageService.storeRecipes();
+  }
+
+  onFetchRecipes() {
+    this.dataStorageService.fetchRecipes().subscribe();
+  }
 }
