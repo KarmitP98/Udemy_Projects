@@ -15,7 +15,8 @@ export class RecipeDetailComponent
   id: number;
   recipe: Recipe;
 
-  constructor(private recipeService: RecipeService, private shoppingListService: ShoppingListService,
+  constructor(private recipeService: RecipeService,
+              private shoppingListService: ShoppingListService,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -36,4 +37,14 @@ export class RecipeDetailComponent
   editRecipe() {
     this.router.navigate(["edit"], {relativeTo : this.route});
   }
+
+  deleteRecipe() {
+    this.recipeService.deleteRecipe(this.id);
+    this.navigateBack();
+  }
+
+  navigateBack() {
+    this.router.navigate(["../"], {relativeTo : this.route});
+  }
+
 }

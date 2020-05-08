@@ -10,16 +10,21 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <div appDropdown
-         class="btn-group ">
-      <button class="btn btn-primary dropdown-toggle" type="button">Manage Recipe
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" style="cursor: pointer">
-        <li><a (click)="addToList()">Add to List</a></li>
-        <li><a (click)="editRecipe()">Edit Recipe</a></li>
-        <li><a>Delete Recipe</a></li>
-      </ul>
+    <!--    <div appDropdown-->
+    <!--         class="btn-group ">-->
+    <!--      <button class="btn btn-primary dropdown-toggle" type="button">Manage Recipe-->
+    <!--        <span class="caret"></span>-->
+    <!--      </button>-->
+    <!--      <ul class="dropdown-menu" style="cursor: pointer">-->
+    <!--        <li><a (click)="addToList()">Add to List</a></li>-->
+    <!--        <li><a (click)="editRecipe()">Edit Recipe</a></li>-->
+    <!--        <li><a>Delete Recipe</a></li>-->
+    <!--      </ul>-->
+    <!--    </div>-->
+    <div class="btn-toolbar">
+      <button (click)="addToList()" class="btn btn-success">Add to List</button>
+      <button (click)="editRecipe()" class="btn btn-warning">Edit Recipe</button>
+      <button (click)="deleteRecipe()" class="btn btn-danger">Delete Recipe</button>
     </div>
   </div>
 </div>
