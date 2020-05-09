@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { UserService } from "../../services/user.service";
-import { User } from "../../user/user.module";
 
 @Component( {
               selector: "app-signup",
@@ -12,6 +11,7 @@ import { User } from "../../user/user.module";
 export class SignupComponent implements OnInit {
 
   @ViewChild( "form", { static: false } ) signupForm: NgForm;
+  admin: boolean;
 
   constructor( private router: Router,
                private userService: UserService ) { }
@@ -21,8 +21,7 @@ export class SignupComponent implements OnInit {
 
   onSubmit(): void {
     const value = this.signupForm.value;
-    const newUser = new User( value.name, value.password, 3, value.email, true, false );
-    this.userService.addUser( newUser );
+    this.userService.addUser( value.name, value.password, value.gender, value.email, this.admin );
     this.userService.login( value.email, value.password );
     this.router.navigate( [ "/home" ] );
   }

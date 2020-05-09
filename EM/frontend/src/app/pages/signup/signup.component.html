@@ -4,6 +4,15 @@
       <h3>Sign Up Form</h3>
       <form #form = "ngForm" (ngSubmit) = "onSubmit()">
         <div class = "form-group">
+          <label for = "gender">Abreviation</label>
+          <select #gender [ngModel] = "['Mr.']" class = "form-control"
+                  id = "gender" name = "gender" required>
+            <option value = "Mr.">Mr.</option>
+            <option value = "Mrs.">Mrs.</option>
+            <option value = "Miss">Ms</option>
+          </select>
+        </div>
+        <div class = "form-group">
           <label for = "name">Name</label>
           <input #name class = "form-control" id = "name" name = "name"
                  ngModel required type = "text">
@@ -21,7 +30,11 @@
                  name = "password"
                  ngModel required type = "password">
         </div>
-
+        <div class = "form-group">
+          <label for = "admin">Admin?</label>
+          <input [(ngModel)] = "admin" class = "checkbox"
+                 id = "admin" name = "admin" type = "checkbox">
+        </div>
         <div class = "form-group">
           <button [disabled] = "!form.valid" class = "btn btn-success"
                   type = "submit">Sign Up

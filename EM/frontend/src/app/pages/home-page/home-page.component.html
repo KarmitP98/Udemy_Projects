@@ -1,30 +1,36 @@
 <div class = "container">
-  <div class = "row">
-    <hr>
-    <button [routerLink] = "['/time-sheet']"
-            class = "btn btn-danger">Time-Sheet
-    </button>
-    View your timesheet
-  </div>
-  <div class = "row">
-    <hr>
-    <button [routerLink] = "['/annual-leave']"
-            class = "btn btn-danger">Annual-Leave
-    </button>
-    View your annual leaves
-  </div>
-  <div class = "row">
-    <hr>
-    <button [routerLink] = "['/sick-leave']"
-            class = "btn btn-danger">Sick-Leave
-    </button>
-    Apply for sick leave
-  </div>
-  <div *ngIf = "this.usersService.isAdmin()" class = "row">
-    <hr>
-    <button [routerLink] = "['/admin']"
-            class = "btn btn-danger">Admin
-    </button>
-    Admin Controls
+  <div class = "col-xs-4">
+    <div class = "row">
+      <br><br><br>
+      <h4>Welcome {{ usersService.crtUser.name }}</h4>
+    </div>
+    <div class = "row">
+      <hr>
+      <button [routerLink] = "['/time-sheet']"
+              class = "btn btn-danger">Time-Sheet
+      </button>
+      View your timesheet
+    </div>
+    <div class = "row">
+      <hr>
+      <button [routerLink] = "['/annual-leave']"
+              class = "btn btn-danger">Annual-Leave
+      </button>
+      View your annual leaves
+    </div>
+    <div class = "row">
+      <hr>
+      <button [routerLink] = "['/sick-leave']"
+              class = "btn btn-danger">Sick-Leave
+      </button>
+      Apply for sick leave
+    </div>
+    <div *ngIf = "this.usersService.isAdmin()" class = "row">
+      <hr>
+      <button [routerLink] = "['/admin']"
+              class = "btn btn-danger">Admin
+      </button>
+      Admin Controls
+    </div>
   </div>
 </div>

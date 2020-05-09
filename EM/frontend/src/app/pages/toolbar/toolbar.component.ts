@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "../../services/user.service";
 import { Router } from "@angular/router";
+import { DataStorageService } from "../../services/data-storage.service";
 
 @Component( {
               selector: "app-toolbar",
@@ -10,15 +11,17 @@ import { Router } from "@angular/router";
 export class ToolbarComponent implements OnInit {
 
   constructor( public usersService: UserService,
-               private router: Router ) { }
+               private router: Router,
+               private dataStorageService: DataStorageService ) { }
 
   ngOnInit() {
-    console.log(
-      "Toolbar Created!\nIs user admin? " + this.usersService.isAdmin() );
   }
 
   onLogout(): void {
     this.usersService.logout();
-    this.router.navigate( [ "/login" ] );
+    this.dataStorageService.saveEmployeeInfo();
+    setTimeout( () => {
+      this.router.navigate( [ "/login" ] );
+    }, 1000 );
   }
 }

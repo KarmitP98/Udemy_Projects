@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { UserService } from "../../services/user.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
+import { DataStorageService } from "../../services/data-storage.service";
 
 @Component( {
               selector: "app-login-page",
@@ -14,10 +15,10 @@ export class LoginPageComponent implements OnInit {
 
   constructor( private usersService: UserService,
                private router: Router,
-               private route: ActivatedRoute ) { }
+               private dataStorageService: DataStorageService ) { }
 
   ngOnInit() {
-    console.log( "Login-page created." );
+    this.dataStorageService.fetchEmployeeInfo();
   }
 
   onSubmit(): void {
@@ -30,5 +31,17 @@ export class LoginPageComponent implements OnInit {
 
   goTo(): void {
     this.router.navigate( [ "/signup" ] );
+  }
+
+  autoLogin( admin: boolean ): void {
+    let loggedIn: boolean;
+    if ( admin ) {
+      loggedIn = this.usersService.login( "admin1@admin.com", "admin1" );
+    } else {
+      loggedIn = this.usersService.login( "test1@test.com", "test1" );
+    }
+    if ( loggedIn ) {
+      this.router.navigate( [ "/home" ] );
+    }
   }
 }

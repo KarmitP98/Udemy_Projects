@@ -16,6 +16,10 @@ import { SignupComponent } from "./pages/signup/signup.component";
 import { UserService } from "./services/user.service";
 import { LoginGaurdService } from "./services/login-gaurd.service";
 import { AdminService } from "./services/admin.service";
+import { LeaveReqComponent } from "./pages/admin-page/leave-req/leave-req.component";
+import { AdminReqComponent } from "./pages/admin-page/admin-req/admin-req.component";
+import { TimeReqComponent } from "./pages/admin-page/time-req/time-req.component";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule( {
              declarations: [
@@ -28,12 +32,16 @@ import { AdminService } from "./services/admin.service";
                DashboardPageComponent,
                ToolbarComponent,
                TimesheetPageComponent,
-               SignupComponent
+               SignupComponent,
+               LeaveReqComponent,
+               AdminReqComponent,
+               TimeReqComponent
              ],
              imports: [
                BrowserModule,
                AppRoutingModule,
-               FormsModule
+               FormsModule,
+               HttpClientModule
              ],
              providers: [ UserService, LoginGaurdService, AdminService ],
              bootstrap: [ AppComponent ]
