@@ -15,11 +15,11 @@ export class User {
     public leaves: Leave[]
   ) {}
 
-  addLeave( leave: Leave ) {
+  addLeave( leave: Leave ): void {
     this.leaves.push( leave );
   }
 
-  addTimeSheet( sheet: TimeSheet ) {
+  addTimeSheet( sheet: TimeSheet ): void {
     this.timeSheets.push( sheet );
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { UserService } from "./user.service";
 import { User } from "../user/user.model";
-import { tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 
 @Injectable( {
                providedIn: "root"
@@ -31,6 +31,13 @@ export class DataStorageService {
           this.userService.setUsers( users );
         }
       }
-    ) ).subscribe();
+    ), map( users => {
+      return users.map( user => {
+        return {
+          ...user.leaves = user.leaves ? user.leaves : [],
+          ...user.timeSheets = user.timeSheets ? user.timeSheets : []
+        };
+      } );
+    } ) ).subscribe();
   }
 }

@@ -94,16 +94,16 @@ export class UserService {
   }
 
   // Adds a leave request for the current user
-  addLeave( startDate: Date, endDate: Date, reason: string ) {
+  addLeave( startDate: Date, endDate: Date, reason: string ): void {
     const leave = new Leave( ++this.leaveId, this.empId, startDate, endDate, "Pending", reason );
-    this.users[this.empId].addLeave( leave );
+    this.getLeaves().push( leave );
     this.usersChanged.next( this.users.slice() );
   }
 
   // Logs timer for the current user
-  logTime( task: string, date: Date, time: number ) {
+  logTime( task: string, date: Date, time: number ): void {
     const timeSheet = new TimeSheet( this.empId, this.users[this.empId].name, task, date, time, "Pending", ++this.timeSheetId );
-    this.users[this.empId].addTimeSheet( timeSheet );
+    this.getTimeSheets().push( timeSheet );
     this.usersChanged.next( this.users.slice() );
   }
 
