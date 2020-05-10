@@ -29,7 +29,9 @@ export class AuthComponent
   }
 
   ngOnDestroy(): void {
-    this.alertSub.unsubscribe();
+    if (this.alertSub) {
+      this.alertSub.unsubscribe();
+    }
   }
 
   onSwitchMode(): void {
@@ -83,9 +85,8 @@ export class AuthComponent
     const compRef = hostViewCont.createComponent(alertCmpFact);
     compRef.instance.alertMessage = errorMsg;
     this.alertSub = compRef.instance.close.subscribe(() => {
-      this.alertSub.unsubscribe();
       hostViewCont.clear();
-      this.ngOnDestroy();
+      this.alertSub.unsubscribe();
     });
   }
 }
