@@ -114,7 +114,14 @@ export class AuthService {
     switch (errRes.error.error.message) {
       case "EMAIL_EXISTS":
         errorMsg = "The email exists";
+        break;
+      case "EMAIL_NOT_FOUND":
+        errorMsg = "This email is invald";
+        break;
+      case "INVALID_PASSWORD":
+        errorMsg = "Pasword is incorrect";
+        break;
     }
-    return throwError(errRes.error.error.message.toLowerCase());
+    return throwError(errorMsg);
   }
 }

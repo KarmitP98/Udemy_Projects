@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { AuthResponseData, AuthService } from "./auth.service";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { Router } from "@angular/router";
+import { AlertComponent } from "../shared/alert/alert.component";
+import { PlaceholderDirective } from "../shared/placeholder.directive";
 
 @Component({
              selector : "app-auth",
@@ -10,17 +12,24 @@ import { Router } from "@angular/router";
              styleUrls : ["./auth.component.css"]
            })
 export class AuthComponent
-  implements OnInit {
+  implements OnInit, OnDestroy {
 
   isLoginMode = true;
   isLoading = false;
   error: string = null;
   @ViewChild("f") form: NgForm;
+  @ViewChild(PlaceholderDirective, {static : false}) alertHost: PlaceholderDirective;
+  alertSub: Subscription;
 
   constructor(private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.alertSub.unsubscribe();
   }
 
   onSwitchMode(): void {
@@ -51,10 +60,32 @@ export class AuthComponent
       this.router.navigate(["./recipes"]);
     }, errorMsg => {
       console.log(errorMsg);
-      this.error = errorMsg;
+      this.error = errorMsg;  // Not necessary since we are passing it to the method
+      this.showErrorAlert(errorMsg);
       this.isLoading = false;
     });
 
     this.form.reset();
+  }
+
+  onHandleError() {
+    this.error = null;
+  }
+
+  private showErrorAlert(errorMsg: string) {
+    // const alertComponent = new AlertComponent(); THIS IS INVALID
+
+    // This method will return a component factory (Not the object)
+    const alertCmpFact = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+    const hostViewCont = this.alertHost.viewContainerRef;
+    hostViewCont.clear();
+
+    const compRef = hostViewCont.createComponent(alertCmpFact);
+    compRef.instance.alertMessage = errorMsg;
+    this.alertSub = compRef.instance.close.subscribe(() => {
+      this.alertSub.unsubscribe();
+      hostViewCont.clear();
+      this.ngOnDestroy();
+    });
   }
 }
