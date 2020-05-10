@@ -20,8 +20,6 @@ export class ToolbarComponent implements OnInit {
   onLogout(): void {
     this.usersService.logout();
     this.dataStorageService.saveEmployeeInfo();
-    setTimeout( () => {
-      this.router.navigate( [ "/login" ] );
-    }, 1000 );
+    this.router.navigate( [ "/login" ] );
   }
 }

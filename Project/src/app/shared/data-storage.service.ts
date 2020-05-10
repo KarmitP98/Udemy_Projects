@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Recipe } from "../recipes/recipe.model";
 import { RecipeService } from "../recipes/recipe.service";
 import { map, tap } from "rxjs/operators";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable({
               providedIn : "root"
@@ -12,7 +13,8 @@ export class DataStorageService {
   serverUrl = "https://recipe-book-a3620.firebaseio.com/recipes.json";
 
   constructor(private http: HttpClient,
-              private recipeService: RecipeService) {}
+              private recipeService: RecipeService,
+              private authService: AuthService) {}
 
 
   storeRecipes() {
@@ -23,6 +25,9 @@ export class DataStorageService {
   }
 
   fetchRecipes() {
+
+    // This means take the value ones and unsubscribe
+
     return this.http.get<Recipe[]>(this.serverUrl).pipe(
       tap(recipes => {
         console.log(recipes);

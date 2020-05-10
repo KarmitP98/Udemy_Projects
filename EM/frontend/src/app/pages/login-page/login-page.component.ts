@@ -18,7 +18,9 @@ export class LoginPageComponent implements OnInit {
                private dataStorageService: DataStorageService ) { }
 
   ngOnInit() {
-    this.dataStorageService.fetchEmployeeInfo();
+    setTimeout( () => {
+      this.dataStorageService.fetchEmployeeInfo();
+    }, 500 );
   }
 
   onSubmit(): void {
