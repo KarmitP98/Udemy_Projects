@@ -7,7 +7,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { SharedModule } from "../shared/shared.module";
 
 const routes: Routes = [
-  {path : "shopping-list", component : ShoppingListComponent}];
+  {path : "", component : ShoppingListComponent}];
 
 @NgModule({
             declarations : [
@@ -23,5 +23,7 @@ const routes: Routes = [
               ShoppingListComponent,
               ShoppingEditComponent,
               RouterModule]
+            // providers : [LoggingService]
+            // This provides a seperate instance for the shopping list components
           })
 export class ShoppingListModule {}
