@@ -40,14 +40,28 @@ export class EmployeeService {
     const emp = new Employee( empId, abv, name, email, isAdmin, ADMIN_STATUS.pending );
     this.employees.push( emp );
     this.employeeChanged.next( this.employees );
-    this.storeEmployee();
+    this.storeEmployees();
   }
 
-  fetchEmployee() {
+  changeAdminStatus( name: string, response: string ) {
+    const isAdmin = response === ADMIN_STATUS.approved;
+    if ( this.employees ) {
+      for ( let emp of this.employees ) {
+        if ( emp._userName === name ) {
+          emp.isAdmin = isAdmin;
+          emp._adminStatus = response;
+        }
+      }
+    }
+    this.employeeChanged.next( this.employees );
+    this.storeEmployees();
+  }
+
+  fetchEmployees() {
     this.http.get<Employee[]>( this.employeeServerUrl ).pipe( tap( emps => {this.setEmployees( emps );} ) ).subscribe();
   }
 
-  storeEmployee() {
+  storeEmployees() {
     const emps = this.getEmployees();
     this.http.put<Employee[]>( this.employeeServerUrl, emps ).subscribe();
   }
