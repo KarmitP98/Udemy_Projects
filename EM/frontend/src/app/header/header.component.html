@@ -1,0 +1,32 @@
+<nav class = "navbar navbar-default">
+  <div class = "conatiner-fluid">
+    <div class = "navbar-header">
+      <a class = "navbar-brand">ABC Company</a>
+    </div>
+
+    <div class = "collapse navbar-collapse">
+      <ul class = "nav navbar-nav">
+        <li
+          routerLinkActive = "active"><a [routerLink] = "['/home']">Home</a>
+        </li>
+        <li routerLinkActive = "active"><a [routerLink] = "['/time-sheet']">Time
+                                                                            -sheet</a>
+        </li>
+        <li routerLinkActive = "active"><a
+          [routerLink] = "['/annual-leave']">Annual
+                                             Leaves</a></li>
+        <li routerLinkActive = "active"><a *ngIf = "isAdmin"
+                                           [routerLink] = "['/admin']">Admin
+        </a></li>
+      </ul>
+      <ul>
+        <li>
+          <a (click) = "onLogout()" *ngIf = "isAuth"
+             style = "cursor:pointer;">Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</nav>

@@ -16,8 +16,7 @@ const routes: Routes = [
               HttpClientModule,
               SharedModule,
               RouterModule.forChild(routes),
-              FormsModule,
-              HttpClientModule
+              FormsModule
             ],
             exports : [RouterModule,
                        CommonModule
