@@ -1,37 +1,54 @@
 import { Injectable } from "@angular/core";
-import { Employee } from "./model/user-model.model";
+import { Employee } from "./model/employee.model";
 import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
+
+
+export enum ADMIN_STATUS {
+  pending = "Pending",
+  approved = "Approved",
+  declined = "Declined"
+}
 
 @Injectable( {
                providedIn: "root"
              } )
 export class EmployeeService {
 
-  userChanged = new Subject<Employee[]>();
-  userServerUrl = "https://employee-managment-f5252.firebaseio.com/users.json";
-  private users: Employee[] = [];
+  employeeChanged = new Subject<Employee[]>();
+  employeeServerUrl = "https://employee-managment-f5252.firebaseio.com/employees.json";
+  private employees: Employee[] = [];
 
   constructor( private http: HttpClient ) { }
 
-  getUser() {
-    return this.users;
+  getEmployees() {
+    return this.employees;
   }
 
-  setUsers( users: Employee[] ): void {
-    this.users = users;
-    this.userChanged.next( this.users );
+  setEmployees( emps: Employee[] ): void {
+    this.employees = emps;
+    this.employeeChanged.next( this.employees );
   }
 
-  addUser( abv: string, name: string )
+  // Add am employee to the array of employees and store it on the server
+  // NOTE: This method will mostly never be called since we will be storing or retreving data when we signup or logout only.
 
-  fetchUsers() {
-    return this.http.get<Employee[]>( this.userServerUrl ).pipe( tap( users => {this.setUsers( users );} ) ).subscribe();
+  addEmployee( abv: string, name: string, email: string, isAdmin: boolean, adminStatus: string ) {
+    const empId = this.employees ? this.employees.length : 0;
+    const admin = adminStatus !== (ADMIN_STATUS.pending || ADMIN_STATUS.declined);
+    const emp = new Employee( empId, abv, name, email, isAdmin, ADMIN_STATUS.pending );
+    this.employees.push( emp );
+    this.employeeChanged.next( this.employees );
+    this.storeEmployee();
   }
 
-  storeUser() {
-    const users = this.getUser();
-    return this.http.put<Employee[]>( this.userServerUrl, users ).subscribe();
+  fetchEmployee() {
+    this.http.get<Employee[]>( this.employeeServerUrl ).pipe( tap( emps => {this.setEmployees( emps );} ) ).subscribe();
+  }
+
+  storeEmployee() {
+    const emps = this.getEmployees();
+    this.http.put<Employee[]>( this.employeeServerUrl, emps ).subscribe();
   }
 }

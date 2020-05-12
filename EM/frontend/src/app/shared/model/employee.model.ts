@@ -4,7 +4,17 @@ export class Employee {
                public _abv: string,
                public _userName: string,
                public _userEmail: string,
-               public _isAdmin: boolean ) {}
+               public _isAdmin: boolean,
+               public _adminStatus: string ) {}
+
+
+  get adminStatus(): string {
+    return this._adminStatus;
+  }
+
+  set adminStatus( value: string ) {
+    this._adminStatus = value;
+  }
 
   get userId(): number {
     return this.userId;
