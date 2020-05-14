@@ -4,11 +4,21 @@ import { EmployeeService } from "../shared/employee.service";
 import { Subscription } from "rxjs";
 import { Leave } from "../shared/model/leaves.model";
 import { NgForm } from "@angular/forms";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 
 @Component( {
               selector: "app-annual-leave",
               templateUrl: "./annual-leave.component.html",
-              styleUrls: [ "./annual-leave.component.css" ]
+              styleUrls: [ "./annual-leave.component.css" ],
+              animations: [
+                trigger( "rowState", [
+                  state( "in", style( { opacity: 1, transform: "translateX(0)" } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0, transform: "translateX(-100px)" } ),
+                    animate( 300 )
+                  ] )
+                ] )
+              ]
             } )
 export class AnnualLeaveComponent implements OnInit, OnDestroy {
 
@@ -16,6 +26,7 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
   currentLeaves: Leave[] = [];
   userId: number;
   @ViewChild( "leaveForm", { static: false } ) leaveForm: NgForm;
+  state: string = "in";
 
   constructor( private leaveService: LeaveService, private employeeService: EmployeeService ) { }
 
@@ -30,7 +41,7 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
+    this.leaveSub.unsubscribe();
   }
 
   onSubmit(): void {

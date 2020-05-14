@@ -91,7 +91,7 @@ export class AppComponent {
 
   onAnimate(): void {
     this.state === "normal" ? this.state = "highlighted" : this.state = "normal";
-    this.advanceState == "normal" ? this.advanceState = "highlighted" : this.advanceState = "normal";
+    this.advanceState === "normal" ? this.advanceState = "highlighted" : this.advanceState = "normal";
   }
 
   onShrink(): void {

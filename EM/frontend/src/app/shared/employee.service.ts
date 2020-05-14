@@ -25,9 +25,6 @@ export class EmployeeService implements OnInit {
   constructor( private http: HttpClient, private router: Router ) { }
 
   ngOnInit(): void {
-    // if ( localStorage.getItem( "Employee" ) ) {
-    //   this.employeeSubject.next( JSON.parse( localStorage.getItem( "Employee" ) ) );
-    // }
   }
 
   getEmployees() {
