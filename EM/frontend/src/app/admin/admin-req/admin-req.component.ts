@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ADMIN_STATUS, EmployeeService } from "../../shared/employee.service";
 import { Employee } from "../../shared/model/employee.model";
 import { Subscription } from "rxjs";
@@ -8,7 +8,7 @@ import { Subscription } from "rxjs";
               templateUrl: "./admin-req.component.html",
               styleUrls: [ "./admin-req.component.css" ]
             } )
-export class AdminReqComponent implements OnInit {
+export class AdminReqComponent implements OnInit, OnDestroy {
 
   emps: Employee[] = [];
   userId: number;
@@ -27,6 +27,10 @@ export class AdminReqComponent implements OnInit {
       }
     } );
     this.employeeService.fetchEmployees();
+  }
+
+  ngOnDestroy(): void {
+    this.empSub.unsubscribe();
   }
 
   changeAdmin( type: boolean, emp: Employee ): void {

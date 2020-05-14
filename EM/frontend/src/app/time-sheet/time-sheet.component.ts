@@ -40,6 +40,5 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
                                         this.timeForm.value.endTime, "Pending",
                                         this.timeForm.value.work );
     this.timeForm.reset();
-    this.currentTimeSheets = this.timeSheetService.timeSheetSubject.getValue();
   }
 }

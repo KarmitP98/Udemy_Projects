@@ -42,19 +42,19 @@ import { trigger, state, style, transition, animate, keyframes, group } from "@a
                     animate( 500 )
                   ] )
                 ] ),
-                trigger( "list1", [
-                  state( "in", style( {
-                                        opacity: 1,
-                                        transform: "translateX(0)"
-                                      } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0, transform: "translateX(-100px)" } ),
-                    animate( 1000 )
+                  trigger( "list1", [
+                    state( "in", style( {
+                                          opacity: 1,
+                                          transform: "translateX(0)"
+                                        } ) ),
+                    transition( "void => *", [
+                      style( { opacity: 0, transform: "translateX(-100px)" } ),
+                      animate( 1000 )
+                    ] ),
+                    transition( "* => void", [
+                      animate( 300, style( { transform: "translateX(100px)" } ) )
+                    ] )
                   ] ),
-                  transition( "* => void", [
-                    animate( 300, style( { transform: "translateX(100px)" } ) )
-                  ] )
-                ] ),
                 trigger( "list2", [
                   state( "in", style( {
                                         opacity: 1,

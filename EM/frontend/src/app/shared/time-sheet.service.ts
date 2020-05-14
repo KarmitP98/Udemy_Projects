@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TimeSheet } from "./model/time-sheet";
-import { BehaviorSubject, Subject, Subscription } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { tap } from "rxjs/operators";
 import { EmployeeService } from "./employee.service";
 
@@ -10,7 +10,7 @@ import { EmployeeService } from "./employee.service";
              } )
 export class TimeSheetService {
 
-  timeSheetSubject = new BehaviorSubject<TimeSheet[]>( null );
+  timeSheetSubject = new Subject<TimeSheet[]>();
   timeSheetUrl = "https://employee-managment-f5252.firebaseio.com/time-sheets.json";
   private timeSheets: TimeSheet[] = [];
   empSub: Subscription;

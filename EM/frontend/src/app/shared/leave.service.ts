@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Leave } from "./model/leaves.model";
-import { BehaviorSubject, Subject } from "rxjs";
+import { Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { ADMIN_STATUS, EmployeeService } from "./employee.service";
@@ -11,7 +11,7 @@ import { ADMIN_STATUS, EmployeeService } from "./employee.service";
 export class LeaveService {
 
   leavesChanged = new Subject<Leave[]>();
-  leaveSubject = new BehaviorSubject<Leave[]>( null );
+  leaveSubject = new Subject<Leave[]>();
   leaveServerUrl = "https://employee-managment-f5252.firebaseio.com/leaves.json";
   private leaves: Leave[] = [];
   userId: number;
