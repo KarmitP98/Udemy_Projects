@@ -12,7 +12,7 @@
         <label for = "work">Work</label>
         <input class = "form-control" id = "work" name = "work" ngModel
                placeholder = "Excel Entries, Inventory Control, etc..."
-               type = "text">
+               [value] = "'Default Work'" type = "text">
       </div>
       <div class = "group-form">
         <label for = "startTime">Start Time</label>
@@ -28,10 +28,12 @@
       </div>
       <hr>
       <div class = "group-form">
-        <button class = "btn btn-default" type = "submit">Add Time-Sheet
-        </button>
-        ||
-        <button class = "btn btn-default" type = "button">Clear Form</button>
+        <div class = "btn-toolbar">
+          <button [disabled] = "!timeForm.valid" class = "btn btn-default"
+                  type = "submit">Add Time-Sheet
+          </button>
+          <button class = "btn btn-default" type = "button">Clear Form</button>
+        </div>
       </div>
     </form>
   </div>
@@ -39,7 +41,7 @@
 <hr>
 <div *ngIf = "currentTimeSheets">
   <table class = "table-responsive">
-    <tr class = "table-bordered">
+    <tr>
       <th class = "col-lg-1 text-center">User Id</th>
       <th class = "col-lg-1 text-center">Date</th>
       <th class = "col-lg-1 text-center">Work</th>
@@ -48,7 +50,8 @@
       <th class = "col-lg-1 text-center">Status</th>
       <th class = "col-lg-1 text-center">Time Sheet Id</th>
     </tr>
-    <tr *ngFor = "let curSheets of currentTimeSheets" class = "table-bordered">
+    <br>
+    <tr *ngFor = "let curSheets of currentTimeSheets">
       <td class = "col-lg-1 text-center">{{ userId }}</td>
       <td class = "col-lg-1 text-center">{{ curSheets.logDate }}</td>
       <td class = "col-lg-1 text-center">{{ curSheets.work }}</td>
