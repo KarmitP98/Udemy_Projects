@@ -11,6 +11,9 @@ import { HomeComponent } from "./home/home.component";
 import { TimeSheetComponent } from "./time-sheet/time-sheet.component";
 import { AnnualLeaveComponent } from "./annual-leave/annual-leave.component";
 import { AdminComponent } from "./admin/admin.component";
+import { TimeReqComponent } from "./admin/time-req/time-req.component";
+import { LeaveReqComponent } from "./admin/leave-req/leave-req.component";
+import { AdminReqComponent } from "./admin/admin-req/admin-req.component";
 
 @NgModule( {
              declarations: [
@@ -20,7 +23,10 @@ import { AdminComponent } from "./admin/admin.component";
                HomeComponent,
                TimeSheetComponent,
                AnnualLeaveComponent,
-               AdminComponent
+               AdminComponent,
+               TimeReqComponent,
+               LeaveReqComponent,
+               AdminReqComponent
 
              ],
              imports: [

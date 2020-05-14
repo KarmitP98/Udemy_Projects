@@ -1,1 +1,34 @@
-<p>admin works!</p>
+<div class = "container">
+  <div class = "row">
+    <div class = "col-xs-12 col-md-6 col-lg-offset-3">
+      <hr>
+      <div class = "text-center">
+        <button class = "btn btn-default" routerLink = "/admin/time-req"
+                routerLinkActive = "active">View
+                                            Time-Sheet
+                                            Requests
+        </button>
+        ||
+        <button class = "btn btn-default" routerLink = "/admin/leave-req"
+                routerLinkActive = "active">View
+                                            Leave
+                                            Requests
+        </button>
+        ||
+        <button class = "btn btn-default" routerLink = "/admin/admin-req"
+                routerLinkActive = "active">View
+                                            Admin
+                                            Requests
+        </button>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <hr>
+  <br><br>
+  <div class = "row">
+    <div class = "col-xs-12">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
