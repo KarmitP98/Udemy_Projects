@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Employee } from "./model/employee.model";
-import { Subject } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
 
 
 export enum ADMIN_STATUS {
@@ -16,11 +17,12 @@ export enum ADMIN_STATUS {
              } )
 export class EmployeeService {
 
-  employeeChanged = new Subject<Employee[]>();
+  employeeChanged = new BehaviorSubject<Employee>( null );
   employeeServerUrl = "https://employee-managment-f5252.firebaseio.com/employees.json";
   private employees: Employee[] = [];
+  employee = new BehaviorSubject<Employee>( null );
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient, private router: Router ) { }
 
   getEmployees() {
     return this.employees;
@@ -28,18 +30,15 @@ export class EmployeeService {
 
   setEmployees( emps: Employee[] ): void {
     this.employees = emps;
-    this.employeeChanged.next( this.employees );
   }
 
   // Add am employee to the array of employees and store it on the server
   // NOTE: This method will mostly never be called since we will be storing or retreving data when we signup or logout only.
 
-  addEmployee( abv: string, name: string, email: string, isAdmin: boolean, adminStatus: string ) {
+  addEmployee( abv: string, name: string, email: string, isAdmin: boolean, adminStatus: string, password: string ) {
     const empId = this.employees ? this.employees.length : 0;
-    const admin = adminStatus !== (ADMIN_STATUS.pending || ADMIN_STATUS.declined);
-    const emp = new Employee( empId, abv, name, email, isAdmin, ADMIN_STATUS.pending );
+    const emp = new Employee( empId, abv, name, email, isAdmin, adminStatus, password );
     this.employees.push( emp );
-    this.employeeChanged.next( this.employees );
     this.storeEmployees();
   }
 
@@ -47,22 +46,78 @@ export class EmployeeService {
     const isAdmin = response === ADMIN_STATUS.approved;
     if ( this.employees ) {
       for ( let emp of this.employees ) {
-        if ( emp._userName === name ) {
-          emp.isAdmin = isAdmin;
-          emp._adminStatus = response;
+        if ( emp !== null ) {
+          if ( emp.userName === name ) {
+            emp.isAdmin = isAdmin;
+            emp.adminStatus = response;
+          }
         }
       }
     }
-    this.employeeChanged.next( this.employees );
     this.storeEmployees();
   }
 
+  // Fetch the employee data from Server
   fetchEmployees() {
-    this.http.get<Employee[]>( this.employeeServerUrl ).pipe( tap( emps => {this.setEmployees( emps );} ) ).subscribe();
+    this.http.get<Employee[]>( this.employeeServerUrl ).pipe( tap( emps => {
+      console.log( emps );
+      if ( emps ) {
+        this.setEmployees( emps );
+      }
+    } ) ).subscribe();
   }
 
+  // Store employee data to the server
   storeEmployees() {
     const emps = this.getEmployees();
     this.http.put<Employee[]>( this.employeeServerUrl, emps ).subscribe();
+  }
+
+  login( email: string, password: string ) {
+    if ( this.doesMatch( email, password ) ) {
+      this.employee.next( this.getEmployee( email, password ) );
+      setTimeout( () => {
+        this.router.navigate( [ "/home" ] );
+      }, 0 );
+    }
+  }
+
+  logout() {
+    this.storeEmployees();
+    this.employee.next( null );
+    this.router.navigate( [ "/login" ] );
+  }
+
+  signup( abv: string, name: string, email: string, password: string, isAdmin: boolean ) {
+    this.addEmployee( abv, name, email, false, isAdmin ? ADMIN_STATUS.pending : ADMIN_STATUS.declined, password );
+    setTimeout( () => {
+      this.login( email, password );
+    }, 0 );
+  }
+
+  doesMatch( email: string, password: string ): boolean {
+    console.log( "doesMatch():: " + email + ":" + password );
+    for ( let emp of this.employees ) {
+      if ( emp !== null ) {
+        if ( emp.userEmail === email && emp.password === password ) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  private getEmployee( email: string, password: string ): Employee {
+    let result: Employee = null;
+    for ( let emp of this.employees ) {
+      if ( emp !== null ) {
+        if ( emp.userEmail === email ) {
+          if ( emp.password === password ) {
+            result = emp;
+          }
+        }
+      }
+    }
+    return result;
   }
 }

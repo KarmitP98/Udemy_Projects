@@ -18,10 +18,8 @@
         <li routerLinkActive = "active"><a *ngIf = "isAdmin"
                                            [routerLink] = "['/admin']">Admin
         </a></li>
-      </ul>
-      <ul>
         <li>
-          <a (click) = "onLogout()" *ngIf = "isAuth"
+          <a (click) = "onLogout()"
              style = "cursor:pointer;">Logout
           </a>
         </li>

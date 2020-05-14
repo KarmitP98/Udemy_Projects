@@ -1,0 +1,27 @@
+<div class = "container">
+  <div class = "row">
+    <div class = "col-xs-12">
+      <hr>
+      <button [routerLink] = "['/time-sheet']" class = "btn btn-default">
+        Time-Sheet
+      </button>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "col-xs-12">
+      <hr>
+      <button [routerLink] = "['/annual-leave']" class = "btn btn-default">
+        Annual
+        Leave
+      </button>
+    </div>
+  </div>
+  <div class = "row">
+    <div class = "col-xs-12">
+      <hr>
+      <button *ngIf = "isAdmin" [routerLink] = "['/admin']"
+              class = "btn btn-default">Admin
+      </button>
+    </div>
+  </div>
+</div>

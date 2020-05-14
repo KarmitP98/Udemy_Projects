@@ -41,8 +41,8 @@ export class TimeSheetService {
 
   changeStatus( userId: number, status: string, timeSheetId: number ) {
     for ( let timesheet of this.timeSheets ) {
-      if ( timesheet._timeSheetId === timeSheetId ) {
-        timesheet._status = status;
+      if ( timesheet.timeSheetId === timeSheetId ) {
+        timesheet.status = status;
       }
     }
     this.storeTimeSheets();
