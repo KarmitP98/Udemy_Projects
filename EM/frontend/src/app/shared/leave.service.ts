@@ -25,11 +25,13 @@ export class LeaveService {
   setLeaves( leaves: Leave[] ) {
     this.leaves = leaves;
     this.leaveSubject.next( this.getCurrentLeaves() );
+    this.leavesChanged.next( this.leaves );
   }
 
   addLeave( userId: number, startDate: Date, endDate: Date, reason: string ) {
     const leaveId = this.leaves ? this.leaves.length : 0;
     this.leaves.push( new Leave( userId, leaveId, startDate, endDate, reason, ADMIN_STATUS.pending ) );
+    this.leavesChanged.next( this.getLeaves() );
     this.storeLeaves();
     this.leaveSubject.next( this.getCurrentLeaves() );
   }
@@ -45,6 +47,7 @@ export class LeaveService {
 
   storeLeaves() {
     this.http.put<Leave[]>( this.leaveServerUrl, this.getLeaves() ).subscribe();
+    this.leavesChanged.next( this.getLeaves() );
   }
 
   getCurrentLeaves() {
@@ -57,6 +60,14 @@ export class LeaveService {
       }
     }
     return temp;
+  }
+
+  changeLeaveStatus( leave: Leave, status: string ) {
+    for ( let l of this.leaves ) {
+      if ( l === leave ) {}
+      l.status = status;
+    }
+    this.storeLeaves();
   }
 
 }

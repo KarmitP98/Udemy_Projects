@@ -1,1 +1,30 @@
-<p>time-req works!</p>
+<h3 *ngIf = "timeSheets" class = "text-center">Time Requests</h3>
+<br>
+<table *ngIf = "timeSheets" class = "table-responsive">
+  <tr>
+    <th class = "col-lg-1 text-center">User Id</th>
+    <th class = "col-lg-1 text-center">Log Date</th>
+    <th class = "col-lg-1 text-center">Work</th>
+    <th class = "col-lg-1 text-center">Start Time</th>
+    <th class = "col-lg-1 text-center">End Time</th>
+    <th class = "col-lg-1 text-center">Status</th>
+    <th class = "col-lg-1 text-center">Response</th>
+  </tr>
+  <tr *ngFor = "let sheet of timeSheets; let i = index" id = "i">
+    <td class = "col-lg-1 text-center">{{sheet.userId}}</td>
+    <td class = "col-lg-1 text-center">{{sheet.logDate}}</td>
+    <td class = "col-lg-1 text-center">{{sheet.work}}</td>
+    <td class = "col-lg-1 text-center">{{sheet.startTime}}</td>
+    <td class = "col-lg-1 text-center">{{sheet.endTime}}</td>
+    <td class = "col-lg-1 text-center">{{sheet.status}}</td>
+    <td class = "col-lg-1 text-center">
+      <button (click) = "changeStatus(false,sheet)" class = "btn btn-danger"
+              style = "border-radius: 50px;">D
+      </button>
+      |
+      <button (click) = "changeStatus(true,sheet)" class = "btn btn-success"
+              style = "border-radius: 50px;">A
+      </button>
+    </td>
+  </tr>
+</table>

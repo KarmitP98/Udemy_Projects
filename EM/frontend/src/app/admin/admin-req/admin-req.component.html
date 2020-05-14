@@ -1,1 +1,37 @@
-<p>admin-req works!</p>
+<h3 *ngIf = "emps" class = "text-center">Employee List</h3>
+<br>
+<table *ngIf = "emps" class = "table-responsive">
+  <tr>
+    <th class = "col-lg-1 text-center">User Id</th>
+    <th class = "col-lg-1 text-center">Title</th>
+    <th class = "col-lg-1 text-center">Username</th>
+    <th class = "col-lg-1 text-center">User Email</th>
+    <th class = "col-lg-1 text-center">Admin?</th>
+    <th class = "col-lg-1 text-center">Admin Status</th>
+    <th class = "col-lg-1 text-center">Response</th>
+  </tr>
+  <tr *ngFor = "let emp of emps; let i = index" class = "table-responsive"
+      id = "i">
+    <td class = "col-lg-1 text-center">{{emp.userId}}</td>
+    <td class = "col-lg-1 text-center">{{emp.abv}}</td>
+    <td class = "col-lg-1 text-center">{{emp.userName}}</td>
+    <td class = "col-lg-1 text-center">{{emp.userEmail}}</td>
+    <td class = "col-lg-1 text-center">{{emp.isAdmin}}</td>
+    <td class = "col-lg-1 text-center">{{emp.adminStatus}}</td>
+    <td class = "col-lg-1 text-center">
+      <button (click) = "changeAdmin(false,emp)" class = "btn btn-danger"
+              style = "border-radius: 50px;">D
+      </button>
+      |
+      <button (click) = "changeAdmin(true,emp)" class = "btn btn-success"
+              style = "border-radius: 50px;">A
+      </button>
+    </td>
+  </tr>
+</table>
+<!--<div class = "text-center">-->
+<!--  <div class = "btn-toolbar">-->
+<!--    <button class = "btn btn-default">Approve Admin</button>-->
+<!--    <button class = "btn btn-default">Deny Admin</button>-->
+<!--  </div>-->
+<!--</div>-->

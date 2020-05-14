@@ -1,1 +1,28 @@
-<p>leave-req works!</p>
+<h3 *ngIf = "leaves" class = "text-center">Leave Requests</h3>
+<br>
+<table *ngIf = "leaves" class = "table-responsive">
+  <tr>
+    <th class = "col-lg-1 text-center">User Id</th>
+    <th class = "col-lg-1 text-center">Start Date</th>
+    <th class = "col-lg-1 text-center">End Date</th>
+    <th class = "col-lg-1 text-center">Reason</th>
+    <th class = "col-lg-1 text-center">Status</th>
+    <th class = "col-lg-1 text-center">Response</th>
+  </tr>
+  <tr *ngFor = "let leave of leaves; let i = index" id = "i">
+    <td class = "col-lg-1 text-center">{{leave.userId}}</td>
+    <td class = "col-lg-1 text-center">{{leave.startDate}}</td>
+    <td class = "col-lg-1 text-center">{{leave.endDate}}</td>
+    <td class = "col-lg-1 text-center">{{leave.reason}}</td>
+    <td class = "col-lg-1 text-center">{{leave.status}}</td>
+    <td class = "col-lg-1 text-center">
+      <button (click) = "changeStatus(false,leave)" class = "btn btn-danger"
+              style = "border-radius: 50px;">D
+      </button>
+      |
+      <button (click) = "changeStatus(true,leave)" class = "btn btn-success"
+              style = "border-radius: 50px;">A
+      </button>
+    </td>
+  </tr>
+</table>

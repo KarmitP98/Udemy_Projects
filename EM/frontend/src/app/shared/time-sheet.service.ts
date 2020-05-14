@@ -26,11 +26,13 @@ export class TimeSheetService {
   setTimeSheets( timeSheets: TimeSheet[] ) {
     this.timeSheets = timeSheets;
     this.timeSheetSubject.next( this.getCurrentTimeSheets() );
+    this.timeSheetChanged.next( this.timeSheets );
   }
 
   storeTimeSheets() {
     const timeSheets = this.getTimeSheets();
     this.http.put<TimeSheet[]>( this.timeSheetUrl, timeSheets ).subscribe();
+    this.timeSheetChanged.next( this.timeSheets );
   }
 
   fetchTimeSheets() {
@@ -48,9 +50,9 @@ export class TimeSheetService {
     this.timeSheetSubject.next( this.getCurrentTimeSheets() );
   }
 
-  changeStatus( userId: number, status: string, timeSheetId: number ) {
+  changeStatus( sheet: TimeSheet, status: string ) {
     for ( let timesheet of this.timeSheets ) {
-      if ( timesheet.timeSheetId === timeSheetId ) {
+      if ( timesheet === sheet ) {
         timesheet.status = status;
       }
     }

@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
 import { Employee } from "./model/employee.model";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { tap } from "rxjs/operators";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
@@ -15,14 +15,20 @@ export enum ADMIN_STATUS {
 @Injectable( {
                providedIn: "root"
              } )
-export class EmployeeService {
+export class EmployeeService implements OnInit {
 
-  employeeChanged = new BehaviorSubject<Employee>( null );
+  employeeChanged = new Subject<Employee[]>();
   employeeServerUrl = "https://employee-managment-f5252.firebaseio.com/employees.json";
   private employees: Employee[] = [];
   employeeSubject = new BehaviorSubject<Employee>( null );
 
   constructor( private http: HttpClient, private router: Router ) { }
+
+  ngOnInit(): void {
+    // if ( localStorage.getItem( "Employee" ) ) {
+    //   this.employeeSubject.next( JSON.parse( localStorage.getItem( "Employee" ) ) );
+    // }
+  }
 
   getEmployees() {
     return this.employees;
@@ -30,6 +36,7 @@ export class EmployeeService {
 
   setEmployees( emps: Employee[] ): void {
     this.employees = emps;
+    this.employeeChanged.next( this.employees );
   }
 
   // Add am employee to the array of employees and store it on the server
@@ -55,6 +62,7 @@ export class EmployeeService {
       }
     }
     this.storeEmployees();
+    this.employeeChanged.next( this.getEmployees().slice() );
   }
 
   // Fetch the employee data from Server
@@ -69,13 +77,13 @@ export class EmployeeService {
 
   // Store employee data to the server
   storeEmployees() {
-    const emps = this.getEmployees();
-    this.http.put<Employee[]>( this.employeeServerUrl, emps ).subscribe();
+    this.http.put<Employee[]>( this.employeeServerUrl, this.employees ).subscribe();
   }
 
   login( email: string, password: string ) {
     if ( this.doesMatch( email, password ) ) {
       this.employeeSubject.next( this.getEmployee( email, password ) );
+      // localStorage.setItem( "Employee", JSON.stringify( this.employeeSubject.getValue() ) );
       setTimeout( () => {
         this.router.navigate( [ "/home" ] );
       }, 0 );
@@ -85,6 +93,7 @@ export class EmployeeService {
   logout() {
     this.storeEmployees();
     this.employeeSubject.next( null );
+    // localStorage.removeItem( "Employee" );
     this.router.navigate( [ "/login" ] );
   }
 

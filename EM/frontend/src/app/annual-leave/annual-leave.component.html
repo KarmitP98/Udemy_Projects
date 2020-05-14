@@ -24,7 +24,8 @@
       </div>
       <div class = "form-group">
         <div class = "btn-toolbar">
-          <button class = "btn btn-default" type = "submit">Apply for Leave!
+          <button [disabled] = "!leaveForm.valid" class = "btn btn-default"
+                  type = "submit">Apply for Leave!
           </button>
           <button class = "btn btn-default" type = "button">Clear Form</button>
         </div>
@@ -45,12 +46,12 @@
     </tr>
     <br>
     <tr *ngFor = "let leave of currentLeaves">
-      <th class = "col-lg-1 text-center">{{leave.userId}}</th>
-      <th class = "col-lg-1 text-center">{{leave.startDate}}</th>
-      <th class = "col-lg-1 text-center">{{leave.endDate}}</th>
-      <th class = "col-lg-1 text-center">{{leave.reason}}</th>
-      <th class = "col-lg-1 text-center">{{leave.status}}</th>
-      <th class = "col-lg-1 text-center">{{leave.leaveId}}</th>
+      <td class = "col-lg-1 text-center">{{leave.userId}}</td>
+      <td class = "col-lg-1 text-center">{{leave.startDate}}</td>
+      <td class = "col-lg-1 text-center">{{leave.endDate}}</td>
+      <td class = "col-lg-1 text-center">{{leave.reason}}</td>
+      <td class = "col-lg-1 text-center">{{leave.status}}</td>
+      <td class = "col-lg-1 text-center">{{leave.leaveId}}</td>
     </tr>
   </table>
 </div>
