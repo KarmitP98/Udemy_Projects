@@ -20,7 +20,7 @@ export class EmployeeService {
   employeeChanged = new BehaviorSubject<Employee>( null );
   employeeServerUrl = "https://employee-managment-f5252.firebaseio.com/employees.json";
   private employees: Employee[] = [];
-  employee = new BehaviorSubject<Employee>( null );
+  employeeSubject = new BehaviorSubject<Employee>( null );
 
   constructor( private http: HttpClient, private router: Router ) { }
 
@@ -75,7 +75,7 @@ export class EmployeeService {
 
   login( email: string, password: string ) {
     if ( this.doesMatch( email, password ) ) {
-      this.employee.next( this.getEmployee( email, password ) );
+      this.employeeSubject.next( this.getEmployee( email, password ) );
       setTimeout( () => {
         this.router.navigate( [ "/home" ] );
       }, 0 );
@@ -84,7 +84,7 @@ export class EmployeeService {
 
   logout() {
     this.storeEmployees();
-    this.employee.next( null );
+    this.employeeSubject.next( null );
     this.router.navigate( [ "/login" ] );
   }
 
@@ -92,11 +92,10 @@ export class EmployeeService {
     this.addEmployee( abv, name, email, false, isAdmin ? ADMIN_STATUS.pending : ADMIN_STATUS.declined, password );
     setTimeout( () => {
       this.login( email, password );
-    }, 0 );
+    }, 500 );
   }
 
   doesMatch( email: string, password: string ): boolean {
-    console.log( "doesMatch():: " + email + ":" + password );
     for ( let emp of this.employees ) {
       if ( emp !== null ) {
         if ( emp.userEmail === email && emp.password === password ) {
@@ -119,5 +118,9 @@ export class EmployeeService {
       }
     }
     return result;
+  }
+
+  getCurrentEmployee() {
+    return this.employeeSubject.getValue();
   }
 }

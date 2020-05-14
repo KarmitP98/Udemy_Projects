@@ -5,7 +5,7 @@ export class TimeSheet {
                public startTime: Date,
                public endTime: Date,
                public status: string,
-               public time: Date,
-               public timeSheetId: number ) {}
+               public timeSheetId: number,
+               public work: string ) {}
 
 }

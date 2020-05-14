@@ -1,1 +1,61 @@
-<p>time-sheet works!</p>
+<div class = "row">
+  <div class = "col-xs-12 col-md-6 col-lg-offset-3">
+    <hr>
+    <h3>Submit a time sheet</h3>
+    <form #timeForm = "ngForm" (ngSubmit) = "onSubmit()">
+      <div class = "group-form">
+        <label for = "date">Date</label>
+        <input class = "form-control" id = "date" name = "date" ngModel required
+               type = "date">
+      </div>
+      <div class = "group-form">
+        <label for = "work">Work</label>
+        <input class = "form-control" id = "work" name = "work" ngModel
+               placeholder = "Excel Entries, Inventory Control, etc..."
+               type = "text">
+      </div>
+      <div class = "group-form">
+        <label for = "startTime">Start Time</label>
+        <input class = "form-control" id = "startTime" name = "startTime"
+               ngModel
+               placeholder = "0800" required type = "time">
+      </div>
+      <div class = "group-form">
+        <label for = "endTime">End Time</label>
+        <input class = "form-control" id = "endTime" name = "endTime" ngModel
+               placeholder = "1400"
+               required type = "time">
+      </div>
+      <hr>
+      <div class = "group-form">
+        <button class = "btn btn-default" type = "submit">Add Time-Sheet
+        </button>
+        ||
+        <button class = "btn btn-default" type = "button">Clear Form</button>
+      </div>
+    </form>
+  </div>
+</div>
+<hr>
+<div *ngIf = "currentTimeSheets">
+  <table class = "table-responsive">
+    <tr class = "table-bordered">
+      <th class = "col-lg-1 text-center">User Id</th>
+      <th class = "col-lg-1 text-center">Date</th>
+      <th class = "col-lg-1 text-center">Work</th>
+      <th class = "col-lg-1 text-center">Start Time</th>
+      <th class = "col-lg-1 text-center">End Time</th>
+      <th class = "col-lg-1 text-center">Status</th>
+      <th class = "col-lg-1 text-center">Time Sheet Id</th>
+    </tr>
+    <tr *ngFor = "let curSheets of currentTimeSheets" class = "table-bordered">
+      <td class = "col-lg-1 text-center">{{ userId }}</td>
+      <td class = "col-lg-1 text-center">{{ curSheets.logDate }}</td>
+      <td class = "col-lg-1 text-center">{{ curSheets.work }}</td>
+      <td class = "col-lg-1 text-center">{{ curSheets.startTime }}</td>
+      <td class = "col-lg-1 text-center">{{ curSheets.endTime }}</td>
+      <td class = "col-lg-1 text-center">{{ curSheets.status }}</td>
+      <td class = "col-lg-1 text-center">{{ curSheets.timeSheetId }}</td>
+    </tr>
+  </table>
+</div>

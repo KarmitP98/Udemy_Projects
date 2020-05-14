@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   companyName = "ABC Company";
   isLoginMode: boolean = true;
   @ViewChild( "f", { static: false } ) form: NgForm;
+  admin: boolean = false;
 
   constructor( private employeeService: EmployeeService, private router: Router ) { }
 
@@ -21,7 +22,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     if ( this.isLoginMode ) {
-      console.log( this.form.value.email + " " + this.form.value.password );
       const userExist = this.employeeService.doesMatch( this.form.value.email, this.form.value.password );
       if ( userExist ) {
         this.employeeService.login( this.form.value.email, this.form.value.password );
@@ -30,9 +30,9 @@ export class LoginComponent implements OnInit {
     } else {
       const userExist = this.employeeService.doesMatch( this.form.value.email, this.form.value.password );
       if ( !userExist ) {
-        console.log( "SignUp Mode" );
+        console.log( this.admin );
         this.employeeService.signup( this.form.value.abv, this.form.value.name, this.form.value.email, this.form.value.password,
-                                     this.form.value.isAdmin );
+                                     this.admin );
 
       }
     }

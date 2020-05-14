@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor( private employeeService: EmployeeService ) { }
 
   ngOnInit() {
-    this.sub = this.employeeService.employee.subscribe( value => {
+    this.sub = this.employeeService.employeeSubject.subscribe( value => {
       const isAuth = !!value;
       if ( isAuth ) {
         this.isAdmin = value.isAdmin;

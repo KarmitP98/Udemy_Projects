@@ -31,15 +31,16 @@
       </div>
       <div *ngIf = "!isLoginMode" class = "form-group">
         <label for = "isAdmin">Admin User?</label>
-        <input #admin class = "checkbox-inline" id = "isAdmin"
-               name = "isAdmin" ngModel type = "checkbox">
+        <input #ad [(ngModel)] = "admin" checked = "true" class = "checkbox"
+               id = "isAdmin"
+               name = "isAdmin" type = "checkbox">
       </div>
       <div class = "form-group">
-        <button (click) = "onSubmit()" class = "btn btn-default"
+        <button (click) = "onSubmit()" class = "btn btn-primary"
                 type = "submit">
           {{ isLoginMode ? "Login" : "Sign-up" }}</button>
         ||
-        <button (click) = "switchModes()" class = "btn btn-default"
+        <button (click) = "switchModes()" class = "btn btn-primary"
                 type = "button"> {{ isLoginMode ? "Sign-up" : "Back" }}</button>
       </div>
     </form>
