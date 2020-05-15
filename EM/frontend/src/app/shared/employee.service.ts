@@ -65,7 +65,6 @@ export class EmployeeService implements OnInit {
   // Fetch the employee data from Server
   fetchEmployees() {
     this.http.get<Employee[]>( this.employeeServerUrl ).pipe( tap( emps => {
-      console.log( emps );
       if ( emps ) {
         this.setEmployees( emps );
       }
@@ -78,19 +77,18 @@ export class EmployeeService implements OnInit {
   }
 
   login( email: string, password: string ) {
-    if ( this.doesMatch( email, password ) ) {
       this.employeeSubject.next( this.getEmployee( email, password ) );
-      // localStorage.setItem( "Employee", JSON.stringify( this.employeeSubject.getValue() ) );
-      setTimeout( () => {
-        this.router.navigate( [ "/home" ] );
-      }, 0 );
-    }
+    localStorage.setItem( "Employee", JSON.stringify( this.getCurrentEmployee() ) );
+    setTimeout( () => {
+      this.router.navigate( [ "/home" ] );
+    }, 0 );
+
   }
 
   logout() {
     this.storeEmployees();
     this.employeeSubject.next( null );
-    // localStorage.removeItem( "Employee" );
+    localStorage.removeItem( "Employee" );
     this.router.navigate( [ "/login" ] );
   }
 

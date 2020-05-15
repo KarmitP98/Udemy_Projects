@@ -1,21 +1,24 @@
 <div class = "row">
   <div class = "col-xs-12 col-md-6 col-lg-offset-3">
     <h1>Welcome to {{ companyName }}</h1>
+    <div *ngIf = "error" class = "text-center">
+      <strong style = "color: red; font-size: 24px">{{ error }}</strong>
+    </div>
     <form #f = "ngForm" (ngSubmit) = "onSubmit()">
-      <div *ngIf = "!isLoginMode" class = "form-group">
-        <label for = "abv">Title</label>
+      <div class = "form-group">
+        <label *ngIf = "!isLoginMode" for = "abv">Title</label>
         <select class = "form-control" id = "abv" name = "abv" ngModel = "Mr."
-                required>
+                *ngIf = "!isLoginMode" required>
           <option value = "Mr.">Mr.</option>
           <option value = "Mrs.">Mrs.</option>
           <option value = "Miss">Miss</option>
         </select>
       </div>
-      <div *ngIf = "!isLoginMode" class = "form-group">
-        <label for = "name">Full Name</label>
-        <input #name *ngIf = "!isLoginMode" class = "form-control" id = "name"
+      <div class = "form-group">
+        <label *ngIf = "!isLoginMode" for = "name">Full Name</label>
+        <input #name *ngIf = "!isLoginMode" class = "form-control"
                name = "name" ngModel placeholder = "Full Name"
-               required type = "text">
+               id = "name" required type = "text">
       </div>
       <div class = "form-group">
         <label for = "email">Email</label>
@@ -27,17 +30,18 @@
         <label for = "password">Password</label>
         <input #password class = "form-control" id = "password"
                name = "password"
-               ngModel placeholder = "Password" required type = "password">
+               autocomplete ngModel placeholder = "Password" required
+               type = "password">
       </div>
-      <div *ngIf = "!isLoginMode" class = "form-group">
-        <label for = "isAdmin">Admin User?</label>
+      <div class = "form-group">
+        <label *ngIf = "!isLoginMode" for = "isAdmin">Admin User?</label>
         <input #ad [(ngModel)] = "admin" checked = "true" class = "checkbox"
                id = "isAdmin"
-               name = "isAdmin" type = "checkbox">
+               *ngIf = "!isLoginMode" name = "isAdmin" type = "checkbox">
       </div>
       <div class = "form-group">
         <button (click) = "onSubmit()" class = "btn btn-primary"
-                type = "submit">
+                [disabled] = "f.invalid" type = "submit">
           {{ isLoginMode ? "Login" : "Sign-up" }}</button>
         ||
         <button (click) = "switchModes()" class = "btn btn-primary"

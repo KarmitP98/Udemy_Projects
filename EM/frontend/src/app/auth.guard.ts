@@ -4,9 +4,9 @@ import { Injectable } from "@angular/core";
 import { map, take } from "rxjs/operators";
 import { EmployeeService } from "./shared/employee.service";
 
-@Injectable({
-              providedIn : "root"
-            })
+@Injectable( {
+               providedIn: "root"
+             } )
 export class AuthGuard
   implements CanActivate {
 
@@ -14,8 +14,8 @@ export class AuthGuard
                private router: Router ) {}
 
 
-  canActivate(route: ActivatedRouteSnapshot,
-              state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate( route: ActivatedRouteSnapshot,
+               state: RouterStateSnapshot ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     // @ts-ignore
     return this.employeeService.employeeSubject.pipe( take( 1 ), map( user => {
@@ -23,7 +23,14 @@ export class AuthGuard
       if ( isAuth ) {
         return true;
       } else {
-        return this.router.navigate( [ "/login" ] );
+        if ( localStorage.getItem( "Employee" ) ) {
+          const emp = JSON.parse( localStorage.getItem( "Employee" ) );
+          this.employeeService.employeeSubject.next( emp );
+          this.employeeService.fetchEmployees();
+          return true;
+        } else {
+          return this.router.navigate( [ "/login" ] );
+        }
       }
     } ) );
 

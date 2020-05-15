@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   isLoginMode: boolean = true;
   @ViewChild( "f", { static: false } ) form: NgForm;
   admin: boolean = false;
+  error: string = "";
 
   constructor( private employeeService: EmployeeService, private router: Router ) { }
 
@@ -21,25 +22,25 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const userExist = this.employeeService.doesMatch( this.form.value.email, this.form.value.password );
     if ( this.isLoginMode ) {
-      const userExist = this.employeeService.doesMatch( this.form.value.email, this.form.value.password );
       if ( userExist ) {
         this.employeeService.login( this.form.value.email, this.form.value.password );
-        // this.router.navigate( [ "/home" ] );
+      } else {
+        this.error = "Invalid Email / Password !";
       }
     } else {
-      const userExist = this.employeeService.doesMatch( this.form.value.email, this.form.value.password );
-      if ( !userExist ) {
-        console.log( this.admin );
+      if ( userExist ) {
+        this.error = "This user already exists !";
+      } else {
         this.employeeService.signup( this.form.value.abv, this.form.value.name, this.form.value.email, this.form.value.password,
                                      this.admin );
-
       }
     }
   }
 
   switchModes(): void {
     this.isLoginMode = !this.isLoginMode;
-    console.log( this.isLoginMode );
+    this.error = null;
   }
 }
