@@ -77,28 +77,28 @@ export class EmployeeService implements OnInit {
   }
 
   login( email: string, password: string ) {
-      this.employeeSubject.next( this.getEmployee( email, password ) );
-    localStorage.setItem( "Employee", JSON.stringify( this.getCurrentEmployee() ) );
-    setTimeout( () => {
-      this.router.navigate( [ "/home" ] );
-    }, 0 );
-
+    this.employeeSubject.next( this.getEmployee( email, password ) );
+    localStorage.setItem( "Employee", JSON.stringify( this.getCurrentEmployee() ) );  // Store the current user to local storage for
+    // auto-login purposes
+    this.router.navigate( [ "/home" ] );
   }
 
   logout() {
     this.storeEmployees();
     this.employeeSubject.next( null );
-    localStorage.removeItem( "Employee" );
+    localStorage.removeItem( "Employee" );  // Clear local storage
     this.router.navigate( [ "/login" ] );
   }
 
   signup( abv: string, name: string, email: string, password: string, isAdmin: boolean ) {
-    this.addEmployee( abv, name, email, false, isAdmin ? ADMIN_STATUS.pending : ADMIN_STATUS.declined, password );
+    this.addEmployee( abv, name, email, false, isAdmin ? ADMIN_STATUS.pending : ADMIN_STATUS.declined, password );  // Add a new employee
+    // Just to make sure the employee has been added and stored on server, there is a 500 ms timer.
     setTimeout( () => {
       this.login( email, password );
     }, 500 );
   }
 
+  // Check if the employee data matches any current employee
   doesMatch( email: string, password: string ): boolean {
     for ( let emp of this.employees ) {
       if ( emp !== null ) {
@@ -110,6 +110,7 @@ export class EmployeeService implements OnInit {
     return false;
   }
 
+  // Get the employee matching the credentials
   private getEmployee( email: string, password: string ): Employee {
     let result: Employee = null;
     for ( let emp of this.employees ) {

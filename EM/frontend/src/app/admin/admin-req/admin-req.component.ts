@@ -17,6 +17,7 @@ export class AdminReqComponent implements OnInit, OnDestroy {
   constructor( private employeeService: EmployeeService ) { }
 
   ngOnInit() {
+    // Get current userId, {employess-currentEmployee}
     this.userId = this.employeeService.employeeSubject.getValue().userId;
     this.empSub = this.employeeService.employeeChanged.subscribe( value => {
       this.emps = [];
