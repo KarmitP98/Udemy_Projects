@@ -10,13 +10,15 @@
     <th class = "col-lg-1 text-center">Admin Status</th>
     <th class = "col-lg-1 text-center">Response</th>
   </tr>
-  <tr *ngFor = "let emp of emps; let i = index" class = "table-responsive"
-      id = "i">
+  <tr *ngFor = "let emp of emps; let i = index" [ngClass] = "emp.isAdmin ?
+  'approved' : 'declined'" id = "i">
     <td class = "col-lg-1 text-center">{{emp.userId}}</td>
     <td class = "col-lg-1 text-center">{{emp.abv}}</td>
     <td class = "col-lg-1 text-center">{{emp.userName}}</td>
     <td class = "col-lg-1 text-center">{{emp.userEmail}}</td>
-    <td class = "col-lg-1 text-center">{{emp.isAdmin}}</td>
+    <td
+      class = "col-lg-1 text-center">{{emp.isAdmin.toString() | titlecase}}
+    </td>
     <td class = "col-lg-1 text-center">{{emp.adminStatus}}</td>
     <td class = "col-lg-1 text-center">
       <button (click) = "changeAdmin(false,emp)" class = "btn btn-danger"

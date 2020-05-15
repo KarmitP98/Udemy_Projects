@@ -14,6 +14,7 @@ import { AdminComponent } from "./admin/admin.component";
 import { TimeReqComponent } from "./admin/time-req/time-req.component";
 import { LeaveReqComponent } from "./admin/leave-req/leave-req.component";
 import { AdminReqComponent } from "./admin/admin-req/admin-req.component";
+import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner.component";
 
 @NgModule( {
              declarations: [
@@ -26,7 +27,8 @@ import { AdminReqComponent } from "./admin/admin-req/admin-req.component";
                AdminComponent,
                TimeReqComponent,
                LeaveReqComponent,
-               AdminReqComponent
+               AdminReqComponent,
+               LoadingSpinnerComponent
 
              ],
              imports: [

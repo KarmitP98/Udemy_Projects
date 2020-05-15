@@ -21,6 +21,8 @@ export class EmployeeService implements OnInit {
   employeeServerUrl = "https://employee-managment-f5252.firebaseio.com/employees.json";
   private employees: Employee[] = [];
   employeeSubject = new BehaviorSubject<Employee>( null );
+  isLoading: boolean = false;
+  loadingSubject = new Subject<boolean>();
 
   constructor( private http: HttpClient, private router: Router ) { }
 
@@ -77,10 +79,16 @@ export class EmployeeService implements OnInit {
   }
 
   login( email: string, password: string ) {
-    this.employeeSubject.next( this.getEmployee( email, password ) );
-    localStorage.setItem( "Employee", JSON.stringify( this.getCurrentEmployee() ) );  // Store the current user to local storage for
-    // auto-login purposes
-    this.router.navigate( [ "/home" ] );
+    this.isLoading = true;
+    this.loadingSubject.next( this.isLoading );
+    setTimeout( () => {
+      this.employeeSubject.next( this.getEmployee( email, password ) );
+      localStorage.setItem( "Employee", JSON.stringify( this.getCurrentEmployee() ) );  // Store the current user to local storage for
+      // auto-login purposes
+      this.isLoading = false;
+      this.loadingSubject.next( this.isLoading );
+      this.router.navigate( [ "/home" ] );
+    }, 1000 );
   }
 
   logout() {
@@ -93,9 +101,7 @@ export class EmployeeService implements OnInit {
   signup( abv: string, name: string, email: string, password: string, isAdmin: boolean ) {
     this.addEmployee( abv, name, email, false, isAdmin ? ADMIN_STATUS.pending : ADMIN_STATUS.declined, password );  // Add a new employee
     // Just to make sure the employee has been added and stored on server, there is a 500 ms timer.
-    setTimeout( () => {
-      this.login( email, password );
-    }, 500 );
+    this.login( email, password );
   }
 
   // Check if the employee data matches any current employee
@@ -128,4 +134,5 @@ export class EmployeeService implements OnInit {
   getCurrentEmployee() {
     return this.employeeSubject.getValue();
   }
+
 }

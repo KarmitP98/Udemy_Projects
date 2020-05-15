@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+.approved {
+  background: rgba(204, 255, 204, 0.3);
+  border: 1px solid darkgreen;
+}
+
+.declined {
+  background: rgba(255, 204, 204, 0.3);
+  border: 1px solid darkred;
+}
+
+.error {
+  background: rgba(255, 204, 204, 0.3);
+  border: 5px solid darkred;
+}

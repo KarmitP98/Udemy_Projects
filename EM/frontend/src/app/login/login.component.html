@@ -1,7 +1,8 @@
 <div class = "row">
   <div class = "col-xs-12 col-md-6 col-lg-offset-3">
     <h1>Welcome to {{ companyName }}</h1>
-    <div *ngIf = "error" class = "text-center">
+    <div *ngIf = "error" [ngClass] = "error ? 'error':
+    null" class = "text-center">
       <strong style = "color: red; font-size: 24px">{{ error }}</strong>
     </div>
     <form #f = "ngForm" (ngSubmit) = "onSubmit()">
@@ -48,5 +49,12 @@
                 type = "button"> {{ isLoginMode ? "Sign-up" : "Back" }}</button>
       </div>
     </form>
+  </div>
+</div>
+<div class = "row">
+  <div class = "col-xs-12 col-md-6 col-lg-offset-3">
+    <div class = "text-center">
+      <app-loading-spinner *ngIf = "isLoading"></app-loading-spinner>
+    </div>
   </div>
 </div>
