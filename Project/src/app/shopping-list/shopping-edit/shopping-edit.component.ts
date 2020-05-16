@@ -3,6 +3,8 @@ import { Ingredient } from "../../shared/ingredient.model";
 import { ShoppingListService } from "../shopping-list.service";
 import { NgForm } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { Store } from "@ngrx/store";
+import * as ShoppingListActions from "../store/shopping-list.actions";
 
 @Component({
              selector : "app-shopping-edit",
@@ -21,7 +23,8 @@ export class ShoppingEditComponent
 
   @Output() ingAdded = new EventEmitter<Ingredient>();
 
-  constructor(private slService: ShoppingListService) {
+  constructor(private slService: ShoppingListService,
+              private store: Store<{ shoppingList: { ingredients: Ingredient[] } }>) {
   }
 
   ngOnInit() {
@@ -46,11 +49,14 @@ export class ShoppingEditComponent
     const value = form.value;
     const newIng = new Ingredient(value.name, value.amount);
     if (this.editMode) {
-      this.slService.updateIngredient(this.itemIndex, newIng);
+      // this.slService.updateIngredient(this.itemIndex, newIng);
+      this.store.dispatch(new ShoppingListActions.UpdateIngredients({index : this.itemIndex, ing : newIng}));
     }
     else {
-      this.slService.addIngredient(newIng);
+      this.store.dispatch(new ShoppingListActions.AddIngredient(newIng));
+      // this.slService.addIngredient(newIng);
     }
+
     this.clear();
   }
 
@@ -60,7 +66,8 @@ export class ShoppingEditComponent
   }
 
   delete() {
-    this.slService.removeIngredient(this.itemIndex);
+    // this.slService.removeIngredient(this.itemIndex);
+    this.store.dispatch(new ShoppingListActions.DeleteIngredients(this.itemIndex));
     this.clear();
   }
 }

@@ -8,9 +8,9 @@ import { RecipeEditComponent } from "./recipe-edit/recipe-edit.component";
 import { RouterModule, Routes } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
-import { AuthGuard } from "../auth/auth.guard";
 import { RecipesResolverService } from "./recipes-resolver.service";
 import { SharedModule } from "../shared/shared.module";
+import { AuthGuard } from "../auth/auth.guard";
 
 const route: Routes = [
   {

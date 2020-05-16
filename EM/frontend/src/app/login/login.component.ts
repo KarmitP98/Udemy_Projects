@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       } else {
         this.error = "Invalid Email / Password !";
         setTimeout( () => {this.error = null;}, 2000 );
-        // alert( this.error );
       }
     } else {
       if ( userExist ) {
