@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { LeaveService } from "../../shared/leave.service";
 import { Leave } from "../../shared/model/leaves.model";
 import { Subscription } from "rxjs";
+import { ADMIN_STATUS } from "../../shared/employee.service";
 
 @Component( {
               selector: "app-leave-req",
@@ -16,8 +17,7 @@ export class LeaveReqComponent implements OnInit, OnDestroy {
   constructor( private leaveService: LeaveService ) { }
 
   ngOnInit() {
-    this.leaveService.fetchLeaves();
-    this.leaveSub = this.leaveService.leavesChanged.subscribe( value => {
+    this.leaveSub = this.leaveService.fetchLeaves( false ).subscribe( value => {
       this.leaves = value;
     } );
   }
@@ -27,6 +27,7 @@ export class LeaveReqComponent implements OnInit, OnDestroy {
   }
 
   changeStatus( b: boolean, leave: Leave ): void {
-    this.leaveService.changeLeaveStatus( leave, b ? "Approved" : "Declined" );
+    leave.status = b ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
+    this.leaveService.updateLeave( leave, leave.leaveId );
   }
 }

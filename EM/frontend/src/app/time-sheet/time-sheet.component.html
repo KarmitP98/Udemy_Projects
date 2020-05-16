@@ -39,7 +39,7 @@
   </div>
 </div>
 <hr>
-<div *ngIf = "currentTimeSheets">
+<div *ngIf = "timeSheets">
   <table class = "table-responsive">
     <tr>
       <th class = "col-lg-1 text-center">User Id</th>
@@ -51,7 +51,7 @@
       <th class = "col-lg-1 text-center">Time Sheet Id</th>
     </tr>
     <br>
-    <tr *ngFor = "let curSheets of currentTimeSheets">
+    <tr *ngFor = "let curSheets of timeSheets">
       <td class = "col-lg-1 text-center">{{ userId }}</td>
       <td class = "col-lg-1 text-center">{{ curSheets.logDate }}</td>
       <td class = "col-lg-1 text-center">{{ curSheets.work }}</td>

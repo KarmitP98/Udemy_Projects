@@ -36,7 +36,7 @@
   </div>
 </div>
 <hr>
-<div *ngIf = "currentLeaves">
+<div *ngIf = "leaves">
   <table class = "table-responsive">
     <tr>
       <th class = "col-lg-1 text-center">User Id</th>
@@ -47,7 +47,7 @@
       <th class = "col-lg-1 text-center">Leave Id</th>
     </tr>
     <br>
-    <tr *ngFor = "let leave of currentLeaves">
+    <tr *ngFor = "let leave of leaves">
       <td class = "col-lg-1 text-center">{{leave.userId}}</td>
       <td class = "col-lg-1 text-center">{{leave.startDate}}</td>
       <td class = "col-lg-1 text-center">{{leave.endDate}}</td>

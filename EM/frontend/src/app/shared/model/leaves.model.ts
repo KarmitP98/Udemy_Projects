@@ -5,6 +5,7 @@ export class Leave {
                public startDate: Date,
                public endDate: Date,
                public reason: string,
-               public status: string ) {}
+               public status: string,
+               public name?: string ) {}
 
 }

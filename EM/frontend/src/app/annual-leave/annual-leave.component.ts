@@ -13,18 +13,18 @@ import { NgForm } from "@angular/forms";
 export class AnnualLeaveComponent implements OnInit, OnDestroy {
 
   leaveSub: Subscription;
-  currentLeaves: Leave[] = [];
+  private leaves: Leave[] = [];
   userId: number;
   @ViewChild( "leaveForm", { static: false } ) leaveForm: NgForm;
 
   constructor( private leaveService: LeaveService, private employeeService: EmployeeService ) { }
 
   ngOnInit() {
-    this.leaveService.fetchLeaves();
     this.userId = this.employeeService.employeeSubject.getValue().userId;
-    this.leaveSub = this.leaveService.leaveSubject.subscribe( value => {
+
+    this.leaveSub = this.leaveService.fetchLeaves( true, this.userId ).subscribe( value => {
       if ( value ) {
-        this.currentLeaves = value;
+        this.leaves = value;
       }
     } );
   }
@@ -34,7 +34,13 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.leaveService.addLeave( this.userId, this.leaveForm.value.startDate, this.leaveForm.value.endDate, this.leaveForm.value.reason );
+    const tempLeave =
+      new Leave( this.userId, this.leaves.length, this.leaveForm.value.startDate, this.leaveForm.value.endDate, this.leaveForm.value.reason,
+                 "Pending" );
+    this.leaves.push( tempLeave );
+    this.leaveService.addLeave( this.leaves );
+
+
     this.leaveForm.resetForm();
   }
 }
