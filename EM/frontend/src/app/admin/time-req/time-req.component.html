@@ -18,12 +18,10 @@
     <td class = "col-lg-1 text-center">{{sheet.endTime}}</td>
     <td class = "col-lg-1 text-center">{{sheet.status}}</td>
     <td class = "col-lg-1 text-center">
-      <button (click) = "changeStatus(false,sheet)" class = "btn btn-danger"
-              style = "border-radius: 50px;">D
+      <button (click) = "changeStatus(false,sheet)" color = "warn" mat-button>D
       </button>
-      |
-      <button (click) = "changeStatus(true,sheet)" class = "btn btn-success"
-              style = "border-radius: 50px;">A
+      <button (click) = "changeStatus(true,sheet)" color = "primary" mat-button>
+        A
       </button>
     </td>
   </tr>

@@ -13,6 +13,8 @@ export class LeaveReqComponent implements OnInit, OnDestroy {
 
   leaves: Leave[] = [];
   leaveSub: Subscription;
+  displayedColumns: string[] =
+    [ "userId", "startDate", "endDate", "reason", "status" ];
 
   constructor( private leaveService: LeaveService ) { }
 

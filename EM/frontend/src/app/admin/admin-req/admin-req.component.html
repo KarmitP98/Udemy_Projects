@@ -10,8 +10,7 @@
     <th class = "col-lg-1 text-center">Admin Status</th>
     <th class = "col-lg-1 text-center">Response</th>
   </tr>
-  <tr *ngFor = "let emp of emps; let i = index" [ngClass] = "emp.isAdmin ?
-  'approved' : 'declined'" id = "i">
+  <tr *ngFor = "let emp of emps; let i = index" id = "i">
     <td class = "col-lg-1 text-center">{{emp.userId}}</td>
     <td class = "col-lg-1 text-center">{{emp.abv}}</td>
     <td class = "col-lg-1 text-center">{{emp.userName}}</td>
@@ -21,12 +20,9 @@
     </td>
     <td class = "col-lg-1 text-center">{{emp.adminStatus}}</td>
     <td class = "col-lg-1 text-center">
-      <button (click) = "changeAdmin(false,emp)" class = "btn btn-danger"
-              style = "border-radius: 50px;">D
+      <button (click) = "changeAdmin(false,emp)" color = "warn" mat-button>D
       </button>
-      |
-      <button (click) = "changeAdmin(true,emp)" class = "btn btn-success"
-              style = "border-radius: 50px;">A
+      <button (click) = "changeAdmin(true,emp)" color = "primary" mat-button>A
       </button>
     </td>
   </tr>

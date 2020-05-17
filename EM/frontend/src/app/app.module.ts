@@ -15,6 +15,19 @@ import { TimeReqComponent } from "./admin/time-req/time-req.component";
 import { LeaveReqComponent } from "./admin/leave-req/leave-req.component";
 import { AdminReqComponent } from "./admin/admin-req/admin-req.component";
 import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner.component";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import {
+  MatButtonModule,
+  MatDatepickerModule,
+  MatExpansionModule,
+  MatInputModule,
+  MatNativeDateModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatSlideToggleModule,
+  MatSnackBarModule,
+  MatTableModule
+} from "@angular/material";
 
 @NgModule( {
              declarations: [
@@ -35,7 +48,18 @@ import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner.compo
                BrowserModule,
                FormsModule,
                HttpClientModule,
-               AppRoutingModule
+               AppRoutingModule,
+               BrowserAnimationsModule,
+               MatInputModule,
+               MatSlideToggleModule,
+               MatOptionModule,
+               MatSelectModule,
+               MatButtonModule,
+               MatDatepickerModule,
+               MatNativeDateModule,
+               MatExpansionModule,
+               MatTableModule,
+               MatSnackBarModule
              ],
              providers: [],
              bootstrap: [ AppComponent ]

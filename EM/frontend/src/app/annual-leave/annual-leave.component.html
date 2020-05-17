@@ -1,37 +1,42 @@
 <div class = "row">
   <div class = "col-xs-12 col-md-6 col-lg-offset-3">
     <hr>
-    <h3>Leave Application</h3>
+    <div class = "text-center">
+      <h3>Leave Application</h3><br>
+    </div>
     <form #leaveForm = "ngForm" (ngSubmit) = "onSubmit()">
-      <div class = "form-group">
-        <label for = "startDate">Start Date</label>
-        <input class = "form-control" id = "startDate" name = "startDate"
-               ngModel
-               required type = "date">
-      </div>
-      <div class = "form-group">
-        <label for = "endDate">End Date</label>
-        <input class = "form-control" id = "endDate" name = "endDate" ngModel
-               required type = "date">
-      </div>
-      <div class = "form-group">
-        <label for = "reason">Reason</label>
-        <select class = "form-control" id = "reason" name = "reason" ngModel =
-          "Sick Leave"
-                required>
-          <option value = "Sick Leave">Sick Leave</option>
-          <option value = "Religious Leave">Religious Leave</option>
-          <option value = "Vacation Leave">Vacation Leave</option>
-        </select>
-      </div>
-      <div class = "form-group">
-        <div class = "btn-toolbar">
-          <button [disabled] = "!leaveForm.valid" class = "btn btn-default"
-                  type = "submit">Apply for Leave!
-          </button>
-          <button class = "btn btn-default" type = "button">Clear Form</button>
-        </div>
-      </div>
+      <mat-form-field appearance = "outline">
+        <mat-label>Start Date</mat-label>
+        <input [matDatepicker] = "startDate" matInput name = "startDate" ngModel
+               required>
+        <mat-datepicker-toggle [for] = "startDate"
+                               matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #startDate></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance = "outline">
+        <mat-label>End Date</mat-label>
+        <input [matDatepicker] = "endDate" matInput name = "endDate" ngModel
+               required>
+        <mat-datepicker-toggle [for] = "endDate"
+                               matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #endDate></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance = "outline">
+        <mat-label>Reason</mat-label>
+        <mat-select name = "reason" ngModel = "Sick Leave" required>
+          <mat-option value = "Sick Leave">Sick Leave</mat-option>
+          <mat-option value = "Religious Leave">Religious Leave</mat-option>
+          <mat-option value = "Vacation Leave">Vacation Leave</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <mat-action-row>
+        <button [disabled] = "!leaveForm.valid" color = "primary"
+                mat-stroked-button type = "submit">Apply for Leave!
+        </button>
+      </mat-action-row>
     </form>
   </div>
 </div>

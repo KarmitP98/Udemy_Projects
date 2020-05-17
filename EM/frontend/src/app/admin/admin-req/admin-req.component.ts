@@ -11,30 +11,35 @@ import { Subscription } from "rxjs";
 export class AdminReqComponent implements OnInit, OnDestroy {
 
   emps: Employee[] = [];
+  curEmp: Employee;
   userId: number;
   empSub: Subscription;
+  curEmpSub: Subscription;
 
   constructor( private employeeService: EmployeeService ) { }
 
   ngOnInit() {
-    // Get current userId, {employess-currentEmployee}
-    this.userId = this.employeeService.employeeSubject.getValue().userId;
-    this.empSub = this.employeeService.employeeChanged.subscribe( value => {
-      this.emps = [];
-      for ( let emp of value ) {
-        if ( emp.userId !== this.userId ) {
-          this.emps.push( emp );
-        }
-      }
+
+    this.curEmpSub = this.employeeService.employeeSubject.subscribe( value => {
+      this.curEmp = value;
     } );
-    this.employeeService.fetchEmployees();
+
+    this.empSub = this.employeeService.fetchEmployees().subscribe( value => {
+      this.emps = value.filter( value1 => {
+        return value1.userId !== this.curEmp.userId;
+      } );
+    } );
   }
 
   ngOnDestroy(): void {
     this.empSub.unsubscribe();
   }
 
-  changeAdmin( type: boolean, emp: Employee ): void {
-    this.employeeService.changeAdminStatus( emp.userName, type ? ADMIN_STATUS.approved : ADMIN_STATUS.declined );
+  changeAdmin( response: boolean, emp: Employee ): void {
+
+    emp.adminStatus = response ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
+    emp.isAdmin = response;
+
+    this.employeeService.updateEmployee( emp, emp.userId );
   }
 }

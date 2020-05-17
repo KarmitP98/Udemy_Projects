@@ -1,9 +1,9 @@
 import { Injectable, OnInit } from "@angular/core";
 import { Employee } from "./model/employee.model";
-import { BehaviorSubject, Subject } from "rxjs";
-import { tap } from "rxjs/operators";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { EXT } from "./leave.service";
 
 
 export enum ADMIN_STATUS {
@@ -18,121 +18,43 @@ export enum ADMIN_STATUS {
 export class EmployeeService implements OnInit {
 
   employeeChanged = new Subject<Employee[]>();
-  employeeServerUrl = "https://employee-managment-f5252.firebaseio.com/employees.json";
+  employeeServerUrl = "https://employee-managment-f5252.firebaseio.com/employees";
   private employees: Employee[] = [];
   employeeSubject = new BehaviorSubject<Employee>( null );
-  isLoading: boolean = false;
-  loadingSubject = new Subject<boolean>();
 
   constructor( private http: HttpClient, private router: Router ) { }
 
   ngOnInit(): void {
   }
 
-  getEmployees() {
-    return this.employees;
-  }
-
-  setEmployees( emps: Employee[] ): void {
-    this.employees = emps;
-    this.employeeChanged.next( this.employees );
-  }
-
-  // Add am employee to the array of employees and store it on the server
-  // NOTE: This method will mostly never be called since we will be storing or retreving data when we signup or logout only.
-
-  addEmployee( abv: string, name: string, email: string, isAdmin: boolean, adminStatus: string, password: string ) {
-    const empId = this.employees ? this.employees.length : 0;
-    const emp = new Employee( empId, abv, name, email, isAdmin, adminStatus, password );
-    this.employees.push( emp );
-    this.storeEmployees();
-  }
-
-  changeAdminStatus( name: string, response: string ) {
-    const isAdmin = response === ADMIN_STATUS.approved;
-    if ( this.employees ) {
-      for ( let emp of this.employees ) {
-        if ( emp !== null ) {
-          if ( emp.userName === name ) {
-            emp.isAdmin = isAdmin;
-            emp.adminStatus = response;
-          }
-        }
-      }
-    }
-    this.storeEmployees();
-    this.employeeChanged.next( this.getEmployees().slice() );
-  }
-
   // Fetch the employee data from Server
-  fetchEmployees() {
-    this.http.get<Employee[]>( this.employeeServerUrl ).pipe( tap( emps => {
-      if ( emps ) {
-        this.setEmployees( emps );
-      }
-    } ) ).subscribe();
+  fetchEmployees(): Observable<Employee[]> {
+    return this.http.get<Employee[]>( this.employeeServerUrl + EXT );
   }
 
   // Store employee data to the server
-  storeEmployees() {
-    this.http.put<Employee[]>( this.employeeServerUrl, this.employees ).subscribe();
+  storeEmployees( employees: Employee[] ) {
+    this.http.put<Employee[]>( this.employeeServerUrl + EXT, employees ).subscribe();
   }
 
-  login( email: string, password: string ) {
-    this.isLoading = true;
-    this.loadingSubject.next( this.isLoading );
-    setTimeout( () => {
-      this.employeeSubject.next( this.getEmployee( email, password ) );
-      localStorage.setItem( "Employee", JSON.stringify( this.getCurrentEmployee() ) );  // Store the current user to local storage for
-      // auto-login purposes
-      this.isLoading = false;
-      this.loadingSubject.next( this.isLoading );
-      this.router.navigate( [ "/home" ] );
-    }, 1000 );
+  updateEmployee( employee: Employee, userId: number ): void {
+    this.http.patch<Employee>( this.employeeServerUrl + "/" + userId + EXT, employee ).subscribe();
   }
 
-  logout() {
-    this.storeEmployees();
+  login( employee: Employee ): void {
+
+    this.employeeSubject.next( employee );
+
+    localStorage.setItem( "Employee", JSON.stringify( employee ) );
+    // Store the current user to local storage for auto-login purposes
+
+    this.router.navigate( [ "/home" ] );
+  }
+
+  logout(): void {
     this.employeeSubject.next( null );
     localStorage.removeItem( "Employee" );  // Clear local storage
     this.router.navigate( [ "/login" ] );
-  }
-
-  signup( abv: string, name: string, email: string, password: string, isAdmin: boolean ) {
-    this.addEmployee( abv, name, email, false, isAdmin ? ADMIN_STATUS.pending : ADMIN_STATUS.declined, password );  // Add a new employee
-    // Just to make sure the employee has been added and stored on server, there is a 500 ms timer.
-    this.login( email, password );
-  }
-
-  // Check if the employee data matches any current employee
-  doesMatch( email: string, password: string ): boolean {
-    for ( let emp of this.employees ) {
-      if ( emp !== null ) {
-        if ( emp.userEmail === email && emp.password === password ) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  // Get the employee matching the credentials
-  private getEmployee( email: string, password: string ): Employee {
-    let result: Employee = null;
-    for ( let emp of this.employees ) {
-      if ( emp !== null ) {
-        if ( emp.userEmail === email ) {
-          if ( emp.password === password ) {
-            result = emp;
-          }
-        }
-      }
-    }
-    return result;
-  }
-
-  getCurrentEmployee() {
-    return this.employeeSubject.getValue();
   }
 
 }

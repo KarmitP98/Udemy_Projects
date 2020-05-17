@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { EmployeeService } from "../shared/employee.service";
+import { ADMIN_STATUS, EmployeeService } from "../shared/employee.service";
 import { NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { Employee } from "../shared/model/employee.model";
 
 @Component( {
               selector: "app-login",
@@ -10,49 +12,77 @@ import { Subscription } from "rxjs";
               styleUrls: [ "./login.component.css" ]
             } )
 export class LoginComponent implements OnInit, OnDestroy {
+
+  @ViewChild( "f", { static: false } ) form: NgForm;
   companyName = "ABC Company";
   isLoginMode: boolean = true;
-  @ViewChild( "f", { static: false } ) form: NgForm;
   admin: boolean = false;
-  error: string = "";
-  loadingSub: Subscription;
-  isLoading: boolean = false;
+  empSub: Subscription;
+  emps: Employee[] = [];
 
-  constructor( private employeeService: EmployeeService, private router: Router ) { }
+  constructor( private employeeService: EmployeeService, private router: Router, private snackBar: MatSnackBar ) { }
 
   ngOnInit() {
-    this.employeeService.fetchEmployees();
-    this.loadingSub = this.employeeService.loadingSubject.subscribe( value => {
-      this.isLoading = value;
+
+    this.empSub = this.employeeService.fetchEmployees().subscribe( value => {
+      if ( value ) {
+        this.emps = value;
+      }
     } );
+
   }
 
   ngOnDestroy(): void {
-    this.loadingSub.unsubscribe();
+    this.empSub.unsubscribe();
   }
 
   onSubmit(): void {
-    const userExist = this.employeeService.doesMatch( this.form.value.email, this.form.value.password );
+    const emp = this.getEmp( this.form.value.email, this.form.value.password );
+    const userId = this.form.value.userId;
+    const email = this.form.value.email;
+    const password = this.form.value.password;
+    const abv = this.form.value.abv;
+    const isAdmin = this.form.value.isAdmin;
+    const name = this.form.value.name;
+
     if ( this.isLoginMode ) {
-      if ( userExist ) {
-        this.employeeService.login( this.form.value.email, this.form.value.password );
+      if ( emp ) {
+        this.employeeService.login( emp );
       } else {
-        this.error = "Invalid Email / Password !";
-        setTimeout( () => {this.error = null;}, 2000 );
+        this.showError( "Invalid Email / Password !" );
       }
     } else {
-      if ( userExist ) {
-        this.error = "This user already exists !";
-        setTimeout( () => {this.error = null;}, 2000 );
+      if ( !emp ) {
+        const newEmp: Employee = new Employee( userId, abv, name, email, isAdmin, ADMIN_STATUS.pending, password );
+        this.emps.push( newEmp );
+        this.employeeService.storeEmployees( this.emps );
+        this.employeeService.login( newEmp );
       } else {
-        this.employeeService.signup( this.form.value.abv, this.form.value.name, this.form.value.email, this.form.value.password,
-                                     this.admin );
+        this.showError( "This user already exists !" );
       }
     }
   }
 
   switchModes(): void {
     this.isLoginMode = !this.isLoginMode;
-    this.error = null;
   }
+
+  // Check if the employee data matches any current employee
+  getEmp( email: string, password: string ): Employee {
+    for ( let emp of this.emps ) {
+      if ( emp !== null ) {
+        if ( emp.userEmail === email && emp.password === password ) {
+          return emp;
+        }
+      }
+    }
+    return null;
+  }
+
+  private showError( error: string ): void {
+    this.snackBar.open( error, "Close", {
+      duration: 2000
+    } );
+  }
+
 }

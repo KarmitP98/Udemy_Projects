@@ -1,5 +1,31 @@
 <h3 *ngIf = "leaves" class = "text-center">Leave Requests</h3>
 <br>
+<!--<table mat-table [dataSource] = "leaves" class = "mat-elevation-z8">-->
+<!--  <ng-container matColumnDef = "userId">-->
+<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>User Id</mat-header-cell>-->
+<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.userId}}</mat-cell>-->
+<!--  </ng-container>-->
+<!--  <ng-container matColumnDef = "startDate">-->
+<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>-->
+<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.startDate}}</mat-cell>-->
+<!--  </ng-container>-->
+<!--  <ng-container matColumnDef = "endDate">-->
+<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>-->
+<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.endDate}}</mat-cell>-->
+<!--  </ng-container>-->
+<!--  <ng-container matColumnDef = "reason">-->
+<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>Reason</mat-header-cell>-->
+<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.reason}}</mat-cell>-->
+<!--  </ng-container>-->
+<!--  <ng-container matColumnDef = "status">-->
+<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>Status</mat-header-cell>-->
+<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.status}}</mat-cell>-->
+<!--  </ng-container>-->
+
+<!--  <mat-header-row mat-header-row *matHeaderRowDef = "displayedColumns"></mat-header-row>-->
+<!--  <mat-row mat-row *matRowDef = "let row; columns: displayedColumns;"></mat-row>-->
+
+<!--</table>-->
 <table *ngIf = "leaves" class = "table-responsive">
   <tr>
     <th class = "col-lg-1 text-center">User Id</th>
@@ -16,12 +42,10 @@
     <td class = "col-lg-1 text-center">{{leave.reason}}</td>
     <td class = "col-lg-1 text-center">{{leave.status}}</td>
     <td class = "col-lg-1 text-center">
-      <button (click) = "changeStatus(false,leave)" class = "btn btn-danger"
-              style = "border-radius: 50px;">D
+      <button (click) = "changeStatus(false,leave)" color = "warn" mat-button>D
       </button>
-      |
-      <button (click) = "changeStatus(true,leave)" class = "btn btn-success"
-              style = "border-radius: 50px;">A
+      <button (click) = "changeStatus(true,leave)" color = "primary" mat-button>
+        A
       </button>
     </td>
   </tr>

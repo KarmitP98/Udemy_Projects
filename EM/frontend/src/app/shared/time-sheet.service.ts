@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TimeSheet } from "./model/time-sheet";
 import { map } from "rxjs/operators";
-import { EmployeeService } from "./employee.service";
 import { EXT } from "./leave.service";
 
 @Injectable( {
@@ -12,7 +11,7 @@ export class TimeSheetService {
 
   timeSheetUrl = "https://employee-managment-f5252.firebaseio.com/time-sheets";
 
-  constructor( private http: HttpClient, private employeeService: EmployeeService ) { }
+  constructor( private http: HttpClient ) { }
 
   fetchTimeSheets( current: boolean, userId?: number ) {
     return this.http.get<TimeSheet[]>( this.timeSheetUrl + EXT ).pipe( map( ( value: TimeSheet[] ) => {
