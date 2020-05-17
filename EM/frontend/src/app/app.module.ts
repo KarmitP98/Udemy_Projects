@@ -26,7 +26,8 @@ import {
   MatSelectModule,
   MatSlideToggleModule,
   MatSnackBarModule,
-  MatTableModule
+  MatTableModule,
+  MatToolbarModule
 } from "@angular/material";
 
 @NgModule( {
@@ -59,7 +60,8 @@ import {
                MatNativeDateModule,
                MatExpansionModule,
                MatTableModule,
-               MatSnackBarModule
+               MatSnackBarModule,
+               MatToolbarModule
              ],
              providers: [],
              bootstrap: [ AppComponent ]

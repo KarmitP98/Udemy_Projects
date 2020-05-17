@@ -1,24 +1,24 @@
 <div class = "container">
   <div class = "row">
-    <div class = "col-md-8 col-lg-offset-2">
+    <div [@buttonLoad] class = "col-md-8 col-lg-offset-2">
       <hr>
       <div class = "text-center">
         <button color = "primary"
-                mat-stroked-button routerLink = "/admin/time-req"
+                mat-raised-button routerLink = "/admin/time-req"
                 routerLinkActive = "active">View
                                             Time-Sheet
                                             Requests
         </button>
         ||
         <button color = "primary"
-                mat-stroked-button routerLink = "/admin/leave-req"
+                mat-raised-button routerLink = "/admin/leave-req"
                 routerLinkActive = "active">View
                                             Leave
                                             Requests
         </button>
         ||
         <button color = "primary"
-                mat-stroked-button routerLink = "/admin/admin-req"
+                mat-raised-button routerLink = "/admin/admin-req"
                 routerLinkActive = "active">View
                                             Admin
                                             Requests
@@ -29,7 +29,7 @@
   </div>
   <hr>
   <br><br>
-  <div class = "row">
+  <div [@tableLoad] class = "row">
     <div class = "col-lg-12">
       <router-outlet></router-outlet>
     </div>
