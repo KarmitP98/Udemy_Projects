@@ -3,27 +3,31 @@
     <div class = "col-xs-12 col-md-6 col-lg-offset-3 text-center">
       <hr>
       <button [routerLink] = "['/time-sheet']" color = "primary"
-              mat-stroked-button>
+              [@rightLoad] mat-stroked-button>
         Time-Sheet
       </button>
+      <hr>
     </div>
   </div>
+  <br>
   <div class = "row">
     <div class = "col-xs-12 col-md-6 col-lg-offset-3 text-center">
       <hr>
       <button [routerLink] = "['/annual-leave']" color = "primary"
-              mat-stroked-button>
-        Annual
-        Leave
+              [@leftLoad] mat-stroked-button> Annual Leave
       </button>
+      <hr>
     </div>
   </div>
-  <div class = "row">
+  <br>
+  <div *ngIf = "isAdmin" class = "row">
     <div class = "col-xs-12 col-md-6 col-lg-offset-3 text-center">
       <hr>
-      <button *ngIf = "isAdmin" [routerLink] = "['/admin']"
-              color = "primary" mat-stroked-button>Admin
+      <button [@rightLoad]
+              [routerLink] = "['/admin']" color = "primary" mat-stroked-button>
+        Admin
       </button>
+      <hr>
     </div>
   </div>
 </div>

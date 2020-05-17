@@ -1,4 +1,4 @@
-<div class = "row">
+<div [@formLoad] class = "row">
   <div class = "col-xs-12 col-md-6 col-lg-offset-3">
     <hr>
     <div class = "text-center">
@@ -38,10 +38,12 @@
         </button>
       </mat-action-row>
     </form>
+    <hr>
   </div>
 </div>
+<br>
 <hr>
-<div *ngIf = "leaves">
+<div *ngIf = "leaves" [@tableLoad]>
   <table class = "table-responsive">
     <tr>
       <th class = "col-lg-1 text-center">User Id</th>

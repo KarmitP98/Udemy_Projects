@@ -1,4 +1,4 @@
-<div class = "row">
+<div [@formLoad] class = "row">
   <div class = "col-xs-12 col-md-6 col-lg-offset-3">
     <hr>
     <div class = "text-center">
@@ -18,22 +18,21 @@
       <mat-form-field appearance = "outline">
         <mat-label>Work</mat-label>
         <input #work [value] = "'Default Work'"
-               autocomplete matInput name = "work" ngModel
+               matInput name = "work" ngModel
                placeholder = "Ex. Excel Worksheet, Mailing, etc."
                required type = "text">
       </mat-form-field>
       <br>
       <mat-form-field appearance = "outline">
         <mat-label>Start Time</mat-label>
-        <input #startTime autocomplete matInput name = "startTime" ngModel
-               required type = "time">
+        <input #startTime matInput name = "startTime" ngModel
+               required type = "time" value = "13:00">
       </mat-form-field>
       <br>
       <mat-form-field appearance = "outline">
         <mat-label>End Time</mat-label>
-        <input #endTime autocomplete matInput name = "endTime" ngModel
-               required
-               type = "time">
+        <input #endTime matInput name = "endTime" ngModel
+               required type = "time" value = "13:00">
       </mat-form-field>
       <br>
       <mat-action-row>
@@ -42,10 +41,12 @@
         </button>
       </mat-action-row>
     </form>
+    <hr>
   </div>
 </div>
+<br>
 <hr>
-<div *ngIf = "timeSheets">
+<div *ngIf = "timeSheets" [@tableLoad]>
   <table class = "table-responsive">
     <tr>
       <th class = "col-lg-1 text-center">User Id</th>

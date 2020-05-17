@@ -4,6 +4,7 @@ import { EmployeeService } from "../shared/employee.service";
 import { Subscription } from "rxjs";
 import { Leave } from "../shared/model/leaves.model";
 import { NgForm } from "@angular/forms";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 
 export const MONTHS = [ "January",
                         "February",
@@ -21,7 +22,29 @@ export const MONTHS = [ "January",
 @Component( {
               selector: "app-annual-leave",
               templateUrl: "./annual-leave.component.html",
-              styleUrls: [ "./annual-leave.component.css" ]
+              styleUrls: [ "./annual-leave.component.css" ],
+              animations: [
+                trigger( "formLoad", [
+                  state( "in", style( {
+                                        opacity: 1,
+                                        transform: "translateY(0)"
+                                      } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0, transform: "translateY(-25px)" } ),
+                    animate( 100 )
+                  ] )
+                ] ),
+                trigger( "tableLoad", [
+                  state( "in", style( {
+                                        opacity: 1,
+                                        transform: "translateY(0)"
+                                      } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0, transform: "translateY(25px)" } ),
+                    animate( 100 )
+                  ] )
+                ] )
+              ]
             } )
 export class AnnualLeaveComponent implements OnInit, OnDestroy {
 

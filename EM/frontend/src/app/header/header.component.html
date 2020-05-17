@@ -18,9 +18,11 @@
         <li routerLinkActive = "active"><a *ngIf = "isAdmin"
                                            [routerLink] = "['/admin']">Admin
         </a></li>
+      </ul>
+      <ul class = "nav navbar-nav pull-right">
         <li>
           <a (click) = "onLogout()"
-             style = "cursor:pointer;">Logout
+             style = "cursor:pointer; color: red">Logout
           </a>
         </li>
       </ul>
