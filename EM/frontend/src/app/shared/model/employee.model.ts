@@ -7,6 +7,6 @@ export class Employee {
                public isAdmin: boolean,
                public adminStatus: string,
                public password: string,
-               public nameId?: string ) {}
+               public name?: string ) {}
 
 }

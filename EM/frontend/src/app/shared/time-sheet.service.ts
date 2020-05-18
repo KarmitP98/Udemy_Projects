@@ -14,25 +14,32 @@ export class TimeSheetService {
   constructor( private http: HttpClient ) { }
 
   fetchTimeSheets( current: boolean, userId?: number ) {
-    return this.http.get<TimeSheet[]>( this.timeSheetUrl + EXT ).pipe( map( ( value: TimeSheet[] ) => {
+    return this.http.get( this.timeSheetUrl + EXT ).pipe( map( ( value ) => {
       if ( value ) {
+        const temp: TimeSheet[] = [];
+        for ( const key in value ) {
+          temp.push( value[key] );
+        }
         if ( current ) {
-          return value.filter( ( value1: TimeSheet ) => {
+          return temp.filter( ( value1: TimeSheet ) => {
             return value1.userId === userId;
           } );
         } else {
-          return value;
+          return temp;
         }
       }
     } ) );
   }
 
-  addTimeSheet( sheets: TimeSheet[] ) {
-    this.http.put<TimeSheet[]>( this.timeSheetUrl + EXT, sheets ).subscribe();
+  addTimeSheet( sheet: TimeSheet ) {
+    this.http.post<TimeSheet>( this.timeSheetUrl + EXT, sheet ).subscribe( value => {
+      value.name = value.name;
+      this.updateTimeSheet( value, value.name );
+    } );
   }
 
-  updateTimeSheet( sheet: TimeSheet, sheetId: number ) {
-    this.http.patch<TimeSheet>( this.timeSheetUrl + "/" + sheetId + EXT, sheet ).subscribe();
+  updateTimeSheet( sheet: TimeSheet, sheetName: string ) {
+    this.http.patch<TimeSheet>( this.timeSheetUrl + "/" + sheetName + EXT, sheet ).subscribe();
   }
 
 }

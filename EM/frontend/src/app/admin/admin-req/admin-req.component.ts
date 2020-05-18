@@ -38,7 +38,7 @@ export class AdminReqComponent implements OnInit, OnDestroy {
       this.curEmp = value;
     } );
 
-    this.empSub = this.employeeService.fetchEmployees().subscribe( value => {
+    this.empSub = this.employeeService.fetchEmployees().subscribe( ( value: Employee[] ) => {
       this.emps = value.filter( value1 => {
         return value1.userId !== this.curEmp.userId;
       } );
@@ -54,7 +54,7 @@ export class AdminReqComponent implements OnInit, OnDestroy {
     this.selectedReq.adminStatus = response ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
     this.selectedReq.isAdmin = response;
 
-    this.employeeService.updateEmployee( this.selectedReq, this.selectedReq.userId );
+    this.employeeService.updateEmployee( this.selectedReq, this.selectedReq.name );
     this.selectedReq = null;
   }
 }

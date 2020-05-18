@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.empSub = this.employeeService.fetchEmployees().subscribe( value => {
+    this.empSub = this.employeeService.fetchEmployees().subscribe( ( value ) => {
       if ( value ) {
         this.emps = value;
       }
@@ -53,8 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     } else {
       if ( !emp ) {
         const newEmp: Employee = new Employee( this.emps ? this.emps.length : 0, abv, name, email, false, ADMIN_STATUS.pending, password );
-        this.emps.push( newEmp );
-        this.employeeService.storeEmployee( this.emps );
+        this.employeeService.storeEmployee( newEmp );
         this.employeeService.login( newEmp );
       } else {
         this.showError( "This user already exists !" );

@@ -23,7 +23,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if ( this.isAuth ) {
         this.emp = value;
         this.isAdmin = this.emp.isAdmin;
-        console.log( this.isAdmin );
       }
     } );
   }

@@ -15,25 +15,33 @@ export class LeaveService {
   constructor( private http: HttpClient ) { }
 
   fetchLeaves( current: boolean, id?: number ) {
-    return this.http.get<Leave[]>( this.leaveServerUrl + EXT ).pipe( map( ( leaves: Leave[] ) => {
+    return this.http.get( this.leaveServerUrl + EXT ).pipe( map( ( leaves ) => {
       if ( leaves ) {
+        const temp: Leave[] = [];
+        for ( const key in leaves ) {
+          // @ts-ignore
+          temp.push( leaves[key] );
+        }
         if ( current ) {
-          return leaves.filter( ( value ) => {
-            return value.userId === id;
+          return temp.filter( ( value1 ) => {
+            return value1.userId === id;
           } );
         } else {
-          return leaves;
+          return temp;
         }
       }
     } ) );
   }
 
-  addLeave( leaves: Leave[] ) {
-    this.http.put<Leave[]>( this.leaveServerUrl + EXT, leaves ).subscribe();
+  addLeave( leave: Leave ) {
+    this.http.post<Leave>( this.leaveServerUrl + EXT, leave ).subscribe( value => {
+      value.name = value.name;
+      this.updateLeave( value, value.name );
+    } );
   }
 
-  updateLeave( leave: Leave, leaveId: number ) {
-    this.http.patch<Leave>( this.leaveServerUrl + "/" + leaveId + EXT, leave ).subscribe();
+  updateLeave( leave: Leave, leaveName: string ) {
+    this.http.patch<Leave>( this.leaveServerUrl + "/" + leaveName + EXT, leave ).subscribe();
   }
 
 }

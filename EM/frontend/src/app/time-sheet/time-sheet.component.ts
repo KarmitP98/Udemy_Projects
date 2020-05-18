@@ -56,11 +56,10 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
       }
     } );
 
-    this.timeSheetSub = this.timeSheetService.fetchTimeSheets( false ).subscribe( value => {
+    this.timeSheetSub = this.timeSheetService.fetchTimeSheets( true, this.userId ).subscribe( value => {
       if ( value ) {
-        this.allTimeSheets = value;
-        this.timeSheets = this.getCurrentTimeSheet();
-        this.dataSource = new MatTableDataSource( this.timeSheets );
+        this.timeSheets = value;
+        this.dataSource = new MatTableDataSource( value );
       }
     } );
 
@@ -76,16 +75,9 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
     const date = this.timeForm.value.date;
     const tempSheet: TimeSheet = new TimeSheet( this.userId, MONTHS[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear(),
                                                 this.timeForm.value.startTime, this.timeForm.value.endTime, "Pending",
-                                                this.allTimeSheets ? this.allTimeSheets.length : 0, this.timeForm.value.work );
-    this.allTimeSheets.push( tempSheet );
-    this.timeSheetService.addTimeSheet( this.allTimeSheets );
+                                                this.allTimeSheets ? this.timeSheets.length : 0, this.timeForm.value.work );
+    this.timeSheetService.addTimeSheet( tempSheet );
     this.timeForm.resetForm();
-  }
-
-  getCurrentTimeSheet() {
-    return this.allTimeSheets.filter( value => {
-      return value.userId === this.userId;
-    } );
   }
 
 }

@@ -42,7 +42,7 @@ export class LeaveReqComponent implements OnInit, OnDestroy {
 
   changeStatus( b: boolean ): void {
     this.selectedReq.status = b ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
-    this.leaveService.updateLeave( this.selectedReq, this.selectedReq.leaveId );
+    this.leaveService.updateLeave( this.selectedReq, this.selectedReq.name );
     this.selectedReq = null;
   }
 }

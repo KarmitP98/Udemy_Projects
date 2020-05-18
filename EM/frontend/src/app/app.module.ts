@@ -14,7 +14,7 @@ import { AdminComponent } from "./admin/admin.component";
 import { TimeReqComponent } from "./admin/time-req/time-req.component";
 import { LeaveReqComponent } from "./admin/leave-req/leave-req.component";
 import { AdminReqComponent } from "./admin/admin-req/admin-req.component";
-import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner.component";
+import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinner.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
   MatButtonModule,

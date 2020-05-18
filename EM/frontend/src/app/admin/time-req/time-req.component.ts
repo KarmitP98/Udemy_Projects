@@ -45,7 +45,7 @@ export class TimeReqComponent implements OnInit, OnDestroy {
   changeStatus( b: boolean ) {
     const status = b ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
     this.selectedReq.status = status;
-    this.timeSheetService.updateTimeSheet( this.selectedReq, this.selectedReq.timeSheetId );
+    this.timeSheetService.updateTimeSheet( this.selectedReq, this.selectedReq.name );
     this.selectedReq = null;
   }
 

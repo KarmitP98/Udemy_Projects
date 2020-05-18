@@ -51,12 +51,11 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
 
   leaveSub: Subscription;
   empSub: Subscription;
-  currentLeaves: Leave[] = [];
-  allLeaves: Leave[] = [];
+  leaves: Leave[] = [];
   userId: number;
   @ViewChild( "leaveForm", { static: false } ) leaveForm: NgForm;
   displayedColumns = [ "userId", "startDate", "endDate", "reason", "status", "leaveId" ];
-  dataSource: any;
+  dataSource: MatTableDataSource<Leave>;
 
   constructor( private leaveService: LeaveService, private employeeService: EmployeeService ) { }
 
@@ -68,14 +67,12 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
       }
     } );
 
-    this.leaveSub = this.leaveService.fetchLeaves( false ).subscribe( value => {
+    this.leaveSub = this.leaveService.fetchLeaves( true, this.userId ).subscribe( value => {
       if ( value ) {
-        this.allLeaves = value;
-        this.currentLeaves = this.getCurrentLeaves();
-        this.dataSource = new MatTableDataSource( this.currentLeaves );
+        this.leaves = value;
+        this.dataSource = new MatTableDataSource<Leave>( value );
       }
     } );
-
   }
 
   ngOnDestroy(): void {
@@ -87,19 +84,12 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
     const startDate = new Date( this.leaveForm.value.startDate );
     const endDate = new Date( this.leaveForm.value.endDate );
     const tempLeave =
-      new Leave( this.userId, this.allLeaves.length,
+      new Leave( this.userId, this.leaves.length,
                  MONTHS[startDate.getMonth()] + " " + startDate.getDate() + ", " + startDate.getFullYear(),
                  MONTHS[endDate.getMonth()] + " " + endDate.getDate() + ", " + endDate.getFullYear(), this.leaveForm.value.reason,
                  "Pending", "" );
-    this.allLeaves.push( tempLeave );
-    this.leaveService.addLeave( this.allLeaves );
+    this.leaveService.addLeave( tempLeave );
     this.leaveForm.resetForm();
-  }
-
-  getCurrentLeaves() {
-    return this.allLeaves.filter( value => {
-      return value.userId === this.userId;
-    } );
   }
 
 }

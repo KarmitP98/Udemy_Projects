@@ -1,9 +1,10 @@
 import { Injectable, OnInit } from "@angular/core";
 import { Employee } from "./model/employee.model";
-import { BehaviorSubject, Observable, Subject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { EXT } from "./leave.service";
+import { map } from "rxjs/operators";
 
 
 export enum ADMIN_STATUS {
@@ -27,19 +28,29 @@ export class EmployeeService implements OnInit {
   }
 
   // Fetch the employee data from Server
-  fetchEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>( this.employeeServerUrl + EXT );
+  fetchEmployees() {
+    return this.http.get( this.employeeServerUrl + EXT ).pipe( map( value => {
+      if ( value ) {
+        let temp: Employee[] = [];
+        for ( const key in value ) {
+          temp.push( value[key] );
+        }
+        return temp;
+      }
+    } ) );
   }
 
-  // Store employee data to the server
-  storeEmployee( employees: Employee[] ) {
-    this.http.put<Employee[]>( this.employeeServerUrl + EXT, employees ).subscribe();
+  storeEmployee( emp: Employee ) {
+    this.http.post<Employee>( this.employeeServerUrl + EXT, emp ).subscribe( ( value: Employee ) => {
+      value.name = value.name;
+      this.updateEmployee( value, value.name );
+    } );
   }
 
-  // Update employee data
-  updateEmployee( employee: Employee, userId: number ): void {
-    this.http.patch<Employee>( this.employeeServerUrl + "/" + userId + EXT, employee ).subscribe();
+  updateEmployee( emp: Employee, name: string ) {
+    this.http.patch<Employee>( this.employeeServerUrl + "/" + name + EXT, emp ).subscribe();
   }
+
 
   login( employee: Employee ): void {
 

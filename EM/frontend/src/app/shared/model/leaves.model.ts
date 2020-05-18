@@ -6,6 +6,6 @@ export class Leave {
                public endDate: string,
                public reason: string,
                public status: string,
-               public nameId?: string ) {}
+               public name?: string ) {}
 
 }

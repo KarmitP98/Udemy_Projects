@@ -43,9 +43,9 @@
 </div>
 <br>
 <hr>
-<div *ngIf = "currentLeaves" [@tableLoad] class = "center">
+<div *ngIf = "leaves" [@tableLoad] class = "center">
 
-  <mat-table [dataSource] = "currentLeaves">
+  <mat-table [dataSource] = "dataSource">
     <!-- User Id Column -->
     <ng-container matColumnDef = "userId">
       <mat-header-cell *matHeaderCellDef> Employee Id.</mat-header-cell>

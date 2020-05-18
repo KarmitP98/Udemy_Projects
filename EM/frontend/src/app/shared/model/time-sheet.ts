@@ -7,6 +7,6 @@ export class TimeSheet {
                public status: string,
                public timeSheetId: number,
                public work: string,
-               public nameId?: string ) {}
+               public name?: string ) {}
 
 }
