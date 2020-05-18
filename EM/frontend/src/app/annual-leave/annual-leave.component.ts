@@ -70,7 +70,7 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
     this.leaveSub = this.leaveService.fetchLeaves( true, this.userId ).subscribe( value => {
       if ( value ) {
         this.leaves = value;
-        this.dataSource = new MatTableDataSource<Leave>( value );
+        this.loadValues();
       }
     } );
   }
@@ -89,7 +89,13 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
                  MONTHS[endDate.getMonth()] + " " + endDate.getDate() + ", " + endDate.getFullYear(), this.leaveForm.value.reason,
                  "Pending", "" );
     this.leaveService.addLeave( tempLeave );
+    this.leaves.push( tempLeave );
+    this.loadValues();
     this.leaveForm.resetForm();
+  }
+
+  loadValues(): void {
+    this.dataSource = new MatTableDataSource<Leave>( this.leaves );
   }
 
 }

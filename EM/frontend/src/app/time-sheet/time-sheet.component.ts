@@ -44,7 +44,7 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
   @ViewChild( "timeForm", { static: false } ) timeForm: NgForm;
   userId: number;
   displayedColumns = [ "userId", "logDate", "work", "startTime", "endTime", "status", "timeSheetId" ];
-  dataSource: MatTableDataSource<any>;
+  dataSource: MatTableDataSource<TimeSheet>;
 
   constructor( private timeSheetService: TimeSheetService, private employeeService: EmployeeService ) { }
 
@@ -59,11 +59,9 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
     this.timeSheetSub = this.timeSheetService.fetchTimeSheets( true, this.userId ).subscribe( value => {
       if ( value ) {
         this.timeSheets = value;
-        this.dataSource = new MatTableDataSource( value );
+        this.loadValues();
       }
     } );
-
-
   }
 
   ngOnDestroy(): void {
@@ -77,7 +75,13 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
                                                 this.timeForm.value.startTime, this.timeForm.value.endTime, "Pending",
                                                 this.allTimeSheets ? this.timeSheets.length : 0, this.timeForm.value.work );
     this.timeSheetService.addTimeSheet( tempSheet );
+    this.timeSheets.push( tempSheet );
+    this.loadValues();
     this.timeForm.resetForm();
+  }
+
+  loadValues(): void {
+    this.dataSource = new MatTableDataSource( this.timeSheets );
   }
 
 }

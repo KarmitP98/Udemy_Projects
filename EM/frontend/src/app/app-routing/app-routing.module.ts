@@ -10,7 +10,6 @@ import { TimeReqComponent } from "../admin/time-req/time-req.component";
 import { AdminReqComponent } from "../admin/admin-req/admin-req.component";
 import { LeaveReqComponent } from "../admin/leave-req/leave-req.component";
 import { AuthGuard } from "../auth.guard";
-import { ProfileComponent } from "../profile/profile.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
@@ -25,8 +24,7 @@ const routes: Routes = [
       { path: "admin-req", component: AdminReqComponent, canActivate: [ AuthGuard ] },
       { path: "leave-req", component: LeaveReqComponent, canActivate: [ AuthGuard ] }
     ]
-  },
-  { path: "profile", component: ProfileComponent, canActivate: [ AuthGuard ] }
+  }
 ];
 
 @NgModule( {

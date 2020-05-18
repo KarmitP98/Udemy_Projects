@@ -13,6 +13,8 @@ export class TimeSheetService {
 
   constructor( private http: HttpClient ) { }
 
+  // Fetch TimeSheets
+  // @current and @userId is used to check if you need timesheets for current employee
   fetchTimeSheets( current: boolean, userId?: number ) {
     return this.http.get( this.timeSheetUrl + EXT ).pipe( map( ( value ) => {
       if ( value ) {
@@ -31,6 +33,7 @@ export class TimeSheetService {
     } ) );
   }
 
+  // Add new TimeSheet and add update the name to key
   addTimeSheet( sheet: TimeSheet ) {
     this.http.post<TimeSheet>( this.timeSheetUrl + EXT, sheet ).subscribe( value => {
       value.name = value.name;

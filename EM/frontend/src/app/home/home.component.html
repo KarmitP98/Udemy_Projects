@@ -4,9 +4,8 @@
   <div class = "row">
     <div class = "col-xs-12 col-md-6 col-lg-offset-3 text-center">
       <hr>
-      <button [routerLink] = "['/time-sheet']" color = "primary"
-              [@rightLoad] mat-raised-button>
-        Time-Sheet
+      <button [@rightLoad] [routerLink] = "['/time-sheet']"
+              color = "accent" mat-raised-button> Time-Sheet
       </button>
       <hr>
     </div>
@@ -15,8 +14,8 @@
   <div class = "row">
     <div class = "col-xs-12 col-md-6 col-lg-offset-3 text-center">
       <hr>
-      <button [routerLink] = "['/annual-leave']" color = "primary"
-              [@leftLoad] mat-raised-button> Annual Leave
+      <button [@leftLoad] [routerLink] = "['/annual-leave']"
+              color = "accent" mat-raised-button> Annual Leave
       </button>
       <hr>
     </div>
@@ -25,9 +24,8 @@
   <div *ngIf = "isAdmin" class = "row">
     <div class = "col-xs-12 col-md-6 col-lg-offset-3 text-center">
       <hr>
-      <button [@rightLoad]
-              [routerLink] = "['/admin']" color = "primary" mat-raised-button>
-        Admin
+      <button [@rightLoad] [routerLink] = "['/admin']" color = "accent"
+              mat-raised-button> Admin
       </button>
       <hr>
     </div>

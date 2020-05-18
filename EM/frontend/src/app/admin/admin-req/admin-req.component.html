@@ -1,5 +1,5 @@
-<div [@tableLoad]>
-  <h3 *ngIf = "emps" class = "text-center">Employee List</h3>
+<div *ngIf = "emps" [@tableLoad]>
+  <h3 class = "text-center">Employee List</h3>
   <br>
 
   <mat-table [dataSource] = "emps">
@@ -66,4 +66,11 @@
             color = "warn" mat-raised-button></button>
   </div>
 
+</div>
+<div *ngIf = "!emps" [@tableLoad]>
+  <br><br><br><br><br>
+  <mat-card>
+    <mat-card-title class = "text-center">No Admin Requests at this time!
+    </mat-card-title>
+  </mat-card>
 </div>

@@ -48,7 +48,7 @@
 <hr>
 <div *ngIf = "timeSheets" [@tableLoad]>
 
-  <mat-table [dataSource] = "timeSheets">
+  <mat-table [dataSource] = "dataSource">
     <!-- User Id Column -->
     <ng-container matColumnDef = "userId">
       <mat-header-cell *matHeaderCellDef> Employee Id.
