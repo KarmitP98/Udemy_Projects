@@ -43,25 +43,48 @@
 </div>
 <br>
 <hr>
-<div *ngIf = "leaves" [@tableLoad]>
-  <table class = "table-responsive">
-    <tr>
-      <th class = "col-lg-1 text-center">User Id</th>
-      <th class = "col-lg-1 text-center">Start Date</th>
-      <th class = "col-lg-1 text-center">End Date</th>
-      <th class = "col-lg-1 text-center">Reason</th>
-      <th class = "col-lg-1 text-center">Status</th>
-      <th class = "col-lg-1 text-center">Leave Id</th>
-    </tr>
-    <br>
-    <tr *ngFor = "let leave of leaves">
-      <td class = "col-lg-1 text-center">{{leave.userId}}</td>
-      <td class = "col-lg-1 text-center">{{leave.startDate}}</td>
-      <td class = "col-lg-1 text-center">{{leave.endDate}}</td>
-      <td class = "col-lg-1 text-center">{{leave.reason}}</td>
-      <td class = "col-lg-1 text-center">{{leave.status}}</td>
-      <td class = "col-lg-1 text-center">{{leave.leaveId}}</td>
-    </tr>
-  </table>
+<div *ngIf = "currentLeaves" [@tableLoad] class = "center">
+
+  <mat-table [dataSource] = "currentLeaves">
+    <!-- User Id Column -->
+    <ng-container matColumnDef = "userId">
+      <mat-header-cell *matHeaderCellDef> Employee Id.</mat-header-cell>
+      <mat-cell *matCellDef = "let timeSheet"> {{timeSheet.userId}} </mat-cell>
+    </ng-container>
+
+    <!-- Start Date Column -->
+    <ng-container matColumnDef = "startDate">
+      <mat-header-cell *matHeaderCellDef> Start Date</mat-header-cell>
+      <mat-cell
+        *matCellDef = "let timeSheet"> {{timeSheet.startDate}} </mat-cell>
+    </ng-container>
+
+    <!-- End Date Column -->
+    <ng-container matColumnDef = "endDate">
+      <mat-header-cell *matHeaderCellDef> End Date</mat-header-cell>
+      <mat-cell *matCellDef = "let timeSheet"> {{timeSheet.endDate}} </mat-cell>
+    </ng-container>
+
+    <!-- Reason Column -->
+    <ng-container matColumnDef = "reason">
+      <mat-header-cell *matHeaderCellDef> Reason</mat-header-cell>
+      <mat-cell *matCellDef = "let timeSheet"> {{timeSheet.reason}} </mat-cell>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef = "status">
+      <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+      <mat-cell *matCellDef = "let timeSheet"> {{timeSheet.status}} </mat-cell>
+    </ng-container>
+
+    <!-- Leave Id Column -->
+    <ng-container matColumnDef = "leaveId">
+      <mat-header-cell *matHeaderCellDef> Leave Id.</mat-header-cell>
+      <mat-cell *matCellDef = "let timeSheet"> {{timeSheet.leaveId}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef = "displayedColumns"></mat-header-row>
+    <mat-row *matRowDef = "let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
 </div>
 

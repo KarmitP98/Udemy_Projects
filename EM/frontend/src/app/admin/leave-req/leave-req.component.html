@@ -1,52 +1,96 @@
-<h3 *ngIf = "leaves" class = "text-center">Leave Requests</h3>
-<br>
-<!--<table mat-table [dataSource] = "leaves" class = "mat-elevation-z8">-->
-<!--  <ng-container matColumnDef = "userId">-->
-<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>User Id</mat-header-cell>-->
-<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.userId}}</mat-cell>-->
-<!--  </ng-container>-->
-<!--  <ng-container matColumnDef = "startDate">-->
-<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>Start Date</mat-header-cell>-->
-<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.startDate}}</mat-cell>-->
-<!--  </ng-container>-->
-<!--  <ng-container matColumnDef = "endDate">-->
-<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>End Date</mat-header-cell>-->
-<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.endDate}}</mat-cell>-->
-<!--  </ng-container>-->
-<!--  <ng-container matColumnDef = "reason">-->
-<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>Reason</mat-header-cell>-->
-<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.reason}}</mat-cell>-->
-<!--  </ng-container>-->
-<!--  <ng-container matColumnDef = "status">-->
-<!--    <mat-header-cell mat-header-cell *matHeaderCellDef>Status</mat-header-cell>-->
-<!--    <mat-cell mat-cell *matCellDef = "let element">{{element.status}}</mat-cell>-->
-<!--  </ng-container>-->
+<div [@tableLoad]>
+  <h3 *ngIf = "leaves" class = "text-center">Leave Requests</h3>
+  <br>
+  <mat-table [dataSource] = "leaves" mat-table>
 
-<!--  <mat-header-row mat-header-row *matHeaderRowDef = "displayedColumns"></mat-header-row>-->
-<!--  <mat-row mat-row *matRowDef = "let row; columns: displayedColumns;"></mat-row>-->
+    <!--    Select Column -->
+    <ng-container matColumnDef = "select">
+      <mat-header-cell *matHeaderCellDef> Select</mat-header-cell>
+      <mat-cell *matCellDef = "let element">
+        <mat-radio-group [(ngModel)] = "selectedReq">
+          <mat-radio-button [value] = "element"></mat-radio-button>
+        </mat-radio-group>
+      </mat-cell>
+    </ng-container>
 
-<!--</table>-->
-<table *ngIf = "leaves" class = "table-responsive">
-  <tr>
-    <th class = "col-lg-1 text-center">User Id</th>
-    <th class = "col-lg-1 text-center">Start Date</th>
-    <th class = "col-lg-1 text-center">End Date</th>
-    <th class = "col-lg-1 text-center">Reason</th>
-    <th class = "col-lg-1 text-center">Status</th>
-    <th class = "col-lg-1 text-center">Response</th>
-  </tr>
-  <tr *ngFor = "let leave of leaves; let i = index" id = "i">
-    <td class = "col-lg-1 text-center">{{leave.userId}}</td>
-    <td class = "col-lg-1 text-center">{{leave.startDate}}</td>
-    <td class = "col-lg-1 text-center">{{leave.endDate}}</td>
-    <td class = "col-lg-1 text-center">{{leave.reason}}</td>
-    <td class = "col-lg-1 text-center">{{leave.status}}</td>
-    <td class = "col-lg-1 text-center">
-      <button (click) = "changeStatus(false,leave)" color = "warn" mat-button>D
-      </button>
-      <button (click) = "changeStatus(true,leave)" color = "primary" mat-button>
-        A
-      </button>
-    </td>
-  </tr>
-</table>
+    <ng-container matColumnDef = "userId">
+      <mat-header-cell *matHeaderCellDef mat-header-cell>User Id
+      </mat-header-cell>
+      <mat-cell *matCellDef = "let element"
+                mat-cell>{{element.userId}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef = "startDate">
+      <mat-header-cell *matHeaderCellDef mat-header-cell>Start Date
+      </mat-header-cell>
+      <mat-cell *matCellDef = "let element"
+                mat-cell>{{element.startDate}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef = "endDate">
+      <mat-header-cell *matHeaderCellDef mat-header-cell>End Date
+      </mat-header-cell>
+      <mat-cell *matCellDef = "let element"
+                mat-cell>{{element.endDate}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef = "reason">
+      <mat-header-cell *matHeaderCellDef mat-header-cell>Reason
+      </mat-header-cell>
+      <mat-cell *matCellDef = "let element"
+                mat-cell>{{element.reason}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef = "status">
+      <mat-header-cell *matHeaderCellDef mat-header-cell>Status
+      </mat-header-cell>
+      <mat-cell *matCellDef = "let element"
+                mat-cell>{{element.status}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef = "displayedColumns"
+                    mat-header-row></mat-header-row>
+    <mat-row *matRowDef = "let row; columns: displayedColumns;"
+             mat-row></mat-row>
+
+  </mat-table>
+
+  <br>
+  <br>
+  <div class = "text-center">
+    <button (click) = "changeStatus(true)" [disabled] = "!selectedReq"
+            [textContent] = "'Approve'"
+            color = "accent" mat-raised-button></button>
+    ||
+    <button (click) = "changeStatus(false)" [disabled] = "!selectedReq"
+            [textContent] = "'Decline'"
+            color = "warn" mat-raised-button></button>
+  </div>
+
+  <!--  <table *ngIf = "currentLeaves" class = "table-responsive">-->
+  <!--    <tr>-->
+  <!--      <th class = "col-lg-1 text-center">User Id</th>-->
+  <!--      <th class = "col-lg-1 text-center">Start Date</th>-->
+  <!--      <th class = "col-lg-1 text-center">End Date</th>-->
+  <!--      <th class = "col-lg-1 text-center">Reason</th>-->
+  <!--      <th class = "col-lg-1 text-center">Status</th>-->
+  <!--      <th class = "col-lg-1 text-center">Response</th>-->
+  <!--    </tr>-->
+  <!--    <tr *ngFor = "let leave of currentLeaves; let i = index" id = "i">-->
+  <!--      <td class = "col-lg-1 text-center">{{leave.userId}}</td>-->
+  <!--      <td class = "col-lg-1 text-center">{{leave.startDate}}</td>-->
+  <!--      <td class = "col-lg-1 text-center">{{leave.endDate}}</td>-->
+  <!--      <td class = "col-lg-1 text-center">{{leave.reason}}</td>-->
+  <!--      <td class = "col-lg-1 text-center">{{leave.status}}</td>-->
+  <!--      <td class = "col-lg-1 text-center">-->
+  <!--        <button (click) = "changeStatus(false,leave)" color = "warn" mat-button>-->
+  <!--          D-->
+  <!--        </button>-->
+  <!--        <button (click) = "changeStatus(true,leave)" color = "primary"-->
+  <!--                mat-button>-->
+  <!--          A-->
+  <!--        </button>-->
+  <!--      </td>-->
+  <!--    </tr>-->
+  <!--  </table>-->
+</div>

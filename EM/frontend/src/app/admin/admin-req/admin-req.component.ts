@@ -2,11 +2,23 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ADMIN_STATUS, EmployeeService } from "../../shared/employee.service";
 import { Employee } from "../../shared/model/employee.model";
 import { Subscription } from "rxjs";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 
 @Component( {
               selector: "app-admin-req",
               templateUrl: "./admin-req.component.html",
-              styleUrls: [ "./admin-req.component.css" ]
+              styleUrls: [ "./admin-req.component.css" ],
+              animations: [
+                trigger( "tableLoad", [
+                  state( "in", style( {
+                                        opacity: 1,
+                                        transform: "translateX(0)"
+                                      } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0, transform: "translateX(-100px)" } ),
+                    animate( 100 )
+                  ] )
+                ] ) ]
             } )
 export class AdminReqComponent implements OnInit, OnDestroy {
 
@@ -15,6 +27,8 @@ export class AdminReqComponent implements OnInit, OnDestroy {
   userId: number;
   empSub: Subscription;
   curEmpSub: Subscription;
+  selectedReq: Employee;
+  displayedColumns = [ "select", "userId", "abv", "userName", "userEmail", "adminStatus" ];
 
   constructor( private employeeService: EmployeeService ) { }
 
@@ -35,11 +49,12 @@ export class AdminReqComponent implements OnInit, OnDestroy {
     this.empSub.unsubscribe();
   }
 
-  changeAdmin( response: boolean, emp: Employee ): void {
+  changeAdmin( response: boolean ): void {
 
-    emp.adminStatus = response ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
-    emp.isAdmin = response;
+    this.selectedReq.adminStatus = response ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
+    this.selectedReq.isAdmin = response;
 
-    this.employeeService.updateEmployee( emp, emp.userId );
+    this.employeeService.updateEmployee( this.selectedReq, this.selectedReq.userId );
+    this.selectedReq = null;
   }
 }

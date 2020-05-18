@@ -3,18 +3,30 @@ import { LeaveService } from "../../shared/leave.service";
 import { Leave } from "../../shared/model/leaves.model";
 import { Subscription } from "rxjs";
 import { ADMIN_STATUS } from "../../shared/employee.service";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 
 @Component( {
               selector: "app-leave-req",
               templateUrl: "./leave-req.component.html",
-              styleUrls: [ "./leave-req.component.css" ]
+              styleUrls: [ "./leave-req.component.css" ],
+              animations: [
+                trigger( "tableLoad", [
+                  state( "in", style( {
+                                        opacity: 1,
+                                        transform: "translateX(0)"
+                                      } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0, transform: "translateX(-100px)" } ),
+                    animate( 100 )
+                  ] )
+                ] ) ]
             } )
 export class LeaveReqComponent implements OnInit, OnDestroy {
 
   leaves: Leave[] = [];
   leaveSub: Subscription;
-  displayedColumns: string[] =
-    [ "userId", "startDate", "endDate", "reason", "status" ];
+  displayedColumns: string[] = [ "select", "userId", "startDate", "endDate", "reason", "status" ];
+  selectedReq: Leave;
 
   constructor( private leaveService: LeaveService ) { }
 
@@ -28,8 +40,9 @@ export class LeaveReqComponent implements OnInit, OnDestroy {
     this.leaveSub.unsubscribe();
   }
 
-  changeStatus( b: boolean, leave: Leave ): void {
-    leave.status = b ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
-    this.leaveService.updateLeave( leave, leave.leaveId );
+  changeStatus( b: boolean ): void {
+    this.selectedReq.status = b ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
+    this.leaveService.updateLeave( this.selectedReq, this.selectedReq.leaveId );
+    this.selectedReq = null;
   }
 }

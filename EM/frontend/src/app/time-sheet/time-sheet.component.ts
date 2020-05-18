@@ -6,6 +6,7 @@ import { NgForm } from "@angular/forms";
 import { EmployeeService } from "../shared/employee.service";
 import { MONTHS } from "../annual-leave/annual-leave.component";
 import { animate, state, style, transition, trigger } from "@angular/animations";
+import { MatTableDataSource } from "@angular/material";
 
 @Component( {
               selector: "app-time-sheet",
@@ -38,24 +39,32 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
 
   timeSheetSub: Subscription;
   empSub: Subscription;
-  public timeSheets: TimeSheet[] = [];
+  timeSheets: TimeSheet[] = [];
+  allTimeSheets: TimeSheet[] = [];
   @ViewChild( "timeForm", { static: false } ) timeForm: NgForm;
   userId: number;
-  today = new Date();
+  displayedColumns = [ "userId", "logDate", "work", "startTime", "endTime", "status", "timeSheetId" ];
+  dataSource: MatTableDataSource<any>;
 
   constructor( private timeSheetService: TimeSheetService, private employeeService: EmployeeService ) { }
 
   ngOnInit() {
 
     this.empSub = this.employeeService.employeeSubject.subscribe( value => {
-      this.userId = value.userId;
-    } );
-
-    this.timeSheetSub = this.timeSheetService.fetchTimeSheets( true, this.userId ).subscribe( value => {
       if ( value ) {
-        this.timeSheets = value;
+        this.userId = value.userId;
       }
     } );
+
+    this.timeSheetSub = this.timeSheetService.fetchTimeSheets( false ).subscribe( value => {
+      if ( value ) {
+        this.allTimeSheets = value;
+        this.timeSheets = this.getCurrentTimeSheet();
+        this.dataSource = new MatTableDataSource( this.timeSheets );
+      }
+    } );
+
+
   }
 
   ngOnDestroy(): void {
@@ -67,9 +76,16 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
     const date = this.timeForm.value.date;
     const tempSheet: TimeSheet = new TimeSheet( this.userId, MONTHS[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear(),
                                                 this.timeForm.value.startTime, this.timeForm.value.endTime, "Pending",
-                                                this.timeSheets ? this.timeSheets.length : 0, this.timeForm.value.work );
-    this.timeSheets.push( tempSheet );
-    this.timeSheetService.addTimeSheet( this.timeSheets );
+                                                this.allTimeSheets ? this.allTimeSheets.length : 0, this.timeForm.value.work );
+    this.allTimeSheets.push( tempSheet );
+    this.timeSheetService.addTimeSheet( this.allTimeSheets );
     this.timeForm.resetForm();
   }
+
+  getCurrentTimeSheet() {
+    return this.allTimeSheets.filter( value => {
+      return value.userId === this.userId;
+    } );
+  }
+
 }

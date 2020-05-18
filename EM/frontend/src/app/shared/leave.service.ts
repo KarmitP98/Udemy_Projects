@@ -29,7 +29,7 @@ export class LeaveService {
   }
 
   addLeave( leaves: Leave[] ) {
-    this.http.put<Leave[]>( this.leaveServerUrl + EXT, leaves, { observe: "response" } ).subscribe();
+    this.http.put<Leave[]>( this.leaveServerUrl + EXT, leaves ).subscribe();
   }
 
   updateLeave( leave: Leave, leaveId: number ) {

@@ -28,7 +28,7 @@ export class TimeSheetService {
   }
 
   addTimeSheet( sheets: TimeSheet[] ) {
-    this.http.put<TimeSheet>( this.timeSheetUrl + EXT, sheets ).subscribe();
+    this.http.put<TimeSheet[]>( this.timeSheetUrl + EXT, sheets ).subscribe();
   }
 
   updateTimeSheet( sheet: TimeSheet, sheetId: number ) {

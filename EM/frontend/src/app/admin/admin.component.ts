@@ -15,16 +15,6 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
                     style( { opacity: 0, transform: "translateY(-25px)" } ),
                     animate( 100 )
                   ] )
-                ] ),
-                trigger( "tableLoad", [
-                  state( "in", style( {
-                                        opacity: 1,
-                                        transform: "translateY(0)"
-                                      } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0, transform: "translateY(25px)" } ),
-                    animate( 100 )
-                  ] )
                 ] )
               ]
             } )

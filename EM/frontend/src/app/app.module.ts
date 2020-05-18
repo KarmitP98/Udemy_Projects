@@ -18,17 +18,21 @@ import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner.compo
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
   MatButtonModule,
+  MatCheckboxModule,
   MatDatepickerModule,
   MatExpansionModule,
   MatInputModule,
   MatNativeDateModule,
   MatOptionModule,
+  MatRadioModule,
   MatSelectModule,
   MatSlideToggleModule,
   MatSnackBarModule,
+  MatSortModule,
   MatTableModule,
   MatToolbarModule
 } from "@angular/material";
+import { ProfileComponent } from "./profile/profile.component";
 
 @NgModule( {
              declarations: [
@@ -42,7 +46,8 @@ import {
                TimeReqComponent,
                LeaveReqComponent,
                AdminReqComponent,
-               LoadingSpinnerComponent
+               LoadingSpinnerComponent,
+               ProfileComponent
 
              ],
              imports: [
@@ -61,7 +66,10 @@ import {
                MatExpansionModule,
                MatTableModule,
                MatSnackBarModule,
-               MatToolbarModule
+               MatToolbarModule,
+               MatCheckboxModule,
+               MatSortModule,
+               MatRadioModule
              ],
              providers: [],
              bootstrap: [ AppComponent ]

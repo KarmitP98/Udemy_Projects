@@ -6,6 +6,7 @@ export class Employee {
                public userEmail: string,
                public isAdmin: boolean,
                public adminStatus: string,
-               public password: string ) {}
+               public password: string,
+               public nameId?: string ) {}
 
 }

@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     const emp = this.getEmp( this.form.value.email, this.form.value.password );
-    const userId = this.form.value.userId;
     const email = this.form.value.email;
     const password = this.form.value.password;
     const abv = this.form.value.abv;
@@ -53,9 +52,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     } else {
       if ( !emp ) {
-        const newEmp: Employee = new Employee( userId, abv, name, email, isAdmin, ADMIN_STATUS.pending, password );
+        const newEmp: Employee = new Employee( this.emps ? this.emps.length : 0, abv, name, email, false, ADMIN_STATUS.pending, password );
         this.emps.push( newEmp );
-        this.employeeService.storeEmployees( this.emps );
+        this.employeeService.storeEmployee( this.emps );
         this.employeeService.login( newEmp );
       } else {
         this.showError( "This user already exists !" );
@@ -69,10 +68,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // Check if the employee data matches any current employee
   getEmp( email: string, password: string ): Employee {
-    for ( let emp of this.emps ) {
-      if ( emp !== null ) {
-        if ( emp.userEmail === email && emp.password === password ) {
-          return emp;
+    if ( this.emps ) {
+      for ( let emp of this.emps ) {
+        if ( emp !== null ) {
+          if ( emp.userEmail === email && emp.password === password ) {
+            return emp;
+          }
         }
       }
     }

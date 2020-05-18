@@ -19,7 +19,6 @@ export class EmployeeService implements OnInit {
 
   employeeChanged = new Subject<Employee[]>();
   employeeServerUrl = "https://employee-managment-f5252.firebaseio.com/employees";
-  private employees: Employee[] = [];
   employeeSubject = new BehaviorSubject<Employee>( null );
 
   constructor( private http: HttpClient, private router: Router ) { }
@@ -33,10 +32,11 @@ export class EmployeeService implements OnInit {
   }
 
   // Store employee data to the server
-  storeEmployees( employees: Employee[] ) {
+  storeEmployee( employees: Employee[] ) {
     this.http.put<Employee[]>( this.employeeServerUrl + EXT, employees ).subscribe();
   }
 
+  // Update employee data
   updateEmployee( employee: Employee, userId: number ): void {
     this.http.patch<Employee>( this.employeeServerUrl + "/" + userId + EXT, employee ).subscribe();
   }
