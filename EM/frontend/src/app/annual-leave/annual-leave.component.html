@@ -4,17 +4,17 @@
     <div class = "text-center">
       <h3>Leave Application</h3><br>
     </div>
-    <form #leaveForm = "ngForm" (ngSubmit) = "onSubmit()">
-      <mat-form-field appearance = "outline">
+    <form #leaveForm = "ngForm" (ngSubmit) = "onSubmit()" class = "text-center">
+      <mat-form-field appearance = "outline" class = "half">
         <mat-label>Start Date</mat-label>
         <input [matDatepicker] = "startDate" matInput name = "startDate" ngModel
                required>
-        <mat-datepicker-toggle [for] = "startDate"
-                               matSuffix></mat-datepicker-toggle>
+        <mat-datepicker-toggle [for] = "startDate" matSuffix>
+        </mat-datepicker-toggle>
         <mat-datepicker #startDate></mat-datepicker>
       </mat-form-field>
       <br>
-      <mat-form-field appearance = "outline">
+      <mat-form-field appearance = "outline" class = "half">
         <mat-label>End Date</mat-label>
         <input [matDatepicker] = "endDate" matInput name = "endDate" ngModel
                required>
@@ -23,7 +23,7 @@
         <mat-datepicker #endDate></mat-datepicker>
       </mat-form-field>
       <br>
-      <mat-form-field appearance = "outline">
+      <mat-form-field appearance = "outline" class = "half">
         <mat-label>Reason</mat-label>
         <mat-select name = "reason" ngModel = "Sick Leave" required>
           <mat-option value = "Sick Leave">Sick Leave</mat-option>

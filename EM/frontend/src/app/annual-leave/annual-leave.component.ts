@@ -6,6 +6,7 @@ import { Leave } from "../shared/model/leaves.model";
 import { NgForm } from "@angular/forms";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatTableDataSource } from "@angular/material";
+import { APPSTYLE } from "../shared/model/style";
 
 export const MONTHS = [ "January",
                         "February",
@@ -56,6 +57,7 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
   @ViewChild( "leaveForm", { static: false } ) leaveForm: NgForm;
   displayedColumns = [ "userId", "startDate", "endDate", "reason", "status", "leaveId" ];
   dataSource: MatTableDataSource<Leave>;
+  appStyle = APPSTYLE;
 
   constructor( private leaveService: LeaveService, private employeeService: EmployeeService ) { }
 

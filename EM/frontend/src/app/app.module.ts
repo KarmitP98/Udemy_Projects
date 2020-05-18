@@ -17,6 +17,7 @@ import { AdminReqComponent } from "./admin/admin-req/admin-req.component";
 import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinner.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
+  MatAutocompleteModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
@@ -69,7 +70,8 @@ import {
                MatCheckboxModule,
                MatSortModule,
                MatRadioModule,
-               MatCardModule
+               MatCardModule,
+               MatAutocompleteModule
              ],
              providers: [],
              bootstrap: [ AppComponent ]

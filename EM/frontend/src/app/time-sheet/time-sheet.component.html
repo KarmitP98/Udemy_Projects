@@ -5,31 +5,34 @@
       <h3>Submit a time sheet</h3>
       <br>
     </div>
-    <form #timeForm = "ngForm" (ngSubmit) = "onSubmit()">
-      <mat-form-field appearance = "outline">
+    <form #timeForm = "ngForm" (ngSubmit) = "onSubmit()" class = "text-center">
+      <mat-form-field appearance = "outline" class = "half">
         <mat-label>Log Date</mat-label>
-        <input [matDatepicker] = "Date" matInput name = "date" ngModel
-               required>
-        <mat-datepicker-toggle [for] = "Date"
-                               matSuffix></mat-datepicker-toggle>
+        <input [matDatepicker] = "Date" matInput name = "date" ngModel required>
+        <mat-datepicker-toggle [for] = "Date" matSuffix></mat-datepicker-toggle>
         <mat-datepicker #Date></mat-datepicker>
       </mat-form-field>
       <br>
-      <mat-form-field appearance = "outline">
+      <mat-form-field appearance = "outline" class = "half">
         <mat-label>Work</mat-label>
-        <input #work [value] = "'Default Work'"
-               matInput name = "work" ngModel
+        <input #work [matAutocomplete] = "auto" [value] = "'Default Work'"
+               matInput name = "work"
                placeholder = "Ex. Excel Worksheet, Mailing, etc."
-               required type = "text">
+               ngModel required type = "text">
+        <mat-autocomplete #auto = "matAutocomplete">
+          <mat-option *ngFor = "let option of options" [value] = "option">
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <br>
-      <mat-form-field appearance = "outline">
+      <mat-form-field appearance = "outline" class = "half">
         <mat-label>Start Time</mat-label>
         <input #startTime matInput name = "startTime" ngModel
                required type = "time" value = "13:00">
       </mat-form-field>
       <br>
-      <mat-form-field appearance = "outline">
+      <mat-form-field appearance = "outline" class = "half">
         <mat-label>End Time</mat-label>
         <input #endTime matInput name = "endTime" ngModel
                required type = "time" value = "13:00">

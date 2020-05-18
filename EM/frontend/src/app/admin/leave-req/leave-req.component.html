@@ -1,70 +1,72 @@
-<div *ngIf = "leaves" [@tableLoad]>
-  <h3 class = "text-center">Leave Requests</h3>
-  <br>
-  <mat-table [dataSource] = "leaves" mat-table>
+<div *ngIf = "leaves">
+  <div [@tableLoad]>
+    <h3 class = "text-center">Leave Requests</h3>
+    <br>
+    <mat-table [dataSource] = "leaves" mat-table>
 
-    <!--    Select Column -->
-    <ng-container matColumnDef = "select">
-      <mat-header-cell *matHeaderCellDef> Select</mat-header-cell>
-      <mat-cell *matCellDef = "let element">
-        <mat-radio-group [(ngModel)] = "selectedReq">
-          <mat-radio-button [value] = "element"></mat-radio-button>
-        </mat-radio-group>
-      </mat-cell>
-    </ng-container>
+      <!--    Select Column -->
+      <ng-container matColumnDef = "select">
+        <mat-header-cell *matHeaderCellDef> Select</mat-header-cell>
+        <mat-cell *matCellDef = "let element">
+          <mat-radio-group [(ngModel)] = "selectedReq">
+            <mat-radio-button [value] = "element"></mat-radio-button>
+          </mat-radio-group>
+        </mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef = "userId">
-      <mat-header-cell *matHeaderCellDef mat-header-cell>User Id
-      </mat-header-cell>
-      <mat-cell *matCellDef = "let element"
-                mat-cell>{{element.userId}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef = "userId">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>User Id
+        </mat-header-cell>
+        <mat-cell *matCellDef = "let element"
+                  mat-cell>{{element.userId}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef = "startDate">
-      <mat-header-cell *matHeaderCellDef mat-header-cell>Start Date
-      </mat-header-cell>
-      <mat-cell *matCellDef = "let element"
-                mat-cell>{{element.startDate}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef = "startDate">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Start Date
+        </mat-header-cell>
+        <mat-cell *matCellDef = "let element"
+                  mat-cell>{{element.startDate}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef = "endDate">
-      <mat-header-cell *matHeaderCellDef mat-header-cell>End Date
-      </mat-header-cell>
-      <mat-cell *matCellDef = "let element"
-                mat-cell>{{element.endDate}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef = "endDate">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>End Date
+        </mat-header-cell>
+        <mat-cell *matCellDef = "let element"
+                  mat-cell>{{element.endDate}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef = "reason">
-      <mat-header-cell *matHeaderCellDef mat-header-cell>Reason
-      </mat-header-cell>
-      <mat-cell *matCellDef = "let element"
-                mat-cell>{{element.reason}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef = "reason">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Reason
+        </mat-header-cell>
+        <mat-cell *matCellDef = "let element"
+                  mat-cell>{{element.reason}}</mat-cell>
+      </ng-container>
 
-    <ng-container matColumnDef = "status">
-      <mat-header-cell *matHeaderCellDef mat-header-cell>Status
-      </mat-header-cell>
-      <mat-cell *matCellDef = "let element"
-                mat-cell>{{element.status}}</mat-cell>
-    </ng-container>
+      <ng-container matColumnDef = "status">
+        <mat-header-cell *matHeaderCellDef mat-header-cell>Status
+        </mat-header-cell>
+        <mat-cell *matCellDef = "let element"
+                  mat-cell>{{element.status}}</mat-cell>
+      </ng-container>
 
-    <mat-header-row *matHeaderRowDef = "displayedColumns"
-                    mat-header-row></mat-header-row>
-    <mat-row *matRowDef = "let row; columns: displayedColumns;"
-             mat-row></mat-row>
+      <mat-header-row *matHeaderRowDef = "displayedColumns"
+                      mat-header-row></mat-header-row>
+      <mat-row *matRowDef = "let row; columns: displayedColumns;"
+               mat-row></mat-row>
 
-  </mat-table>
+    </mat-table>
 
-  <br>
-  <br>
-  <div class = "text-center">
-    <button (click) = "changeStatus(true)" [disabled] = "!selectedReq"
-            [textContent] = "'Approve'"
-            color = "accent" mat-raised-button></button>
-    ||
-    <button (click) = "changeStatus(false)" [disabled] = "!selectedReq"
-            [textContent] = "'Decline'"
-            color = "warn" mat-raised-button></button>
+    <br>
+    <br>
+    <div class = "text-center">
+      <button (click) = "changeStatus(true)" [disabled] = "!selectedReq"
+              [textContent] = "'Approve'"
+              color = "accent" mat-raised-button></button>
+      ||
+      <button (click) = "changeStatus(false)" [disabled] = "!selectedReq"
+              [textContent] = "'Decline'"
+              color = "warn" mat-raised-button></button>
+    </div>
   </div>
 </div>
 <div *ngIf = "!leaves" [@tableLoad]>

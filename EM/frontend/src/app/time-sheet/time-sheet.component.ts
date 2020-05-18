@@ -45,6 +45,8 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
   userId: number;
   displayedColumns = [ "userId", "logDate", "work", "startTime", "endTime", "status", "timeSheetId" ];
   dataSource: MatTableDataSource<TimeSheet>;
+  options = [ "ACE 101", "CFF 102", "CFF 209", "ZAS 392", "TTP 119", "DTF 476" ];
+  today = new Date();
 
   constructor( private timeSheetService: TimeSheetService, private employeeService: EmployeeService ) { }
 
