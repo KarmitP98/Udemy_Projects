@@ -4,6 +4,7 @@ import { Leave } from "../../shared/model/leaves.model";
 import { Subscription } from "rxjs";
 import { ADMIN_STATUS } from "../../shared/employee.service";
 import { animate, state, style, transition, trigger } from "@angular/animations";
+import { MatTableDataSource } from "@angular/material";
 
 @Component( {
               selector: "app-leave-req",
@@ -19,7 +20,15 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
                     style( { opacity: 0, transform: "translateX(-100px)" } ),
                     animate( 100 )
                   ] )
-                ] ) ]
+                ] ),
+                trigger( "load", [
+                  state( "in", style( { opacity: 1 } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0 } ),
+                    animate( 200 )
+                  ] )
+                ] )
+              ]
             } )
 export class LeaveReqComponent implements OnInit, OnDestroy {
 
@@ -27,12 +36,14 @@ export class LeaveReqComponent implements OnInit, OnDestroy {
   leaveSub: Subscription;
   displayedColumns: string[] = [ "select", "userId", "startDate", "endDate", "reason", "status" ];
   selectedReq: Leave;
+  dataSource: MatTableDataSource<Leave>;
 
   constructor( private leaveService: LeaveService ) { }
 
   ngOnInit() {
     this.leaveSub = this.leaveService.fetchLeaves( false ).subscribe( value => {
       this.leaves = value;
+      this.loadValues();
     } );
   }
 
@@ -44,5 +55,18 @@ export class LeaveReqComponent implements OnInit, OnDestroy {
     this.selectedReq.status = b ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
     this.leaveService.updateLeave( this.selectedReq, this.selectedReq.name );
     this.selectedReq = null;
+  }
+
+  removeReq(): void {
+    this.leaveService.removeLeave( this.selectedReq.name );
+    this.leaves = this.leaves.filter( value => {
+      return value.name !== this.selectedReq.name;
+    } );
+    this.loadValues();
+    this.selectedReq = null;
+  }
+
+  loadValues() {
+    this.dataSource = new MatTableDataSource<Leave>( this.leaves );
   }
 }

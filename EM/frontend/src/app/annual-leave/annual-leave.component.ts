@@ -45,6 +45,13 @@ export const MONTHS = [ "January",
                     style( { opacity: 0, transform: "translateY(25px)" } ),
                     animate( 100 )
                   ] )
+                ] ),
+                trigger( "load", [
+                  state( "in", style( { opacity: 1 } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0 } ),
+                    animate( 200 )
+                  ] )
                 ] )
               ]
             } )
@@ -58,6 +65,8 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
   displayedColumns = [ "userId", "startDate", "endDate", "reason", "status", "leaveId" ];
   dataSource: MatTableDataSource<Leave>;
   appStyle = APPSTYLE;
+  minDate = new Date();
+  date: Date;
 
   constructor( private leaveService: LeaveService, private employeeService: EmployeeService ) { }
 

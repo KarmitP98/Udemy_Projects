@@ -1,4 +1,4 @@
-<div [@formLoad] class = "row">
+<div [@load] class = "row">
   <div class = "col-xs-12 col-md-6 col-lg-offset-3">
     <hr>
     <div class = "text-center">
@@ -28,14 +28,14 @@
       <br>
       <mat-form-field appearance = "outline" class = "half">
         <mat-label>Start Time</mat-label>
-        <input #startTime matInput name = "startTime" ngModel
-               required type = "time" value = "13:00">
+        <input #startTime [(ngModel)] = "time" matInput name = "startTime"
+               required type = "time">
       </mat-form-field>
       <br>
       <mat-form-field appearance = "outline" class = "half">
         <mat-label>End Time</mat-label>
         <input #endTime matInput name = "endTime" ngModel
-               required type = "time" value = "13:00">
+               [min] = "time" [value] = "time" required type = "time">
       </mat-form-field>
       <br>
       <mat-action-row>
@@ -49,7 +49,7 @@
 </div>
 <br>
 <hr>
-<div *ngIf = "timeSheets" [@tableLoad]>
+<div *ngIf = "timeSheets" [@load]>
 
   <mat-table [dataSource] = "dataSource">
     <!-- User Id Column -->

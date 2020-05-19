@@ -1,9 +1,9 @@
 <div *ngIf = "emps">
-  <div [@tableLoad]>
+  <div [@load]>
     <h3 class = "text-center">Employee List</h3>
     <br>
 
-    <mat-table [dataSource] = "emps">
+    <mat-table [dataSource] = "dataSource">
       <!--    Select Column -->
       <ng-container matColumnDef = "select">
         <mat-header-cell *matHeaderCellDef> Select</mat-header-cell>
@@ -61,19 +61,21 @@
     <br>
     <div class = "text-center">
       <button (click) = "changeAdmin(true)" [disabled] = "!selectedReq"
-              [textContent] = "'Approve'"
-              color = "accent" mat-raised-button></button>
+              [textContent] = "'Approve'" color = "primary" mat-raised-button>
+      </button>
       ||
       <button (click) = "changeAdmin(false)" [disabled] = "!selectedReq"
-              [textContent] = "'Decline'"
-              color = "warn" mat-raised-button></button>
+              [textContent] = "'Decline'" color = "accent" mat-raised-button>
+
+      </button>
     </div>
   </div>
 </div>
-<div *ngIf = "!emps" [@tableLoad]>
+<div *ngIf = "!emps" [@load]>
   <br><br><br><br><br>
   <mat-card>
-    <mat-card-title class = "text-center">No Admin Requests at this time!
+    <mat-card-title class = "text-center">
+      No Admin Requests at this time!
     </mat-card-title>
   </mat-card>
 </div>

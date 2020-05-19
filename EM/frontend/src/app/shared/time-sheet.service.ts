@@ -45,4 +45,8 @@ export class TimeSheetService {
     this.http.patch<TimeSheet>( this.timeSheetUrl + "/" + sheetName + EXT, sheet ).subscribe();
   }
 
+  removeTimeSheet( sheetName: string ) {
+    this.http.delete( this.timeSheetUrl + "/" + sheetName + EXT ).subscribe();
+  }
+
 }

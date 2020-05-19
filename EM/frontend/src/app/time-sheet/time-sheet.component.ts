@@ -32,6 +32,13 @@ import { MatTableDataSource } from "@angular/material";
                     style( { opacity: 0, transform: "translateY(25px)" } ),
                     animate( 100 )
                   ] )
+                ] ),
+                trigger( "load", [
+                  state( "in", style( { opacity: 1 } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0 } ),
+                    animate( 200 )
+                  ] )
                 ] )
               ]
             } )
@@ -46,7 +53,8 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
   displayedColumns = [ "userId", "logDate", "work", "startTime", "endTime", "status", "timeSheetId" ];
   dataSource: MatTableDataSource<TimeSheet>;
   options = [ "ACE 101", "CFF 102", "CFF 209", "ZAS 392", "TTP 119", "DTF 476" ];
-  today = new Date();
+  time: string;
+  morning = new Date().getTime().toString();
 
   constructor( private timeSheetService: TimeSheetService, private employeeService: EmployeeService ) { }
 

@@ -5,11 +5,21 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Employee } from "../shared/model/employee.model";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 
 @Component( {
               selector: "app-login",
               templateUrl: "./login.component.html",
-              styleUrls: [ "./login.component.css" ]
+              styleUrls: [ "./login.component.css" ],
+              animations: [
+                trigger( "load", [
+                  state( "in", style( { opacity: 1 } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0 } ),
+                    animate( 200 )
+                  ] )
+                ] )
+              ]
             } )
 export class LoginComponent implements OnInit, OnDestroy {
 

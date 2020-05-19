@@ -1,8 +1,8 @@
-<div *ngIf = "leaves">
-  <div [@tableLoad]>
+<div *ngIf = "leaves" [@load]>
+  <div>
     <h3 class = "text-center">Leave Requests</h3>
     <br>
-    <mat-table [dataSource] = "leaves" mat-table>
+    <mat-table [dataSource] = "dataSource" mat-table>
 
       <!--    Select Column -->
       <ng-container matColumnDef = "select">
@@ -66,10 +66,14 @@
       <button (click) = "changeStatus(false)" [disabled] = "!selectedReq"
               [textContent] = "'Decline'"
               color = "warn" mat-raised-button></button>
+      ||
+      <button (click) = "removeReq()" [disabled] = "!selectedReq"
+              [textContent] = "'Remove'"
+              color = "warn" mat-raised-button></button>
     </div>
   </div>
 </div>
-<div *ngIf = "!leaves" [@tableLoad]>
+<div *ngIf = "!leaves" [@load]>
   <br><br><br><br><br>
   <mat-card>
     <mat-card-title class = "text-center">No Leave Requests at this

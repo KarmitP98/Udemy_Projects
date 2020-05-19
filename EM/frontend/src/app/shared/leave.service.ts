@@ -44,4 +44,8 @@ export class LeaveService {
     this.http.patch<Leave>( this.leaveServerUrl + "/" + leaveName + EXT, leave ).subscribe();
   }
 
+  removeLeave( leaveName: string ) {
+    this.http.delete( this.leaveServerUrl + "/" + leaveName + EXT ).subscribe();
+  }
+
 }

@@ -26,6 +26,13 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
                     style( { opacity: 0, transform: "translateX(25px)" } ),
                     animate( 100 )
                   ] )
+                ] ),
+                trigger( "load", [
+                  state( "in", style( { opacity: 1 } ) ),
+                  transition( "void => *", [
+                    style( { opacity: 0 } ),
+                    animate( 200 )
+                  ] )
                 ] )
               ]
             } )

@@ -1,10 +1,10 @@
 <br>
 <br>
-<div class = "container">
+<div [@load] class = "container">
   <div class = "row">
     <div class = "col-xs-12 col-md-6 col-lg-offset-3 text-center">
       <hr>
-      <button [@rightLoad] [routerLink] = "['/time-sheet']"
+      <button [routerLink] = "['/time-sheet']"
               class = "big-button" color = "accent" mat-raised-button>
         Time-Sheet
       </button>
@@ -15,7 +15,7 @@
   <div class = "row">
     <div class = "col-xs-12 col-md-6 col-lg-offset-3 text-center">
       <hr>
-      <button [@leftLoad] [routerLink] = "['/annual-leave']"
+      <button [routerLink] = "['/annual-leave']"
               class = "big-button" color = "accent" mat-raised-button> Annual
                                                                        Leave
       </button>
@@ -26,7 +26,7 @@
   <div *ngIf = "isAdmin" class = "row">
     <div class = "col-xs-12 col-md-6 col-lg-offset-3 text-center">
       <hr>
-      <button [@rightLoad] [routerLink] = "['/admin']" color = "accent"
+      <button [routerLink] = "['/admin']" color = "accent"
               class = "big-button" mat-raised-button> Admin
       </button>
       <hr>

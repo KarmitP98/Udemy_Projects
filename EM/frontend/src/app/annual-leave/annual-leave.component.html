@@ -1,4 +1,4 @@
-<div [@formLoad] class = "row">
+<div [@load] class = "row">
   <div class = "col-xs-12 col-md-6 col-lg-offset-3">
     <hr>
     <div class = "text-center">
@@ -7,8 +7,9 @@
     <form #leaveForm = "ngForm" (ngSubmit) = "onSubmit()" class = "text-center">
       <mat-form-field appearance = "outline" class = "half">
         <mat-label>Start Date</mat-label>
-        <input [matDatepicker] = "startDate" matInput name = "startDate" ngModel
-               required>
+        <input [(ngModel)] = "date" [matDatepicker] = "startDate"
+               [min] = "minDate"
+               matInput name = "startDate" required>
         <mat-datepicker-toggle [for] = "startDate" matSuffix>
         </mat-datepicker-toggle>
         <mat-datepicker #startDate></mat-datepicker>
@@ -17,7 +18,7 @@
       <mat-form-field appearance = "outline" class = "half">
         <mat-label>End Date</mat-label>
         <input [matDatepicker] = "endDate" matInput name = "endDate" ngModel
-               required>
+               [min] = "date" required>
         <mat-datepicker-toggle [for] = "endDate"
                                matSuffix></mat-datepicker-toggle>
         <mat-datepicker #endDate></mat-datepicker>
@@ -43,7 +44,7 @@
 </div>
 <br>
 <hr>
-<div *ngIf = "leaves" [@tableLoad] class = "center">
+<div *ngIf = "leaves" [@load] class = "center">
 
   <mat-table [dataSource] = "dataSource">
     <!-- User Id Column -->

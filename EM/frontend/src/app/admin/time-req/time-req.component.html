@@ -1,7 +1,7 @@
 <div *ngIf = "timeSheets">
-  <div [@tableLoad]><h3 class = "text-center">Time Requests</h3>
+  <div [@load]><h3 class = "text-center">Time Requests</h3>
     <br>
-    <mat-table [dataSource] = "timeSheets">
+    <mat-table [dataSource] = "dataSource">
       <!--    Select Column -->
       <ng-container matColumnDef = "select">
         <mat-header-cell *matHeaderCellDef> Select</mat-header-cell>
@@ -57,18 +57,23 @@
     <div class = "text-center">
       <button (click) = "changeStatus(true)" [disabled] = "!selectedReq"
               [textContent] = "'Approve'"
-              color = "accent" mat-raised-button></button>
+              color = "primary" mat-raised-button></button>
       ||
       <button (click) = "changeStatus(false)" [disabled] = "!selectedReq"
               [textContent] = "'Decline'"
+              color = "accent" mat-raised-button></button>
+      ||
+      <button (click) = "removeReq()" [disabled] = "!selectedReq"
+              [textContent] = "'Remove'"
               color = "warn" mat-raised-button></button>
     </div>
   </div>
 </div>
-<div *ngIf = "!timeSheets" [@tableLoad]>
+<div *ngIf = "!timeSheets" [@load]>
   <br><br><br><br><br>
   <mat-card>
-    <mat-card-title class = "text-center">No Time Sheets at this time!
+    <mat-card-title class = "text-center">
+      No Time Sheets at this time!
     </mat-card-title>
   </mat-card>
 </div>
