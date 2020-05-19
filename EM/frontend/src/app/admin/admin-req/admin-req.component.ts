@@ -4,6 +4,10 @@ import { Employee } from "../../shared/model/employee.model";
 import { Subscription } from "rxjs";
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatTableDataSource } from "@angular/material";
+import { TimeSheetService } from "../../shared/time-sheet.service";
+import { LeaveService } from "../../shared/leave.service";
+import { Leave } from "../../shared/model/leaves.model";
+import { TimeSheet } from "../../shared/model/time-sheet";
 
 @Component( {
               selector: "app-admin-req",
@@ -39,8 +43,10 @@ export class AdminReqComponent implements OnInit, OnDestroy {
   selectedReq: Employee;
   displayedColumns = [ "select", "userId", "abv", "userName", "userEmail", "adminStatus" ];
   dataSource: MatTableDataSource<Employee>;
+  leaves: Leave[];
+  timesheets: TimeSheet[];
 
-  constructor( private employeeService: EmployeeService ) { }
+  constructor( private employeeService: EmployeeService, private leaveService: LeaveService, private timeSheetService: TimeSheetService ) { }
 
   ngOnInit() {
 
@@ -58,6 +64,7 @@ export class AdminReqComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.empSub.unsubscribe();
+    this.curEmpSub.unsubscribe();
   }
 
   changeAdmin( response: boolean ): void {
@@ -73,4 +80,12 @@ export class AdminReqComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource<Employee>( this.emps );
   }
 
+  // removeEmployee(): void {
+  //   const userId = this.selectedReq.userId;
+  //   const userName = this.selectedReq.userName;
+  //   const name = this.selectedReq.name;
+  //
+  //   this.employeeService.removeEmployee(this.selectedReq.name);
+  //
+  // }
 }

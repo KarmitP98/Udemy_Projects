@@ -68,4 +68,7 @@ export class EmployeeService implements OnInit {
     this.router.navigate( [ "/login" ] );
   }
 
+  removeEmployee( name: string ): void {
+    this.http.delete( this.employeeServerUrl + "/" + name + EXT );
+  }
 }

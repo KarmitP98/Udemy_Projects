@@ -1,4 +1,4 @@
-<div *ngIf = "emps">
+<div *ngIf = "dataSource">
   <div [@load]>
     <h3 class = "text-center">Employee List</h3>
     <br>
@@ -66,12 +66,16 @@
       ||
       <button (click) = "changeAdmin(false)" [disabled] = "!selectedReq"
               [textContent] = "'Decline'" color = "accent" mat-raised-button>
-
       </button>
+      <!--      ||-->
+      <!--      <button mat-raised-button (click) = "removeEmployee()"-->
+      <!--              [disabled] = "!selectedReq||selectedReq.isAdmin" color="warn"-->
+      <!--              [textContent] = "'Remove'">-->
+      <!--      </button>-->
     </div>
   </div>
 </div>
-<div *ngIf = "!emps" [@load]>
+<div *ngIf = "!dataSource" [@load]>
   <br><br><br><br><br>
   <mat-card>
     <mat-card-title class = "text-center">
