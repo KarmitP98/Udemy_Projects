@@ -1,25 +1,18 @@
 import { Component, OnInit } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
-import { Employee } from "../shared/model/employee.model";
-import { Leave } from "../shared/model/leaves.model";
-import { TimeSheet } from "../shared/model/time-sheet";
-import { EmployeeService } from "../shared/employee.service";
-import { LeaveService } from "../shared/leave.service";
-import { TimeSheetService } from "../shared/time-sheet.service";
-import { animate, state, style, transition, trigger } from "@angular/animations";
+import { Employee } from "../../shared/model/employee.model";
+import { Leave } from "../../shared/model/leaves.model";
+import { TimeSheet } from "../../shared/model/time-sheet";
+import { EmployeeService } from "../../shared/employee.service";
+import { LeaveService } from "../../shared/leave.service";
+import { TimeSheetService } from "../../shared/time-sheet.service";
+import { loadTrigger } from "../../shared/shared";
 
 @Component( {
               selector: "app-database",
               templateUrl: "./database.component.html",
               styleUrls: [ "./database.component.css" ],
-              animations: [ ,
-                trigger( "load", [
-                  state( "in", style( { opacity: 1 } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0 } ),
-                    animate( 200 )
-                  ] )
-                ] ) ]
+              animations: [ loadTrigger ]
             } )
 export class DatabaseComponent implements OnInit {
 

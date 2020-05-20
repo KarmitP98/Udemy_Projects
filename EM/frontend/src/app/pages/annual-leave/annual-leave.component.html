@@ -17,8 +17,9 @@
       <br>
       <mat-form-field appearance = "outline" class = "half">
         <mat-label>End Date</mat-label>
-        <input [matDatepicker] = "endDate" matInput name = "endDate" ngModel
-               [min] = "date" required>
+        <input [matDatepicker] = "endDate" [min] = "date" matInput
+               name = "endDate"
+               ngModel required>
         <mat-datepicker-toggle [for] = "endDate"
                                matSuffix></mat-datepicker-toggle>
         <mat-datepicker #endDate></mat-datepicker>

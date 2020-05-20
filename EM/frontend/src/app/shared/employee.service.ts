@@ -6,7 +6,6 @@ import { Router } from "@angular/router";
 import { EXT } from "./leave.service";
 import { map } from "rxjs/operators";
 
-
 export enum ADMIN_STATUS {
   pending = "Pending",
   approved = "Approved",
@@ -42,7 +41,8 @@ export class EmployeeService implements OnInit {
 
   storeEmployee( emp: Employee ) {
     this.http.post<Employee>( this.employeeServerUrl + EXT, emp ).subscribe( ( value: Employee ) => {
-      value.name = value.name;
+      value.name = value.name;  // Store unique key as "name" field to be retrieved for updating and deleting later
+      // NOTE: UserName and name are 2 different fields
       this.updateEmployee( value, value.name );
     } );
   }
@@ -50,7 +50,6 @@ export class EmployeeService implements OnInit {
   updateEmployee( emp: Employee, name: string ) {
     this.http.patch<Employee>( this.employeeServerUrl + "/" + name + EXT, emp ).subscribe();
   }
-
 
   login( employee: Employee ): void {
 
@@ -62,12 +61,14 @@ export class EmployeeService implements OnInit {
     this.router.navigate( [ "/home" ] );
   }
 
+  // Logout current user
   logout(): void {
-    this.employeeSubject.next( null );
+    this.employeeSubject.next( null );  // Clear current subject
     localStorage.removeItem( "Employee" );  // Clear local storage
     this.router.navigate( [ "/login" ] );
   }
 
+  // Delete an employee from the database
   removeEmployee( name: string ): void {
     this.http.delete( this.employeeServerUrl + "/" + name + EXT );
   }

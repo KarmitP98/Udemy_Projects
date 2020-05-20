@@ -36,7 +36,7 @@ export class TimeSheetService {
   // Add new TimeSheet and add update the name to key
   addTimeSheet( sheet: TimeSheet ) {
     this.http.post<TimeSheet>( this.timeSheetUrl + EXT, sheet ).subscribe( value => {
-      value.name = value.name;
+      value.name = value.name;  // Store unique key as "name" field to be retrieved for updating and deleting later
       this.updateTimeSheet( value, value.name );
     } );
   }

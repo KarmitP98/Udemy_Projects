@@ -35,7 +35,7 @@ export class LeaveService {
 
   addLeave( leave: Leave ) {
     this.http.post<Leave>( this.leaveServerUrl + EXT, leave ).subscribe( value => {
-      value.name = value.name;
+      value.name = value.name;  // Store unique key as "name" field to be retrieved for updating and deleting later
       this.updateLeave( value, value.name );
     } );
   }

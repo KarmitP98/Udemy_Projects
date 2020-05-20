@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-import { LeaveService } from "../shared/leave.service";
-import { EmployeeService } from "../shared/employee.service";
+import { LeaveService } from "../../shared/leave.service";
+import { EmployeeService } from "../../shared/employee.service";
 import { Subscription } from "rxjs";
-import { Leave } from "../shared/model/leaves.model";
+import { Leave } from "../../shared/model/leaves.model";
 import { NgForm } from "@angular/forms";
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatTableDataSource } from "@angular/material";
-import { APPSTYLE } from "../shared/model/style";
+import { loadTrigger } from "../../shared/shared";
 
 export const MONTHS = [ "January",
                         "February",
@@ -25,35 +24,7 @@ export const MONTHS = [ "January",
               selector: "app-annual-leave",
               templateUrl: "./annual-leave.component.html",
               styleUrls: [ "./annual-leave.component.css" ],
-              animations: [
-                trigger( "formLoad", [
-                  state( "in", style( {
-                                        opacity: 1,
-                                        transform: "translateY(0)"
-                                      } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0, transform: "translateY(-25px)" } ),
-                    animate( 100 )
-                  ] )
-                ] ),
-                trigger( "tableLoad", [
-                  state( "in", style( {
-                                        opacity: 1,
-                                        transform: "translateY(0)"
-                                      } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0, transform: "translateY(25px)" } ),
-                    animate( 100 )
-                  ] )
-                ] ),
-                trigger( "load", [
-                  state( "in", style( { opacity: 1 } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0 } ),
-                    animate( 200 )
-                  ] )
-                ] )
-              ]
+              animations: [ loadTrigger ]
             } )
 export class AnnualLeaveComponent implements OnInit, OnDestroy {
 
@@ -64,7 +35,6 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
   @ViewChild( "leaveForm", { static: false } ) leaveForm: NgForm;
   displayedColumns = [ "userId", "startDate", "endDate", "reason", "status", "leaveId" ];
   dataSource: MatTableDataSource<Leave>;
-  appStyle = APPSTYLE;
   minDate = new Date();
   date: Date;
 

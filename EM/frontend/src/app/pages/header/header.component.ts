@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
-import { EmployeeService } from "../shared/employee.service";
-import { Employee } from "../shared/model/employee.model";
+import { EmployeeService } from "../../shared/employee.service";
+import { Employee } from "../../shared/model/employee.model";
 
 @Component( {
               selector: "app-header",

@@ -17,8 +17,9 @@
         <mat-label>Work</mat-label>
         <input #work [matAutocomplete] = "auto" [value] = "'Default Work'"
                matInput name = "work"
-               placeholder = "Ex. Excel Worksheet, Mailing, etc."
-               ngModel required type = "text">
+               ngModel
+               placeholder = "Ex. Excel Worksheet, Mailing, etc." required
+               type = "text">
         <mat-autocomplete #auto = "matAutocomplete">
           <mat-option *ngFor = "let option of options" [value] = "option">
             {{ option }}
@@ -34,8 +35,8 @@
       <br>
       <mat-form-field appearance = "outline" class = "half">
         <mat-label>End Time</mat-label>
-        <input #endTime matInput name = "endTime" ngModel
-               [min] = "time" [value] = "time" required type = "time">
+        <input #endTime [min] = "time" [value] = "time" matInput
+               name = "endTime" ngModel required type = "time">
       </mat-form-field>
       <br>
       <mat-action-row>

@@ -3,32 +3,14 @@ import { LeaveService } from "../../shared/leave.service";
 import { Leave } from "../../shared/model/leaves.model";
 import { Subscription } from "rxjs";
 import { ADMIN_STATUS } from "../../shared/employee.service";
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatTableDataSource } from "@angular/material";
+import { loadTrigger } from "../../shared/shared";
 
 @Component( {
               selector: "app-leave-req",
               templateUrl: "./leave-req.component.html",
               styleUrls: [ "./leave-req.component.css" ],
-              animations: [
-                trigger( "tableLoad", [
-                  state( "in", style( {
-                                        opacity: 1,
-                                        transform: "translateX(0)"
-                                      } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0, transform: "translateX(-100px)" } ),
-                    animate( 100 )
-                  ] )
-                ] ),
-                trigger( "load", [
-                  state( "in", style( { opacity: 1 } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0 } ),
-                    animate( 200 )
-                  ] )
-                ] )
-              ]
+              animations: [ loadTrigger ]
             } )
 export class LeaveReqComponent implements OnInit, OnDestroy {
 

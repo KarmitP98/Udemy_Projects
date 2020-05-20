@@ -2,34 +2,16 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { TimeSheetService } from "../../shared/time-sheet.service";
 import { TimeSheet } from "../../shared/model/time-sheet";
 import { Subscription } from "rxjs";
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { ADMIN_STATUS } from "../../shared/employee.service";
 import { MatTableDataSource } from "@angular/material";
+import { loadTrigger } from "../../shared/shared";
 
 
 @Component( {
               selector: "app-time-req",
               templateUrl: "./time-req.component.html",
               styleUrls: [ "./time-req.component.css" ],
-              animations: [
-                trigger( "tableLoad", [
-                  state( "in", style( {
-                                        opacity: 1,
-                                        transform: "translateX(0)"
-                                      } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0, transform: "translateX(-100px)" } ),
-                    animate( 100 )
-                  ] )
-                ] ),
-                trigger( "load", [
-                  state( "in", style( { opacity: 1 } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0 } ),
-                    animate( 200 )
-                  ] )
-                ] )
-              ]
+              animations: [ loadTrigger ]
             } )
 export class TimeReqComponent implements OnInit, OnDestroy {
 

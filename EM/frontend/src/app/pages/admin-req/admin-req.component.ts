@@ -2,36 +2,18 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ADMIN_STATUS, EmployeeService } from "../../shared/employee.service";
 import { Employee } from "../../shared/model/employee.model";
 import { Subscription } from "rxjs";
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { MatTableDataSource } from "@angular/material";
 import { TimeSheetService } from "../../shared/time-sheet.service";
 import { LeaveService } from "../../shared/leave.service";
 import { Leave } from "../../shared/model/leaves.model";
 import { TimeSheet } from "../../shared/model/time-sheet";
+import { loadTrigger } from "../../shared/shared";
 
 @Component( {
               selector: "app-admin-req",
               templateUrl: "./admin-req.component.html",
               styleUrls: [ "./admin-req.component.css" ],
-              animations: [
-                trigger( "tableLoad", [
-                  state( "in", style( {
-                                        opacity: 1,
-                                        transform: "translateX(0)"
-                                      } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0, transform: "translateX(-100px)" } ),
-                    animate( 100 )
-                  ] )
-                ] ),
-                trigger( "load", [
-                  state( "in", style( { opacity: 1 } ) ),
-                  transition( "void => *", [
-                    style( { opacity: 0 } ),
-                    animate( 200 )
-                  ] )
-                ] )
-              ]
+              animations: [ loadTrigger ]
             } )
 export class AdminReqComponent implements OnInit, OnDestroy {
 
