@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+
 .approved {
   background: rgba(204, 255, 204, 0.3);
   border: 1px solid #006400;
@@ -26,3 +26,4 @@ body {
 .half {
   width: 50%;
 }
+

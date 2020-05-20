@@ -2,14 +2,25 @@
   <div>
     <h3 class = "text-center">Leave Requests</h3>
     <br>
-    <mat-table [dataSource] = "dataSource" mat-table>
+
+    <!--    <div *ngIf = "!leaves" [@load]>-->
+    <!--      <br><br><br><br><br>-->
+    <!--      <mat-card>-->
+    <!--        <mat-card-title class = "text-center">No Leave Requests at this-->
+    <!--                                              time!-->
+    <!--        </mat-card-title>-->
+    <!--      </mat-card>-->
+    <!--    </div>-->
+
+    <mat-table [dataSource] = "dataSource">
 
       <!--    Select Column -->
       <ng-container matColumnDef = "select">
         <mat-header-cell *matHeaderCellDef> Select</mat-header-cell>
         <mat-cell *matCellDef = "let element">
           <mat-radio-group [(ngModel)] = "selectedReq">
-            <mat-radio-button [value] = "element"></mat-radio-button>
+            <mat-radio-button [value] = "element"
+                              color = "warn"></mat-radio-button>
           </mat-radio-group>
         </mat-cell>
       </ng-container>
@@ -61,23 +72,15 @@
     <div class = "text-center">
       <button (click) = "changeStatus(true)" [disabled] = "!selectedReq"
               [textContent] = "'Approve'"
-              color = "accent" mat-raised-button></button>
+              color = "primary" mat-raised-button></button>
       ||
       <button (click) = "changeStatus(false)" [disabled] = "!selectedReq"
               [textContent] = "'Decline'"
-              color = "warn" mat-raised-button></button>
+              color = "accent" mat-raised-button></button>
       ||
       <button (click) = "removeReq()" [disabled] = "!selectedReq"
               [textContent] = "'Remove'"
               color = "warn" mat-raised-button></button>
     </div>
   </div>
-</div>
-<div *ngIf = "!leaves" [@load]>
-  <br><br><br><br><br>
-  <mat-card>
-    <mat-card-title class = "text-center">No Leave Requests at this
-                                          time!
-    </mat-card-title>
-  </mat-card>
 </div>

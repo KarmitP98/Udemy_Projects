@@ -7,7 +7,8 @@
         <mat-header-cell *matHeaderCellDef> Select</mat-header-cell>
         <mat-cell *matCellDef = "let element">
           <mat-radio-group [(ngModel)] = "selectedReq">
-            <mat-radio-button [value] = "element"></mat-radio-button>
+            <mat-radio-button [value] = "element"
+                              color = "warn"></mat-radio-button>
           </mat-radio-group>
         </mat-cell>
       </ng-container>
@@ -69,11 +70,11 @@
     </div>
   </div>
 </div>
-<div *ngIf = "!timeSheets" [@load]>
-  <br><br><br><br><br>
-  <mat-card>
-    <mat-card-title class = "text-center">
-      No Time Sheets at this time!
-    </mat-card-title>
-  </mat-card>
-</div>
+<!--<div *ngIf = "!timeSheets" [@load]>-->
+<!--  <br><br><br><br><br>-->
+<!--  <mat-card>-->
+<!--    <mat-card-title class = "text-center">-->
+<!--      No Time Sheets at this time!-->
+<!--    </mat-card-title>-->
+<!--  </mat-card>-->
+<!--</div>-->

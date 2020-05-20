@@ -4,14 +4,17 @@
       <hr>
       <div class = "text-center">
         <button color = "accent" mat-raised-button
+                [routerLinkActive] = "'selected'"
                 routerLink = "/admin/time-req">View Time-Sheet Requests
         </button>
         ||
         <button color = "accent" mat-raised-button
+                [routerLinkActive] = "'selected'"
                 routerLink = "/admin/leave-req">View Leave Requests
         </button>
         ||
         <button color = "accent" mat-raised-button
+                [routerLinkActive] = "'selected'"
                 routerLink = "/admin/admin-req"> View Admin Requests
         </button>
       </div>

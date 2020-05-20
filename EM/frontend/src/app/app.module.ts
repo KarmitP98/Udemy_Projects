@@ -24,6 +24,7 @@ import {
   MatDatepickerModule,
   MatExpansionModule,
   MatInputModule,
+  MatListModule,
   MatNativeDateModule,
   MatOptionModule,
   MatRadioModule,
@@ -34,6 +35,7 @@ import {
   MatTableModule,
   MatToolbarModule
 } from "@angular/material";
+import { DatabaseComponent } from "./database/database.component";
 
 @NgModule( {
              declarations: [
@@ -47,7 +49,8 @@ import {
                TimeReqComponent,
                LeaveReqComponent,
                AdminReqComponent,
-               LoadingSpinnerComponent
+               LoadingSpinnerComponent,
+               DatabaseComponent
 
              ],
              imports: [
@@ -71,7 +74,8 @@ import {
                MatSortModule,
                MatRadioModule,
                MatCardModule,
-               MatAutocompleteModule
+               MatAutocompleteModule,
+               MatListModule
              ],
              providers: [],
              bootstrap: [ AppComponent ]
