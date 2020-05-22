@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "project-1-aa193": {
+      "hosting": {
+        "Testing": [
+          "project-1-aa193"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "project-1-aa193"
+  }
+}

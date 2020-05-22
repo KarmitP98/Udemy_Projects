@@ -1,9 +1,36 @@
-<!--<form #f = "ngForm" (ngSubmit) = "storeValue()">-->
-<!--  <label>-->
-<!--    <input name = "num" type = "number" [value] = "10" [ngModel]>-->
-<!--  </label>-->
-  <button (click) = "storeValue()">Store
-  </button>
-  <button (click) = "fetchValue()">Fetch
-  </button>
-<!--</form>-->
+<div class = "container text-center">
+  <div class = "btn-group-vertical" style = "margin: 10%">
+    <button class = "btn btn-outline-success" (click) = "addItem()">Add
+                                                                    Data
+    </button>
+    <button class = "btn btn-outline-danger" (click) = "deleteTable()">Delete
+                                                                       Table
+    </button>
+    <button class = "btn btn-outline-warning" (click) = "query(3)">Query
+    </button>
+  </div>
+  <!--  <div class = "list-group">-->
+  <!--    <li class = "list-group-item" *ngFor = "let item of-->
+  <!--    items | async"-->
+  <!--        [ngClass] = "item.id % 2 === 0 ? 'list-group-item-success':-->
+  <!--    'list-group-item-danger' ">-->
+  <!--      {{item.name}}-->
+  <!--    </li>-->
+  <!--  </div>-->
+  <mat-table [dataSource] = "dataSource">
+
+    <ng-container matColumnDef = "id">
+      <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
+      <mat-cell *matCellDef = "let element"> {{element.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef = "name">
+      <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+      <mat-cell *matCellDef = "let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef = "['id','name']"></mat-header-row>
+    <mat-row *matRowDef = "let row; columns: ['id','name'];"></mat-row>
+  </mat-table>
+  <br><br><br>
+</div>
