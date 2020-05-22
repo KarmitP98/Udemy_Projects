@@ -10,6 +10,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatNativeDateModule } from "@angular/material/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CommonModule } from "@angular/common";
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule( {
              declarations: [
@@ -23,7 +24,8 @@ import { CommonModule } from "@angular/common";
                AngularFireDatabaseModule,
                BrowserAnimationsModule,
                MatTableModule,
-               MatNativeDateModule
+               MatNativeDateModule,
+               MatButtonModule
              ],
              providers: [],
              bootstrap: [ AppComponent ]

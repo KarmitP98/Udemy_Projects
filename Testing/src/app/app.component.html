@@ -1,24 +1,16 @@
 <div class = "container text-center">
   <div class = "btn-group-vertical" style = "margin: 10%">
-    <button class = "btn btn-outline-success" (click) = "addItem()">Add
-                                                                    Data
+    <button (click) = "addItem()" color = "primary" mat-raised-button>Add
+                                                                      Data
     </button>
-    <button class = "btn btn-outline-danger" (click) = "deleteTable()">Delete
-                                                                       Table
+    <button (click) = "deleteTable()" color = "accent" mat-raised-button>Delete
+                                                                         Table
     </button>
-    <button class = "btn btn-outline-warning" (click) = "query(3)">Query
+    <button (click) = "query(3)" color = "warn" mat-raised-button>Query
     </button>
   </div>
-  <!--  <div class = "list-group">-->
-  <!--    <li class = "list-group-item" *ngFor = "let item of-->
-  <!--    items | async"-->
-  <!--        [ngClass] = "item.id % 2 === 0 ? 'list-group-item-success':-->
-  <!--    'list-group-item-danger' ">-->
-  <!--      {{item.name}}-->
-  <!--    </li>-->
-  <!--  </div>-->
-  <mat-table [dataSource] = "dataSource">
 
+  <mat-table [dataSource] = "dataSource" class = "mat-elevation-z24">
     <ng-container matColumnDef = "id">
       <mat-header-cell *matHeaderCellDef> Id</mat-header-cell>
       <mat-cell *matCellDef = "let element"> {{element.id}} </mat-cell>
@@ -29,8 +21,9 @@
       <mat-cell *matCellDef = "let element"> {{element.name}} </mat-cell>
     </ng-container>
 
-    <mat-header-row *matHeaderRowDef = "['id','name']"></mat-header-row>
-    <mat-row *matRowDef = "let row; columns: ['id','name'];"></mat-row>
+    <mat-header-row *matHeaderRowDef = displayed></mat-header-row>
+    <mat-row *matRowDef = "let row; columns: displayed;"></mat-row>
+
   </mat-table>
   <br><br><br>
 </div>
