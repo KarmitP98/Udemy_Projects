@@ -21,12 +21,11 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
   timeSheets: TimeSheet[] = [];
   allTimeSheets: TimeSheet[] = [];
   @ViewChild( "timeForm", { static: false } ) timeForm: NgForm;
-  userId: number;
+  empId: string;
   displayedColumns = [ "userId", "logDate", "work", "startTime", "endTime", "status", "timeSheetId" ];
   dataSource: MatTableDataSource<TimeSheet>;
   options = [ "ACE 101", "CFF 102", "CFF 209", "ZAS 392", "TTP 119", "DTF 476" ];
   time: string;
-  morning = new Date().getTime().toString();
 
   constructor( private timeSheetService: TimeSheetService, private employeeService: EmployeeService ) { }
 
@@ -34,11 +33,11 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
 
     this.empSub = this.employeeService.employeeSubject.subscribe( value => {
       if ( value ) {
-        this.userId = value.userId;
+        this.empId = value.empId;
       }
     } );
 
-    this.timeSheetSub = this.timeSheetService.fetchTimeSheets( true, this.userId ).subscribe( value => {
+    this.timeSheetSub = this.timeSheetService.fetchTimeSheets( true, this.empId ).subscribe( value => {
       if ( value ) {
         this.timeSheets = value;
         this.loadValues();
@@ -53,9 +52,10 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     const date = this.timeForm.value.date;
-    const tempSheet: TimeSheet = new TimeSheet( this.userId, MONTHS[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear(),
-                                                this.timeForm.value.startTime, this.timeForm.value.endTime, "Pending",
-                                                this.allTimeSheets ? this.timeSheets.length : 0, this.timeForm.value.work );
+    const tempSheet: TimeSheet = new TimeSheet( this.empId, "placeholder",
+                                                MONTHS[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear(),
+                                                this.timeForm.value.startTime, this.timeForm.value.endTime,
+                                                this.timeForm.value.work, "Pending", false );
     this.timeSheetService.addTimeSheet( tempSheet );
     this.timeSheets.push( tempSheet );
     this.loadValues();

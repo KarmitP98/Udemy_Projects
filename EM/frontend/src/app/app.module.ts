@@ -36,6 +36,9 @@ import {
   MatTableModule,
   MatToolbarModule
 } from "@angular/material";
+import { AngularFireModule } from "@angular/fire";
+import { AngularFireDatabaseModule } from "@angular/fire/database";
+import { environment } from "../environments/environment";
 
 @NgModule( {
              declarations: [
@@ -75,7 +78,9 @@ import {
                MatRadioModule,
                MatCardModule,
                MatAutocompleteModule,
-               MatListModule
+               MatListModule,
+               AngularFireModule.initializeApp( environment.firebase ),
+               AngularFireDatabaseModule
              ],
              providers: [],
              bootstrap: [ AppComponent ]

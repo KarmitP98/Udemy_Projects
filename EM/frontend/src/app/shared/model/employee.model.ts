@@ -1,12 +1,11 @@
 export class Employee {
 
-  constructor( public userId: number,
+  constructor( public empId: string,
                public abv: string,
-               public userName: string,
-               public userEmail: string,
+               public empName: string,
+               public empEmail: string,
                public isAdmin: boolean,
                public adminStatus: string,
-               public password: string,
-               public name?: string ) {}
+               public password: string ) {}
 
 }

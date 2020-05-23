@@ -19,7 +19,7 @@ export class AdminReqComponent implements OnInit, OnDestroy {
 
   emps: Employee[] = [];
   curEmp: Employee;
-  userId: number;
+  empId: string;
   empSub: Subscription;
   curEmpSub: Subscription;
   selectedReq: Employee;
@@ -36,9 +36,9 @@ export class AdminReqComponent implements OnInit, OnDestroy {
       this.curEmp = value;
     } );
 
-    this.empSub = this.employeeService.fetchEmployees().subscribe( ( value: Employee[] ) => {
+    this.empSub = this.employeeService.fetchEmployees().subscribe( ( value ) => {
       this.emps = value.filter( value1 => {
-        return value1.userId !== this.curEmp.userId;
+        return value1.empId !== this.curEmp.empId;
       } );
       this.loadValues();
     } );
@@ -54,7 +54,7 @@ export class AdminReqComponent implements OnInit, OnDestroy {
     this.selectedReq.adminStatus = response ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
     this.selectedReq.isAdmin = response;
 
-    this.employeeService.updateEmployee( this.selectedReq, this.selectedReq.name );
+    this.employeeService.updateEmployee( this.selectedReq, this.selectedReq.empId );
     this.selectedReq = null;
   }
 
@@ -62,12 +62,4 @@ export class AdminReqComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource<Employee>( this.emps );
   }
 
-  // removeEmployee(): void {
-  //   const userId = this.selectedReq.userId;
-  //   const userName = this.selectedReq.userName;
-  //   const name = this.selectedReq.name;
-  //
-  //   this.employeeService.removeEmployee(this.selectedReq.name);
-  //
-  // }
 }

@@ -31,7 +31,7 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
   leaveSub: Subscription;
   empSub: Subscription;
   leaves: Leave[] = [];
-  userId: number;
+  empId: string;
   @ViewChild( "leaveForm", { static: false } ) leaveForm: NgForm;
   displayedColumns = [ "userId", "startDate", "endDate", "reason", "status", "leaveId" ];
   dataSource: MatTableDataSource<Leave>;
@@ -44,11 +44,11 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
 
     this.empSub = this.employeeService.employeeSubject.subscribe( value => {
       if ( value ) {
-        this.userId = value.userId;
+        this.empId = value.empId;
       }
     } );
 
-    this.leaveSub = this.leaveService.fetchLeaves( true, this.userId ).subscribe( value => {
+    this.leaveSub = this.leaveService.fetchLeaves( true, this.empId ).subscribe( value => {
       if ( value ) {
         this.leaves = value;
         this.loadValues();
@@ -65,10 +65,10 @@ export class AnnualLeaveComponent implements OnInit, OnDestroy {
     const startDate = new Date( this.leaveForm.value.startDate );
     const endDate = new Date( this.leaveForm.value.endDate );
     const tempLeave =
-      new Leave( this.userId, this.leaves.length,
+      new Leave( this.empId, "placeholder",
                  MONTHS[startDate.getMonth()] + " " + startDate.getDate() + ", " + startDate.getFullYear(),
                  MONTHS[endDate.getMonth()] + " " + endDate.getDate() + ", " + endDate.getFullYear(), this.leaveForm.value.reason,
-                 "Pending", "" );
+                 "Pending", false );
     this.leaveService.addLeave( tempLeave );
     this.leaves.push( tempLeave );
     this.loadValues();

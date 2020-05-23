@@ -35,14 +35,14 @@ export class LeaveReqComponent implements OnInit, OnDestroy {
 
   changeStatus( b: boolean ): void {
     this.selectedReq.status = b ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
-    this.leaveService.updateLeave( this.selectedReq, this.selectedReq.name );
+    this.leaveService.updateLeave( this.selectedReq, this.selectedReq.empId );
     this.selectedReq = null;
   }
 
   removeReq(): void {
-    this.leaveService.removeLeave( this.selectedReq.name );
+    this.leaveService.removeLeave( this.selectedReq.empId );
     this.leaves = this.leaves.filter( value => {
-      return value.name !== this.selectedReq.name;
+      return value.empId !== this.selectedReq.empId;
     } );
     this.loadValues();
     this.selectedReq = null;

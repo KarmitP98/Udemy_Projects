@@ -4,7 +4,7 @@ import { BehaviorSubject, Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { EXT } from "./leave.service";
-import { map } from "rxjs/operators";
+import { AngularFireDatabase } from "@angular/fire/database";
 
 export enum ADMIN_STATUS {
   pending = "Pending",
@@ -21,34 +21,40 @@ export class EmployeeService implements OnInit {
   employeeServerUrl = "https://employee-managment-f5252.firebaseio.com/employees";
   employeeSubject = new BehaviorSubject<Employee>( null );
 
-  constructor( private http: HttpClient, private router: Router ) { }
+  constructor( private http: HttpClient, private router: Router, private firestore: AngularFireDatabase ) { }
 
   ngOnInit(): void {
   }
 
   // Fetch the employee data from Server
   fetchEmployees() {
-    return this.http.get( this.employeeServerUrl + EXT ).pipe( map( value => {
-      if ( value ) {
-        let temp: Employee[] = [];
-        for ( const key in value ) {
-          temp.push( value[key] );
-        }
-        return temp;
-      }
-    } ) );
+    // return this.http.get( this.employeeServerUrl + EXT ).pipe( map( value => {
+    //   if ( value ) {
+    //     let temp: Employee[] = [];
+    //     for ( const key in value ) {
+    //       temp.push( value[key] );
+    //     }
+    //     return temp;
+    //   }
+    // } ) );
+    return this.firestore.list<Employee>( "employees" ).valueChanges();
   }
 
   storeEmployee( emp: Employee ) {
-    this.http.post<Employee>( this.employeeServerUrl + EXT, emp ).subscribe( ( value: Employee ) => {
-      value.name = value.name;  // Store unique key as "name" field to be retrieved for updating and deleting later
-      // NOTE: UserName and name are 2 different fields
-      this.updateEmployee( value, value.name );
+    // this.http.post<Employee>( this.employeeServerUrl + EXT, emp ).subscribe( ( value: Employee ) => {
+    //   value.name = value.name;  // Store unique key as "name" field to be retrieved for updating and deleting later
+    //   // NOTE: UserName and name are 2 different fields
+    //   this.updateEmployee( value, value.name );
+    // } );
+    this.firestore.list( "employees" ).push( emp ).then( value => {
+      emp.empId = value.key;
+      this.updateEmployee( emp, value.key );
     } );
   }
 
   updateEmployee( emp: Employee, name: string ) {
-    this.http.patch<Employee>( this.employeeServerUrl + "/" + name + EXT, emp ).subscribe();
+    // this.http.patch<Employee>( this.employeeServerUrl + "/" + name + EXT, emp ).subscribe();
+    this.firestore.list( "employees" ).update( name, emp );
   }
 
   login( employee: Employee ): void {

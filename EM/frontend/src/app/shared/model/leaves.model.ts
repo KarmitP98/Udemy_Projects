@@ -1,11 +1,11 @@
 export class Leave {
 
-  constructor( public userId: number,
-               public leaveId: number,
+  constructor( public empId: string,
+               public leaveId: string,
                public startDate: string,
                public endDate: string,
                public reason: string,
                public status: string,
-               public name?: string ) {}
+               public approved: boolean ) {}
 
 }

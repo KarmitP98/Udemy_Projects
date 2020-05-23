@@ -38,14 +38,14 @@ export class TimeReqComponent implements OnInit, OnDestroy {
   changeStatus( b: boolean ) {
     const status = b ? ADMIN_STATUS.approved : ADMIN_STATUS.declined;
     this.selectedReq.status = status;
-    this.timeSheetService.updateTimeSheet( this.selectedReq, this.selectedReq.name );
+    this.timeSheetService.updateTimeSheet( this.selectedReq, this.selectedReq.empId );
     this.selectedReq = null;
   }
 
   removeReq(): void {
-    this.timeSheetService.removeTimeSheet( this.selectedReq.name );
+    this.timeSheetService.removeTimeSheet( this.selectedReq.empId );
     this.timeSheets = this.timeSheets.filter( value => {
-      return value.name !== this.selectedReq.name;
+      return value.empId !== this.selectedReq.empId;
     } );
     this.loadValues();
     this.selectedReq = null;

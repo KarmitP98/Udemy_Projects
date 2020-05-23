@@ -27,8 +27,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.empSub = this.employeeService.fetchEmployees().subscribe( ( value ) => {
-      if ( value ) {
+      if ( value.length > 0 ) {
         this.emps = value;
+        console.log( value );
       }
     } );
 
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     } else {
       if ( !emp ) {
-        const newEmp: Employee = new Employee( this.emps ? this.emps.length : 0, abv, name, email, false, ADMIN_STATUS.pending, password );
+        const newEmp: Employee = new Employee( "Placeholder", abv, name, email, false, ADMIN_STATUS.pending, password );
         this.employeeService.storeEmployee( newEmp );
         this.employeeService.login( newEmp );
       } else {
@@ -72,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if ( this.emps ) {
       for ( let emp of this.emps ) {
         if ( emp !== null ) {
-          if ( emp.userEmail === email && emp.password === password ) {
+          if ( emp.empEmail === email && emp.password === password ) {
             return emp;
           }
         }
