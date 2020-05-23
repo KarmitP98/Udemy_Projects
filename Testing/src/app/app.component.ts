@@ -41,7 +41,8 @@ export class AppComponent {
   }
 
   query( num: number ) {
-    this.firestore.list( "data", ref => ref.orderByChild( "id" ).limitToLast( num ) ).valueChanges().subscribe( value => {
+    this.firestore.list<StorageModel>( "data", ref => ref.orderByChild("id").equalTo( 2 ) ).valueChanges().subscribe( value => {
+      console.log(value);
       this.dataSource = new MatTableDataSource<any>( value );
     } );
   }

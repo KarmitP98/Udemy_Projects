@@ -24,8 +24,10 @@ export class LeaveReqComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.leaveSub = this.leaveService.fetchLeaves( false ).subscribe( value => {
-      this.leaves = value;
-      this.loadValues();
+      if ( value.length > 0 ) {
+        this.leaves = value;
+        this.loadValues();
+      }
     } );
   }
 

@@ -19,67 +19,35 @@ export class LoginComponent implements OnInit, OnDestroy {
   companyName = "ABC Company";
   isLoginMode: boolean = true;
   admin: boolean = false;
-  empSub: Subscription;
   emps: Employee[] = [];
+  errorSub: Subscription;
 
   constructor( private employeeService: EmployeeService, private router: Router, private snackBar: MatSnackBar ) { }
 
   ngOnInit() {
 
-    this.empSub = this.employeeService.fetchEmployees().subscribe( ( value ) => {
-      if ( value.length > 0 ) {
-        this.emps = value;
-        console.log( value );
-      }
-    } );
-
   }
 
   ngOnDestroy(): void {
-    this.empSub.unsubscribe();
   }
 
   onSubmit(): void {
-    const emp = this.getEmp( this.form.value.email, this.form.value.password );
+    console.log( "submit Called" );
     const email = this.form.value.email;
     const password = this.form.value.password;
     const abv = this.form.value.abv;
     const isAdmin = this.form.value.isAdmin;
     const name = this.form.value.name;
+    const newEmp: Employee = new Employee( "Placeholder", abv, name, email, false, ADMIN_STATUS.pending, password );
 
-    if ( this.isLoginMode ) {
-      if ( emp ) {
-        this.employeeService.login( emp );
-      } else {
-        this.showError( "Invalid Email / Password !" );
-      }
-    } else {
-      if ( !emp ) {
-        const newEmp: Employee = new Employee( "Placeholder", abv, name, email, false, ADMIN_STATUS.pending, password );
-        this.employeeService.storeEmployee( newEmp );
-        this.employeeService.login( newEmp );
-      } else {
-        this.showError( "This user already exists !" );
-      }
-    }
+    this.isLoginMode ?
+      this.employeeService.login( email, password, newEmp ) :
+      this.employeeService.signUp( email, password, newEmp );
+
   }
 
   switchModes(): void {
     this.isLoginMode = !this.isLoginMode;
-  }
-
-  // Check if the employee data matches any current employee
-  getEmp( email: string, password: string ): Employee {
-    if ( this.emps ) {
-      for ( let emp of this.emps ) {
-        if ( emp !== null ) {
-          if ( emp.empEmail === email && emp.password === password ) {
-            return emp;
-          }
-        }
-      }
-    }
-    return null;
   }
 
   private showError( error: string ): void {

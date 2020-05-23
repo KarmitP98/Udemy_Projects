@@ -35,7 +35,7 @@
             <mat-label>Password</mat-label>
             <input #password autocomplete matInput
                    name = "password" ngModel placeholder = "Password" required
-                   type = "password">
+                   minlength = "6" type = "password">
           </mat-form-field>
         </div>
         <div *ngIf = "!isLoginMode" class = "form-group">
@@ -44,8 +44,8 @@
           </mat-slide-toggle>
         </div>
         <div class = "example-button-row">
-          <button (click) = "onSubmit()" [disabled] =
-            "f.invalid" color = "primary"
+          <button [disabled] =
+                    "f.invalid" color = "primary"
                   mat-raised-button type = "submit">
             {{ isLoginMode ? "Login" : "Sign-up" }}</button>
           ||

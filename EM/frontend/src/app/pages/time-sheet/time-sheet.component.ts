@@ -38,7 +38,7 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
     } );
 
     this.timeSheetSub = this.timeSheetService.fetchTimeSheets( true, this.empId ).subscribe( value => {
-      if ( value ) {
+      if ( value.length > 0 ) {
         this.timeSheets = value;
         this.loadValues();
       }

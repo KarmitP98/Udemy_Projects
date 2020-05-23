@@ -23,14 +23,7 @@ export class AuthGuard
       if ( isAuth ) {
         return true;
       } else {
-        if ( localStorage.getItem( "Employee" ) ) {
-          const emp = JSON.parse( localStorage.getItem( "Employee" ) );
-          this.employeeService.employeeSubject.next( emp );
-          this.employeeService.fetchEmployees();
-          return true;
-        } else {
-          return this.router.navigate( [ "/login" ] );
-        }
+        return this.router.navigate( [ "/login" ] );
       }
     } ) );
 
