@@ -74,8 +74,8 @@ export class EmployeeService implements OnInit {
     } );
   }
 
-  updateEmployee( emp: Employee, name: string ) {
-    this.firestore.list( "employees" ).update( name, emp );
+  updateEmployee( emp: Employee, empId: string ) {
+    this.firestore.list( "employees" ).set( empId, emp );
   }
 
   login( email: string, password: string, emp: Employee ) {
@@ -99,12 +99,6 @@ export class EmployeeService implements OnInit {
     } );
   }
 
-  autoLogout( expirationDuration: number ) {
-    this.tokenExpirationTimer = setTimeout( () => {
-      this.logout();
-    }, expirationDuration );
-  }
-
   logout(): void {
     if ( this.tokenExpirationTimer ) {
       clearTimeout( this.tokenExpirationTimer );
@@ -115,29 +109,18 @@ export class EmployeeService implements OnInit {
     this.router.navigate( [ "/login" ] );
   }
 
+  autoLogout( expirationDuration: number ) {
+    this.tokenExpirationTimer = setTimeout( () => {
+      this.logout();
+    }, expirationDuration );
+  }
+
   autoLogin( email: string ): void {
     this.fetchEmployees( "empEmail", email ).subscribe( value => {
       this.employeeSubject.next( value[0] );
     } );
 
   }
-
-  // login( employee: Employee ): void {
-  //
-  //   this.employeeSubject.next( employee );
-  //
-  //   localStorage.setItem( "Employee", JSON.stringify( employee ) );
-  //   // Store the current user to local storage for auto-login purposes
-  //
-  //   this.router.navigate( [ "/home" ] );
-  // }
-
-  // // Logout current user
-  // logout(): void {
-  //   this.employeeSubject.next( null );  // Clear current subject
-  //   localStorage.removeItem( "Employee" );  // Clear local storage
-  //   this.router.navigate( [ "/login" ] );
-  // }
 
   private handleAuth( email: string, token: string, expireIn: number, id: string ) {
     const expiration = new Date( new Date().getTime() + expireIn * 1000 );

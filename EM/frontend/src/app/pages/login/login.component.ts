@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     const abv = this.form.value.abv;
     const isAdmin = this.form.value.isAdmin;
     const name = this.form.value.name;
-    const newEmp: Employee = new Employee( "Placeholder", abv, name, email, false, ADMIN_STATUS.pending, password );
+    const newEmp: Employee = new Employee( "Placeholder", abv, name, email, false, ADMIN_STATUS.pending, password, 0 );
 
     this.isLoginMode ?
       this.employeeService.login( email, password, newEmp ) :

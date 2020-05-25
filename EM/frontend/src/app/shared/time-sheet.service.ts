@@ -8,20 +8,15 @@ import { AngularFireDatabase } from "@angular/fire/database";
              } )
 export class TimeSheetService {
 
-  timeSheetUrl = "https://employee-managment-f5252.firebaseio.com/time-sheets";
-
   constructor( private http: HttpClient, private firestore: AngularFireDatabase ) { }
 
   // Fetch TimeSheets
   // @current and @userId is used to check if you need timesheets for current employee
   fetchTimeSheets( current: boolean, empId?: string ) {
-
     if ( current ) {
       return this.firestore.list<TimeSheet>( "time-sheets", ref => ref.orderByChild( "empId" ).equalTo( empId ) ).valueChanges();
     }
     return this.firestore.list<TimeSheet>( "time-sheets" ).valueChanges();
-
-
   }
 
   // Add new TimeSheet and add update the name to key
@@ -33,7 +28,7 @@ export class TimeSheetService {
   }
 
   updateTimeSheet( sheet: TimeSheet, sheetId: string ) {
-    this.firestore.list<TimeSheet>( "time-sheets" ).set( sheetId, sheet );
+    this.firestore.list<TimeSheet>( "time-sheets" ).update( sheetId, sheet );
   }
 
   removeTimeSheet( sheetName: string ) {

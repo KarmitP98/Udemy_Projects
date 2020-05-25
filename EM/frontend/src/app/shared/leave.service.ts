@@ -10,8 +10,6 @@ export const EXT = ".json";
              } )
 export class LeaveService {
 
-  leaveServerUrl = "https://employee-managment-f5252.firebaseio.com/leaves";
-
   constructor( private http: HttpClient, private firestore: AngularFireDatabase ) { }
 
   fetchLeaves( current: boolean, empId?: string ) {

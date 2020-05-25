@@ -4,7 +4,6 @@ import { TimeSheetService } from "../../shared/time-sheet.service";
 import { TimeSheet } from "../../shared/model/time-sheet";
 import { NgForm } from "@angular/forms";
 import { EmployeeService } from "../../shared/employee.service";
-import { MONTHS } from "../annual-leave/annual-leave.component";
 import { MatTableDataSource } from "@angular/material";
 import { loadTrigger } from "../../shared/shared";
 
@@ -19,13 +18,14 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
   timeSheetSub: Subscription;
   empSub: Subscription;
   timeSheets: TimeSheet[] = [];
-  allTimeSheets: TimeSheet[] = [];
   @ViewChild( "timeForm", { static: false } ) timeForm: NgForm;
   empId: string;
   displayedColumns = [ "userId", "logDate", "work", "startTime", "endTime", "status", "timeSheetId" ];
   dataSource: MatTableDataSource<TimeSheet>;
   options = [ "ACE 101", "CFF 102", "CFF 209", "ZAS 392", "TTP 119", "DTF 476" ];
-  time: string;
+  today = new Date();
+  stTime: string = this.today.getHours() + ":" + (this.today.getMinutes() < 10 ? "0" + this.today.getMinutes() : this.today.getMinutes());
+  edTime: string = this.stTime;
 
   constructor( private timeSheetService: TimeSheetService, private employeeService: EmployeeService ) { }
 
@@ -52,14 +52,19 @@ export class TimeSheetComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     const date = this.timeForm.value.date;
-    const tempSheet: TimeSheet = new TimeSheet( this.empId, "placeholder",
-                                                MONTHS[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear(),
-                                                this.timeForm.value.startTime, this.timeForm.value.endTime,
-                                                this.timeForm.value.work, "Pending", false );
-    this.timeSheetService.addTimeSheet( tempSheet );
-    this.timeSheets.push( tempSheet );
-    this.loadValues();
-    this.timeForm.resetForm();
+    const startTime: number = this.timeForm.value.startTime;
+    const endTime: number = this.timeForm.value.endTime;
+    // const hours = endTime - startTime;
+    console.log( startTime );
+    console.log( endTime );
+    console.log( endTime - startTime );
+    // const tempSheet: TimeSheet = new TimeSheet( this.empId, "placeholder",
+    //                                             MONTHS[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear(),
+    //                                             startTime, endTime, this.timeForm.value.work, "Pending", false, hours );
+    // this.timeSheetService.addTimeSheet( tempSheet );
+    // this.timeSheets.push( tempSheet );
+    // this.loadValues();
+    // this.timeForm.resetForm();
   }
 
   loadValues(): void {

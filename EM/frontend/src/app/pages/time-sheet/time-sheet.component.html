@@ -29,13 +29,13 @@
       <br>
       <mat-form-field appearance = "outline" class = "half">
         <mat-label>Start Time</mat-label>
-        <input #startTime [(ngModel)] = "time" matInput name = "startTime"
+        <input [(ngModel)] = "stTime" matInput name = "startTime"
                required type = "time">
       </mat-form-field>
       <br>
       <mat-form-field appearance = "outline" class = "half">
         <mat-label>End Time</mat-label>
-        <input #endTime [min] = "time" [value] = "time" matInput
+        <input [min] = "stTime" [value] = "stTime" matInput
                name = "endTime" ngModel required type = "time">
       </mat-form-field>
       <br>

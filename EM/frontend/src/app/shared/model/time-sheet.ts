@@ -7,6 +7,7 @@ export class TimeSheet {
                public endTime: Date,
                public work: string,
                public status: string,
-               public approved: boolean ) {}
+               public approved: boolean,
+               public hours: number ) {}
 
 }

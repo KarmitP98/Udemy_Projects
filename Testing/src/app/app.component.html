@@ -1,5 +1,19 @@
 <div class = "container text-center">
   <div class = "btn-group-vertical" style = "margin: 10%">
+    <form #form = "ngForm" (ngSubmit) = "onSubmit()">
+
+      <mat-form-field appearance = "outline" class = "half">
+        <mat-label>Start Time</mat-label>
+        <input matInput name = "startTime" ngModel type = "time" [value]="time">
+      </mat-form-field>
+
+      <mat-form-field appearance = "outline" class = "half">
+        <mat-label>End Time</mat-label>
+        <input matInput name = "endTime" ngModel type = "time" [value]="time">
+      </mat-form-field>
+      ||
+      <button mat-raised-button type = "submit">Submit</button>
+    </form>
     <button (click) = "addItem()" color = "primary" mat-raised-button>Add
                                                                       Data
     </button>
@@ -27,3 +41,4 @@
   </mat-table>
   <br><br><br>
 </div>
+

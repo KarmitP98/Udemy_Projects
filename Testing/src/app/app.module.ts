@@ -11,6 +11,8 @@ import { MatNativeDateModule } from "@angular/material/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
+import { FormsModule } from "@angular/forms";
+import { MatInputModule } from "@angular/material/input";
 
 @NgModule( {
              declarations: [
@@ -25,7 +27,9 @@ import { MatButtonModule } from "@angular/material/button";
                BrowserAnimationsModule,
                MatTableModule,
                MatNativeDateModule,
-               MatButtonModule
+               MatButtonModule,
+               FormsModule,
+               MatInputModule
              ],
              providers: [],
              bootstrap: [ AppComponent ]
